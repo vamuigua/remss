@@ -145,13 +145,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-            <a href="/admin/roles" class="nav-link">
-              <i class="fas fa-user-circle nav-icon"></i>
-              <p>
-                Roles
-              </p>
-            </a>
-          </li>
+                <a href="/admin/roles" class="nav-link">
+                  <i class="fas fa-user-circle nav-icon"></i>
+                  <p>
+                    Roles
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/roles/users" class="nav-link">
+                  <i class="fas fa-user-circle nav-icon"></i>
+                  <p>
+                    Users Roles
+                  </p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">

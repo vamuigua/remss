@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\User;
 use App\Role;
 use Illuminate\Http\Request;
 
@@ -117,5 +118,11 @@ class RolesController extends Controller
         Role::destroy($id);
 
         return redirect('admin/roles')->with('flash_message', 'Role deleted!');
+    }
+
+    public function users(){
+        $users = User::all();
+        $roles = Role::all();
+        return view('admin.roles.users', compact('users','roles'));
     }
 }

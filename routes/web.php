@@ -21,4 +21,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/admin/dashboard', 'AdminController@index');
 Route::resource('admin/tenants', 'Admin\\TenantsController');
+
+Route::get('/admin/roles/users', [
+    'uses' => 'Admin\\RolesController@users',
+    'as' => 'roles.users'
+]);
 Route::resource('admin/roles', 'Admin\\RolesController');
