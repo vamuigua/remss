@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 class RolesController extends Controller
 {
+    // public function __construct(){
+    //     $this->middleware('roles');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -124,5 +127,18 @@ class RolesController extends Controller
         $users = User::all();
         $roles = Role::all();
         return view('admin.roles.users', compact('users','roles'));
+    }
+
+    public function assignRoles(Request $request)
+    {
+        $user = User::where('email', $request['email'])->first();
+        $user->roles()->detach();
+        if ($request['role_user']) {
+            $user->roles()->attach(Role::where('name', 'User')->first());
+        }
+        if ($request['role_admin']) {
+            $user->roles()->attach(Role::where('name', 'Admin')->first());
+        }
+        return redirect()->back();
     }
 }

@@ -35,11 +35,11 @@
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user)
-                                    <form action="#" method="POST">
+                                    <form action="{{ route('roles.assignRoles') }}" method="POST">
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->email }} <input type="hidden" name="email" value="{{ $user->email }}"></td>
                                             <td><input type="checkbox" {{ $user->hasRole('User') ? 'checked' : '' }} name="role_user"></td>
                                             <td><input type="checkbox" {{ $user->hasRole('Admin') ? 'checked' : '' }} name="role_admin"></td>
                                             {{ csrf_field() }}
