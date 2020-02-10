@@ -153,10 +153,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/roles/users" class="nav-link">
+                <a href="/admin/roles/assign" class="nav-link">
                   <i class="fas fa-user-circle nav-icon"></i>
                   <p>
-                    Users Roles
+                    Assign Roles
                   </p>
                 </a>
               </li>

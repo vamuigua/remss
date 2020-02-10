@@ -11,9 +11,6 @@ use Illuminate\Http\Request;
 
 class RolesController extends Controller
 {
-    // public function __construct(){
-    //     $this->middleware('roles');
-    // }
     /**
      * Display a listing of the resource.
      *
@@ -123,7 +120,7 @@ class RolesController extends Controller
         return redirect('admin/roles')->with('flash_message', 'Role deleted!');
     }
 
-    public function users(){
+    public function assign(){
         $users = User::all();
         $roles = Role::all();
         return view('admin.roles.users', compact('users','roles'));
