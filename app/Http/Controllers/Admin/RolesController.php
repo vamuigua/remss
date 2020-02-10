@@ -120,10 +120,19 @@ class RolesController extends Controller
         return redirect('admin/roles')->with('flash_message', 'Role deleted!');
     }
 
-    public function assign(){
-        $users = User::all();
-        $roles = Role::all();
-        return view('admin.roles.users', compact('users','roles'));
+    public function assign(Request $request){
+        $keyword = $request->get('search');
+        $perPage = 10;
+
+        if (!empty($keyword)) {
+            $users = User::where('name', 'LIKE', "%$keyword%")
+                ->orWhere('email', 'LIKE', "%$keyword%")
+                ->latest()->paginate($perPage);
+        } else {
+            $users = User::latest()->paginate($perPage);
+        }
+
+        return view('admin.roles.users', compact('users'));
     }
 
     public function assignRoles(Request $request)
