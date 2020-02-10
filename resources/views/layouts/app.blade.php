@@ -72,6 +72,12 @@
             </div>
         </nav>
 
+        @if(session()->has('flash_message'))
+            <div class="alert alert-success" role="alert">
+                <strong>Success</strong> {{ session()->get('flash_message')}}
+            </div>
+        @endif
+        
         <main class="py-4">
             @yield('content')
         </main>

@@ -21,7 +21,12 @@ class TenantsController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $tenants = Tenant::where('firstname', 'LIKE', "%$keyword%")
+            $tenants = Tenant::where('surname', 'LIKE', "%$keyword%")
+                ->orWhere('other_names', 'LIKE', "%$keyword%")
+                ->orWhere('gender', 'LIKE', "%$keyword%")
+                ->orWhere('national_id', 'LIKE', "%$keyword%")
+                ->orWhere('phone_no', 'LIKE', "%$keyword%")
+                ->orWhere('email', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $tenants = Tenant::latest()->paginate($perPage);
@@ -37,7 +42,8 @@ class TenantsController extends Controller
      */
     public function create()
     {
-        return view('admin.tenants.create');
+        $tenant = new Tenant();
+        return view('admin.tenants.create', compact('tenant'));
     }
 
     /**
@@ -48,11 +54,8 @@ class TenantsController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
-    {
-        
-        $requestData = $request->all();
-        
-        Tenant::create($requestData);
+    {   
+        Tenant::create($this->validateRequest($request));
 
         return redirect('admin/tenants')->with('flash_message', 'Tenant added!');
     }
@@ -95,11 +98,8 @@ class TenantsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $requestData = $request->all();
-        
         $tenant = Tenant::findOrFail($id);
-        $tenant->update($requestData);
+        $tenant->update($this->validateRequest($request));
 
         return redirect('admin/tenants')->with('flash_message', 'Tenant updated!');
     }
@@ -116,5 +116,16 @@ class TenantsController extends Controller
         Tenant::destroy($id);
 
         return redirect('admin/tenants')->with('flash_message', 'Tenant deleted!');
+    }
+
+    public function validateRequest(Request $request){
+        return $request->validate([
+            'surname' => 'required',
+            'other_names' => 'required',
+            'gender' => 'required',
+            'national_id' => 'required',
+            'phone_no' => 'required|max:12',
+            'email' => 'required|email'
+        ]);
     }
 }

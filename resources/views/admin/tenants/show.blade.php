@@ -27,7 +27,7 @@
                                     <tr>
                                         <th>ID</th><td>{{ $tenant->id }}</td>
                                     </tr>
-                                    <tr><th> Firstname </th><td> {{ $tenant->firstname }} </td></tr>
+                                    <tr><th> Surname </th><td> {{ $tenant->surname }} </td></tr><tr><th> Other Names </th><td> {{ $tenant->other_names }} </td></tr><tr><th> Gender </th><td> {{ $tenant->gender }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
