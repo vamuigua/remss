@@ -21,6 +21,7 @@ class CreateTenantsTable extends Migration
             $table->string('national_id')->unique();
             $table->string('phone_no');
             $table->string('email')->unique();
+            $table->string('image')->nullable();
         });
     }
 

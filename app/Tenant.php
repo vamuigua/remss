@@ -25,7 +25,7 @@ class Tenant extends Model
      *
      * @var array
      */
-    protected $fillable = ['surname', 'other_names', 'gender', 'national_id', 'phone_no', 'email'];
+    protected $fillable = ['surname', 'other_names', 'gender', 'national_id', 'phone_no', 'email', 'image'];
 
     public function genderOptions(){
         return [

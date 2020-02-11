@@ -32,6 +32,11 @@
     <input class="form-control" name="email" type="text" id="email" value="{{ old('email') ?? $tenant->email }}" >
     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group {{ $errors->has('image') ? 'has-error' : ''}}">
+    <label for="image" class="control-label">{{ 'Image' }}</label>
+    <input class="form-control" name="image" type="file" id="image" value="{{ isset($post->image) ? $post->image : ''}}" >
+    {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
+</div>
 
 
 <div class="form-group">

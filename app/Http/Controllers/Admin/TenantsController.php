@@ -55,7 +55,18 @@ class TenantsController extends Controller
      */
     public function store(Request $request)
     {   
-        Tenant::create($this->validateRequest($request));
+        $validatedData = $this->validateRequest($request);
+
+        if ($request->hasFile('image')) {
+            $img_filePath = $request->file('image')->store('uploads/tenants_img', 'public');
+
+            Tenant::create(array_merge(
+                $validatedData,
+                ['image' => $img_filePath]
+            ));
+        }else{
+            Tenant::create($validatedData);
+        }
 
         return redirect('admin/tenants')->with('flash_message', 'Tenant added!');
     }
@@ -98,8 +109,20 @@ class TenantsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $this->validateRequest($request);
         $tenant = Tenant::findOrFail($id);
-        $tenant->update($this->validateRequest($request));
+
+        if ($request->hasFile('image')) {
+            $img_filePath = $request->file('image')->store('uploads/tenants_img', 'public');
+
+            $tenant->update(array_merge(
+                $validatedData,
+                ['image' => $img_filePath]
+            ));
+
+        }else{
+            $tenant->update($validatedData);
+        }
 
         return redirect('admin/tenants')->with('flash_message', 'Tenant updated!');
     }
@@ -125,7 +148,8 @@ class TenantsController extends Controller
             'gender' => 'required',
             'national_id' => 'required',
             'phone_no' => 'required|max:12',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'image' => 'image',
         ]);
     }
 }
