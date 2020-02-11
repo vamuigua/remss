@@ -93,15 +93,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-home nav-icon"></i>
-                  <p>Houses</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="/admin/tenants" class="nav-link">
                   <i class="fas fa-user nav-icon"></i>
                   <p>Tenants</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="fas fa-home nav-icon"></i>
+                  <p>Houses</p>
                 </a>
               </li>
               <li class="nav-item has-treeview">
@@ -192,7 +192,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/home">Home</a></li>
-              <li class="breadcrumb-item active">Admin Page</li>
+              <li class="breadcrumb-item active">Admin Dashboard</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->

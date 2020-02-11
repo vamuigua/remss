@@ -28,6 +28,9 @@
                                     <tr><th> Surname </th><td> {{ $tenant->surname }} </td></tr>
                                     <tr><th> Other Names </th><td> {{ $tenant->other_names }} </td></tr>
                                     <tr><th> Gender </th><td> {{ $tenant->gender }} </td></tr>
+                                    <tr><th> National ID </th><td> {{ $tenant->national_id }} </td></tr>
+                                    <tr><th> Mobile No. </th><td> {{ $tenant->phone_no }} </td></tr>
+                                    <tr><th> Email </th><td> {{ $tenant->email }} </td></tr>
                                     <tr><th> Tenant Photo: </th><td> <img src="{{$tenant->tenantImage()}}" alt="tenantImage"> </td></tr>
                                 </tbody>
                             </table>
