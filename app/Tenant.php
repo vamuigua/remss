@@ -33,4 +33,8 @@ class Tenant extends Model
             'female' => 'Female',
         ];
     }
+
+    public function tenantImage(){
+        return ($this->image) ? '/storage/' . $this->image : '/img/no-image-available.png'; 
+    }
 }

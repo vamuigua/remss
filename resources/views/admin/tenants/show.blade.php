@@ -28,7 +28,7 @@
                                     <tr><th> Surname </th><td> {{ $tenant->surname }} </td></tr>
                                     <tr><th> Other Names </th><td> {{ $tenant->other_names }} </td></tr>
                                     <tr><th> Gender </th><td> {{ $tenant->gender }} </td></tr>
-                                    <tr><th> Tenant Photo: </th><td> <img src="/storage/{{$tenant->image}}" alt="tenant_photo"> </td></tr>
+                                    <tr><th> Tenant Photo: </th><td> <img src="{{$tenant->tenantImage()}}" alt="tenantImage"> </td></tr>
                                 </tbody>
                             </table>
                         </div>
