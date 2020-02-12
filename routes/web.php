@@ -27,7 +27,8 @@ Route::middleware(['roles:Admin'])->group(function () {
         'uses' => 'AdminController@index',
         'as' => 'admin.dashboard'
     ]);
-
+    
+    Route::resource('admin/houses', 'Admin\\HousesController');
     Route::resource('admin/tenants', 'Admin\\TenantsController');
 
     Route::get('/admin/roles/assign', [

@@ -27,14 +27,14 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                         <div class="inner">
-                        <h3>{{$tenants->count()}}</h3>
+                        <h3>{{$houses->count()}}</h3>
 
                             <p>Houses <i class="fas fa-home"></i></p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="/admin/houses" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
