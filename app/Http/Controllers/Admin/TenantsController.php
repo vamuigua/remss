@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use App\Tenant;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class TenantsController extends Controller
 {
@@ -62,6 +63,10 @@ class TenantsController extends Controller
 
         if ($request->hasFile('image')) {
             $img_filePath = $request->file('image')->store('uploads/tenants_img', 'public');
+
+            //resize uploaded tenant image
+            $image = Image::make(public_path("storage/{$img_filePath}"))->fit(200, 200);
+            $image->save();
 
             Tenant::create(array_merge(
                 $validatedData,
@@ -117,6 +122,10 @@ class TenantsController extends Controller
 
         if ($request->hasFile('image')) {
             $img_filePath = $request->file('image')->store('uploads/tenants_img', 'public');
+
+            //resize uploaded tenant image
+            $image = Image::make(public_path("storage/{$img_filePath}"))->fit(200, 200);
+            $image->save();
 
             $tenant->update(array_merge(
                 $validatedData,

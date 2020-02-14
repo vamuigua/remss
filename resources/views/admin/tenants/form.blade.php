@@ -34,7 +34,10 @@
 </div>
 <div class="form-group {{ $errors->has('image') ? 'has-error' : ''}}">
     <label for="image" class="control-label">{{ 'Image' }}</label>
-    <input class="form-control" name="image" type="file" id="image" value="{{ isset($post->image) ? $post->image : ''}}" >
+    <input class="form-control" name="image" type="file" id="image" value="{{ isset($tenant->image) ? $tenant->image : ''}}" >
+    <div class="mt-2">
+        <p><b>Current Tenant Photo:</b></p><img src="{{$tenant->tenantImage()}}" alt="tenantImage">
+    </div>
     {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
 </div>
 
