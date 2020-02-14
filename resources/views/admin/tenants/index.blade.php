@@ -9,10 +9,89 @@
                 <div class="card">
                     <div class="card-header">Tenants</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/tenants/create') }}" class="btn btn-success btn-sm" title="Add New Tenant">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
+                        <div>
+                            <a href="{{ url('/admin/tenants/create') }}" class="btn btn-success btn-sm my-2" title="Add New Tenant">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Add New Tenant
+                            </a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Import & Export Excel
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">TENANTS: Import & Export Excel</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group {{ $errors->has('excel_format') ? 'has-error' : ''}}">
+                                        <form method="GET" action="{{ route('tenants.exportTenantsData') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <label for="excel_format" class="control-label">{{ 'Download Tenant Details to Excel' }}</label>
+                                            <select name="excel_format" class="form-control" id="excel_format">
+                                                <option value="xlsx">Excel xlsx</option>
+                                                <option value="xls">Excel xls</option>
+                                                <option value="csv">Excel CSV</option>
+                                            </select>
+                                            <button class="btn btn-primary my-3">Export to Excel</button>
+                                        </form>
+                                    </div>
+                                    
+                                    <form  method="POST" action="{{ route('tenants.importTenantsData') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <div class="form-group {{ $errors->has('import_file') ? 'has-error' : ''}}">
+                                            <label for="import_file" class="control-label">{{ 'Import Tenant Details Excel File ' }} <i>(.xlsx, .xls or .csv only)</i>:</label>
+                                            <br>
+                                            <input accept=".xlsx, .xls, .csv" type="file" name="import_file" />
+                                            <button class="btn btn-primary">Import Excel File</button>
+                                            {!! $errors->first('import_file', '<p class="help-block">:message</p>') !!}
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
 
+                        @if ($errors->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+
+                        {{-- <div class="form-group {{ $errors->has('excel_format') ? 'has-error' : ''}}">
+                            <form method="GET" action="{{ route('tenants.exportTenantsData') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <label for="excel_format" class="control-label">{{ 'Download Tenant Details to Excel' }}</label>
+                                <select name="excel_format" class="form-control" id="excel_format">
+                                    <option value="xlsx">Excel xlsx</option>
+                                    <option value="xls">Excel xls</option>
+                                    <option value="csv">Excel CSV</option>
+                                </select>
+                                <button class="btn btn-primary my-3">Export to Excel</button>
+                            </form>
+                        </div>
+                        
+                        <form  method="POST" action="{{ route('tenants.importTenantsData') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="form-group {{ $errors->has('import_file') ? 'has-error' : ''}}">
+                                <label for="import_file" class="control-label">{{ 'Import Tenant Details Excel File ' }} <i>(.xlsx, .xls or .csv only)</i>:</label>
+                                <br>
+                                <input accept=".xlsx, .xls, .csv" type="file" name="import_file" />
+                                <button class="btn btn-primary">Import Excel File</button>
+                                {!! $errors->first('import_file', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </form> --}}
+                        
                         <form method="GET" action="{{ url('/admin/tenants') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">

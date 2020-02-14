@@ -10,7 +10,7 @@
 </div>
 <div class="form-group {{ $errors->has('gender') ? 'has-error' : ''}}">
     <label for="gender" class="control-label">{{ 'Gender' }}</label>
-    <select name="gender" class="form-control" id="gender" >
+    <select name="gender" class="form-control" id="gender">
         @foreach ($tenant->genderOptions() as $optionKey => $optionValue)
             <option value="{{ $optionKey }}" {{ (isset($tenant->gender) && $tenant->gender == $optionKey) ? 'selected' : ''}}>{{ $optionValue }}</option>
         @endforeach

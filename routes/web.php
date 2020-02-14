@@ -29,6 +29,17 @@ Route::middleware(['roles:Admin'])->group(function () {
     ]);
     
     Route::resource('admin/houses', 'Admin\\HousesController');
+
+    Route::post('admin/tenants/importData', [
+        'uses' => 'Admin\\TenantsController@importTenantsData',
+        'as' => 'tenants.importTenantsData'
+    ]);
+
+    Route::get('admin/tenants/exportData', [
+        'uses' => 'Admin\\TenantsController@exportTenantsData',
+        'as' => 'tenants.exportTenantsData'
+    ]);
+
     Route::resource('admin/tenants', 'Admin\\TenantsController');
 
     Route::get('/admin/roles/assign', [

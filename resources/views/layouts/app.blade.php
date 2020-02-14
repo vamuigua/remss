@@ -72,9 +72,23 @@
             </div>
         </nav>
 
+        {{-- Success Alert --}}
         @if(session()->has('flash_message'))
             <div class="alert alert-success" role="alert">
-                <strong>Success</strong> {{ session()->get('flash_message')}}
+                <strong>Success:</strong> {{ session()->get('flash_message')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        {{-- Error/Danger Alert --}}
+        @if(session()->has('flash_message_error'))
+            <div class="alert alert-danger" role="alert">
+                <strong>Error:</strong> {{ session()->get('flash_message_error')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         @endif
         

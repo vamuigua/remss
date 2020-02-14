@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Imports\TenantsImport;
+use App\Exports\TenantsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Tenant;
 use Illuminate\Http\Request;
@@ -141,6 +144,7 @@ class TenantsController extends Controller
         return redirect('admin/tenants')->with('flash_message', 'Tenant deleted!');
     }
 
+    // Validates Tenant Request Details
     public function validateRequest(Request $request){
         return $request->validate([
             'surname' => 'required',
@@ -151,5 +155,27 @@ class TenantsController extends Controller
             'email' => 'required|email',
             'image' => 'image',
         ]);
+    }
+
+    // Validates & Imports Tenant Excel Files
+    public function importTenantsData(Request $request) 
+    {
+        $request->validate(['import_file' => 'required|file']);
+        $extension = $request->file('import_file')->getClientOriginalExtension();
+
+        if($extension === "xlsx" || $extension === "xls" || $extension === "csv"){
+            Excel::import(new TenantsImport, $request->file('import_file'));
+            
+            return redirect('admin/tenants')->with('flash_message', 'Tenants Imported...All good!');
+        }else {
+            return redirect('admin/tenants')->with('flash_message_error', 'Uploaded File is of wrong format! Must be either: .xlsx, .xls or .csv Excel file');
+        }
+    }
+
+    // Exports all Tenant Details from the Database
+    public function exportTenantsData(Request $request) 
+    {
+        $format = $request['excel_format'];
+        return Excel::download(new TenantsExport, 'Tenants.' . $format);
     }
 }
