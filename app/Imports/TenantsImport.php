@@ -4,8 +4,11 @@ namespace App\Imports;
 
 use App\Tenant;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class TenantsImport implements ToModel
+class TenantsImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading
 {
     /**
     * @param array $row
@@ -15,12 +18,21 @@ class TenantsImport implements ToModel
     public function model(array $row)
     {
         return new Tenant([
-            'surname' => $row[0],
-            'other_names' => $row[1], 
-            'gender' => $row[2],
-            'national_id' => $row[3],
-            'phone_no' => $row[4],
-            'email' => $row[5],
+            'surname' => $row['surname'],
+            'other_names' => $row['other_names'], 
+            'gender' => $row['gender'],
+            'national_id' => $row['national_id'],
+            'phone_no' => $row['phone_no'],
+            'email' => $row['email'],
         ]);
+    }
+     public function batchSize(): int
+    {
+        return 1000;
+    }
+    
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 }

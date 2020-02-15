@@ -169,15 +169,17 @@ class TenantsController extends Controller
     // Validates & Imports Tenant Excel Files
     public function importTenantsData(Request $request) 
     {
-        $request->validate(['import_file' => 'required|file']);
+        $request->validate([
+            'import_file' => 'required|mimes:xlsx, xls, csv'
+        ]);
+        
         $extension = $request->file('import_file')->getClientOriginalExtension();
 
         if($extension === "xlsx" || $extension === "xls" || $extension === "csv"){
             Excel::import(new TenantsImport, $request->file('import_file'));
-            
             return redirect('admin/tenants')->with('flash_message', 'Tenants Imported...All good!');
         }else {
-            return redirect('admin/tenants')->with('flash_message_error', 'Uploaded File is of wrong format! Must be either: .xlsx, .xls or .csv Excel file');
+            return redirect('admin/tenants')->with('flash_message_error', 'Failed to Import upload file!');
         }
     }
 
