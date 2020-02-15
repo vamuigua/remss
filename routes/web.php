@@ -27,6 +27,16 @@ Route::middleware(['roles:Admin'])->group(function () {
         'uses' => 'AdminController@index',
         'as' => 'admin.dashboard'
     ]);
+
+    Route::post('admin/houses/importData', [
+        'uses' => 'Admin\\HousesController@importHousesData',
+        'as' => 'houses.importHousesData'
+    ]);
+
+    Route::get('admin/houses/exportData', [
+        'uses' => 'Admin\\HousesController@exportHousesData',
+        'as' => 'houses.exportHousesData'
+    ]);
     
     Route::resource('admin/houses', 'Admin\\HousesController');
 

@@ -9,9 +9,65 @@
                 <div class="card">
                     <div class="card-header">Houses</div>
                     <div class="card-body">
+                    <div class="my-2">
                         <a href="{{ url('/admin/houses/create') }}" class="btn btn-success btn-sm" title="Add New House">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
+                        <!-- Import & Export Houses Excel Button trigger modal -->
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#import_export_modal">
+                            Import & Export Excel
+                        </button>
+                    </div>
+                        <!-- Import & Export Houses Excel Modal -->
+                        <div class="modal fade" id="import_export_modal" tabindex="-1" role="dialog" aria-labelledby="ImportExportModal" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ImportExportExcel">HOUSES: Import & Export Excel</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group {{ $errors->has('excel_format') ? 'has-error' : ''}}">
+                                        <form method="GET" action="{{ route('houses.exportHousesData') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <label for="excel_format" class="control-label">{{ 'Download House Details to Excel' }}</label>
+                                            <select name="excel_format" class="form-control" id="excel_format">
+                                                <option value="xlsx">Excel xlsx</option>
+                                                <option value="xls">Excel xls</option>
+                                                <option value="csv">Excel CSV</option>
+                                            </select>
+                                            <button class="btn btn-primary my-3">Export to Excel</button>
+                                        </form>
+                                    </div>
+                                    
+                                    <form  method="POST" action="{{ route('houses.importHousesData') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <div class="form-group {{ $errors->has('import_file') ? 'has-error' : ''}}">
+                                            <label for="import_file" class="control-label">{{ 'Import House Details Excel File ' }} <i>(.xlsx, .xls or .csv only)</i>:</label>
+                                            <br>
+                                            <input accept=".xlsx, .xls, .csv" type="file" name="import_file" />
+                                            <button class="btn btn-primary">Import Excel File</button>
+                                            {!! $errors->first('import_file', '<p class="help-block">:message</p>') !!}
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Errors Panel --}}
+                        @if ($errors->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
 
                         <form method="GET" action="{{ url('/admin/houses') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
                             <div class="input-group">

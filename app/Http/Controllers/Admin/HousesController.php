@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Imports\HousesImport;
+use App\Exports\HousesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\House;
 use Illuminate\Http\Request;
@@ -133,5 +136,29 @@ class HousesController extends Controller
             'water_meter_no' => 'required',
             'electricity_meter_no' => 'required'
         ]);
+    }
+
+    // Validates & Imports House Excel Files
+    public function importHousesData(Request $request) 
+    {
+        $request->validate([
+            'import_file' => 'required|mimes:xlsx, xls, csv'
+        ]);
+        
+        $extension = $request->file('import_file')->getClientOriginalExtension();
+
+        if($extension === "xlsx" || $extension === "xls" || $extension === "csv"){
+            Excel::import(new HousesImport, $request->file('import_file'));
+            return redirect('admin/houses')->with('flash_message', 'Houses Imported...All good!');
+        }else {
+            return redirect('admin/houses')->with('flash_message_error', 'Failed to Import upload file!');
+        }
+    }
+
+     // Exports all House Details from the Database
+    public function exportHousesData(Request $request) 
+    {
+        $format = $request['excel_format'];
+        return Excel::download(new HousesExport, 'Houses.' . $format);
     }
 }

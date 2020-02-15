@@ -2,13 +2,13 @@
 
 namespace App\Imports;
 
-use App\Tenant;
+use App\House;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class TenantsImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading
+class HousesImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading
 {
     /**
     * @param array $row
@@ -17,13 +17,13 @@ class TenantsImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
     */
     public function model(array $row)
     {
-        return new Tenant([
-            'surname' => $row['surname'],
-            'other_names' => $row['other_names'], 
-            'gender' => $row['gender'],
-            'national_id' => $row['national_id'],
-            'phone_no' => $row['phone_no'],
-            'email' => $row['email'],
+        return new House([
+            'house_no' => $row['house_no'],
+            'features' => $row['features'], 
+            'rent' => $row['rent'],
+            'status' => $row['status'],
+            'water_meter_no' => $row['water_meter_no'],
+            'electricity_meter_no' => $row['electricity_meter_no'],
         ]);
     }
 
