@@ -1,17 +1,24 @@
 <div class="col-md-3">
     <div class="card">
         <div class="card-header">
-            Sidebar
+            Go To:
         </div>
-
-        <div class="card-body">
-            <ul class="nav" role="tablist">
-                <li role="presentation">
-                    <a href="{{ url('/admin/dashboard') }}">
-                        Dashboard
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <a href="{{ url('/admin/dashboard') }}">
+                    Dashboard
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url('/admin/tenants') }}">
+                    Tenants
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url('/admin/houses') }}">
+                    Houses
+                </a>
+            </li>
+        </ul>
     </div>
 </div>

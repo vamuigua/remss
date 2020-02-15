@@ -33,4 +33,12 @@ class House extends Model
             'occipied' => 'Occupied'
         ];
     }
+
+    /**
+     * Get the tenant that owns the house.
+     */
+    public function tenant()
+    {
+        return $this->belongsTo('App\Tenant');
+    }
 }

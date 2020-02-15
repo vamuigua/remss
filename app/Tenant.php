@@ -37,4 +37,12 @@ class Tenant extends Model
     public function tenantImage(){
         return ($this->image) ? '/storage/' . $this->image : '/img/no-image-available.png'; 
     }
+
+    /**
+     * Get the house record associated with the tenant.
+     */
+    public function house()
+    {
+        return $this->hasOne('App\House');
+    }
 }
