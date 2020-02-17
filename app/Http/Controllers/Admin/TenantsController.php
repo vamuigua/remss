@@ -9,6 +9,7 @@ use App\Exports\TenantsExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Tenant;
+use App\House;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -89,8 +90,10 @@ class TenantsController extends Controller
     public function show($id)
     {
         $tenant = Tenant::findOrFail($id);
+        $has_house = $tenant->house; 
+        $houses = House::all();
 
-        return view('admin.tenants.show', compact('tenant'));
+        return view('admin.tenants.show', compact('tenant', 'houses', 'has_house'));
     }
 
     /**
@@ -188,5 +191,43 @@ class TenantsController extends Controller
     {
         $format = $request['excel_format'];
         return Excel::download(new TenantsExport, 'Tenants.' . $format);
+    }
+
+    //assigns a house to a tenant
+    public function assignHouse(Request $request)
+    {
+        $validatedData = $request->validate([
+            'tenant_id' => 'required',
+            'house_no' => 'required'
+        ]);
+
+        $tenant_id = $validatedData['tenant_id'];
+        $house_no = $validatedData['house_no'];
+
+        $current_tenant = Tenant::where('id', $tenant_id)->first();
+        $house = House::where('house_no', $house_no)->first();
+
+        //assign house to tenant
+        if ($house->status === 'vacant') {
+            $house->tenant_id = $tenant_id;
+            $house->status = 'occipied';
+
+            //check if the current tenant had was assigned a house previously
+            if($current_tenant->house !== null){
+                $current_tenant->house->status = 'vacant';
+                $current_tenant->house->tenant_id = null;
+                $current_tenant->house->save();
+            }
+            
+            $house->save();
+            
+            return redirect('admin/tenants/' . $tenant_id)->with('flash_message', 'Tenant Successfully assigned House No: ' . $house_no);
+        }elseif ($house->status === 'occipied') {
+            return redirect('admin/tenants/' . $tenant_id)->with('flash_message_error', 'House No: ' . $house_no . ' is currently Occupied! Please select a vacant house');
+        }
+    }
+
+    public function revokeHouse(Request $request){
+        dd('Revoke House');
     }
 }

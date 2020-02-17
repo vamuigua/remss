@@ -40,6 +40,17 @@ Route::middleware(['roles:Admin'])->group(function () {
     
     Route::resource('admin/houses', 'Admin\\HousesController');
 
+
+    Route::post('/admin/tenants/assignHouse', [
+        'uses' => 'Admin\\TenantsController@assignHouse',
+        'as' => 'tenants.assignHouse'
+    ]);
+
+    Route::post('admin/tenants/revokeHouse', [
+        'uses' => 'Admin\\TenantsController@revokeHouse',
+        'as' => 'tenants.revokeHouse'
+    ]);
+
     Route::post('admin/tenants/importData', [
         'uses' => 'Admin\\TenantsController@importTenantsData',
         'as' => 'tenants.importTenantsData'
