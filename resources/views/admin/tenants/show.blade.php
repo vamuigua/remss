@@ -49,6 +49,7 @@
                                                     </button>
                                                     <form method="POST" action="{{ route('tenants.revokeHouse') }}" accept-charset="UTF-8">
                                                         {{ csrf_field() }}
+                                                        <input type="hidden" name="tenant_id" value="{{ $tenant->id }}">
                                                         <button type="submit" class="btn btn-danger btn-sm" title="Revoke Assigned House" onclick="return confirm(&quot;Confirm Revoke Assigned House?&quot;)"><i class="fa fa-trash" aria-hidden="true"></i> Revoke Assigned House</button>
                                                     </form>
                                                 </div>

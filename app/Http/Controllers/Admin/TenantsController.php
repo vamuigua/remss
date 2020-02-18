@@ -151,6 +151,15 @@ class TenantsController extends Controller
      */
     public function destroy($id)
     {
+        //check if tenant of $id is occupying a house
+        $house = House::where('tenant_id', $id)->first();
+        
+        if ($house !== null) {
+            $house->tenant_id = null;
+            $house->status = 'vacant';
+            $house->save();
+        }
+        
         Tenant::destroy($id);
 
         return redirect('admin/tenants')->with('flash_message', 'Tenant deleted!');
@@ -221,13 +230,31 @@ class TenantsController extends Controller
             
             $house->save();
             
-            return redirect('admin/tenants/' . $tenant_id)->with('flash_message', 'Tenant Successfully assigned House No: ' . $house_no);
+            return back()->with('flash_message', 'Tenant Successfully assigned House No: ' . $house_no);
         }elseif ($house->status === 'occipied') {
-            return redirect('admin/tenants/' . $tenant_id)->with('flash_message_error', 'House No: ' . $house_no . ' is currently Occupied! Please select a vacant house');
+            return back()->with('flash_message_error', 'House No: ' . $house_no . ' is currently Occupied! Please select a vacant house');
         }
     }
 
+    //function to revoke a House from a Tenant
     public function revokeHouse(Request $request){
-        dd('Revoke House');
+
+        $validatedData = $request->validate([
+            'tenant_id' => 'required'
+        ]);
+
+        $tenant_id = $validatedData['tenant_id'];
+
+        $house = House::where('tenant_id', $tenant_id)->first();
+        
+        if ($house !== null) {
+            $house->tenant_id = null;
+            $house->status = 'vacant';
+            $house->save();
+            return back()->with('flash_message', 'Tenant Successfully revoked House No: ' . $house->house_no);
+        }else{
+             return back()->with('flash_message_error', 'Tenant does not have an assigned House!');
+        }
+
     }
 }
