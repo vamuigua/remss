@@ -73,5 +73,6 @@ Route::middleware(['roles:Admin'])->group(function () {
         'as' => 'roles.assignRoles'
     ]);
     
+    Route::resource('admin/invoices', 'Admin\\InvoicesController');
     Route::resource('admin/roles', 'Admin\\RolesController');
 });

@@ -10,11 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <title>Admin Panel</title>
-
-  <!-- Font Awesome Icons -->
-  <!-- <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css"> -->
-  <!-- Theme style -->
-  <!-- <link rel="stylesheet" href="dist/css/adminlte.min.css"> -->
+  {{-- All CSS Compiled Assets --}}
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -102,6 +98,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="/admin/houses" class="nav-link">
                   <i class="fas fa-home nav-icon"></i>
                   <p>Houses</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/invoices" class="nav-link">
+                  <i class="fas fa-file-invoice nav-icon"></i>
+                  <p>Invoices</p>
                 </a>
               </li>
               <li class="nav-item has-treeview">
@@ -223,13 +225,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-
-<!-- jQuery -->
-<!-- <script src="plugins/jquery/jquery.min.js"></script> -->
-<!-- Bootstrap 4 -->
-<!-- <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script> -->
-<!-- AdminLTE App -->
-<!-- <script src="dist/js/adminlte.min.js"></script> -->
- <script src="{{ asset('js/app.js') }}"></script>
 </body>
+ @stack('scripts')
+<script src="{{ asset('js/app.js') }}"></script>
 </html>

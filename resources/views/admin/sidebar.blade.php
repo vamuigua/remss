@@ -19,6 +19,11 @@
                     Houses
                 </a>
             </li>
+            <li class="list-group-item">
+                <a href="{{ url('/admin/invoices') }}">
+                    Invoices
+                </a>
+            </li>
         </ul>
     </div>
 </div>
