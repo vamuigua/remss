@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Faker\Factory;
 use App\Invoice;
 use App\InvoiceProduct;
+use App\Tenant; 
 
 class InvoiceTableSeeder extends Seeder
 {
@@ -14,6 +15,11 @@ class InvoiceTableSeeder extends Seeder
      */
     public function run()
     {
+        $tenant_a = Tenant::where('id', '1')->first();
+        $tenant_b = Tenant::where('id', '2')->first();
+        $array_names = array($tenant_a->surname, $tenant_b->surname);
+        $array_address = array($tenant_a->email, $tenant_b->email);
+
         $faker = Factory::create();
 
         Invoice::truncate();
@@ -38,8 +44,9 @@ class InvoiceTableSeeder extends Seeder
             $total = $subTotal - $discount;
 
             $invoice = Invoice::create([
-                'client' => $faker->name,
-                'client_address' => $faker->address,
+                'tenant_id' => $faker->numberBetween($tenant_a->id, $tenant_b->id),
+                'client' => $faker->randomElement($array_names),
+                'client_address' => $faker->randomElement($array_address),
                 'title' => $faker->sentence,
                 'invoice_no' => $faker->numberBetween(1000, 2000),
                 'invoice_date' => $faker->date(),

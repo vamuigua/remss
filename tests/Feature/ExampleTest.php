@@ -1,4 +1,4 @@
-<?php
+ExampleTest.php<?php
 
 namespace Tests\Feature;
 

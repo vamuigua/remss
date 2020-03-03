@@ -116,19 +116,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
+                    <a href="/admin/payments" class="nav-link">
+                      <i class="nav-icon fas fa-money-check-alt"></i>
+                      <p>All Payments</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
                     <a href="#" class="nav-link">
+                       <i class="fas fa-dollar-sign"></i>
                       <i class="fas fa-home nav-icon"></i>
                       <p>Rent</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="#" class="nav-link">
+                       <i class="fas fa-dollar-sign"></i>
                       <i class="fas fa-bolt nav-icon"></i>
                       <p>Electricity</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="#" class="nav-link">
+                       <i class="fas fa-dollar-sign"></i>
                       <i class="fas fa-water nav-icon"></i>
                       <p>Water</p>
                     </a>
@@ -226,6 +235,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED SCRIPTS -->
 </body>
- @stack('scripts')
+@stack('scripts')
 <script src="{{ asset('js/app.js') }}"></script>
 </html>

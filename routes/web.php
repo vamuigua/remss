@@ -73,6 +73,12 @@ Route::middleware(['roles:Admin'])->group(function () {
         'as' => 'roles.assignRoles'
     ]);
     
+    Route::post('/admin/payments/getInvoiceBalance', [
+        'uses' => 'Admin\\PaymentsController@getInvoiceBalance',
+        'as' => 'payments.getInvoiceBalance'
+    ]);
+
     Route::resource('admin/invoices', 'Admin\\InvoicesController');
+    Route::resource('admin/payments', 'Admin\\PaymentsController');
     Route::resource('admin/roles', 'Admin\\RolesController');
 });

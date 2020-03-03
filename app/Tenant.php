@@ -45,4 +45,14 @@ class Tenant extends Model
     {
         return $this->hasOne('App\House');
     }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div class="col-md-2">
     <div class="card">
         <div class="card-header">
             Go To:
@@ -22,6 +22,11 @@
             <li class="list-group-item">
                 <a href="{{ url('/admin/invoices') }}">
                     Invoices
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url('/admin/payments') }}">
+                    Payments
                 </a>
             </li>
         </ul>

@@ -96,6 +96,32 @@
                     </tr>
                 </tfoot>
             </table>
+            {{-- INVOICE PAYMENTS --}}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th><th>Payment No.</th><th>Amount Paid</th><th>Balance</th><th>Tenant</th><th>Payment Date</th><th>Payment Type</th><th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ($invoice->payments()->count() > 0)
+                        @foreach($invoice->payments as $payment)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $payment->payment_no }}</td>
+                                <td>{{ $payment->amount_paid }}</td>
+                                <td>{{ $payment->balance }}</td>
+                                <td>{{ $payment->tenant->surname }}</td>
+                                <td>{{ $payment->payment_date }}</td>
+                                <td>{{ $payment->payment_type }}</td>
+                                <td><a href="{{ url('/admin/payments/' . $payment->id) }}" title="View Payment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a></td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <b>NO PAYMENTS FOR THIS INVOICE!</b>
+                    @endif
+                </tbody>       
+            </table>
         </div>
     </div>
 @endsection
