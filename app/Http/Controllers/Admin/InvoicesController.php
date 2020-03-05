@@ -141,4 +141,10 @@ class InvoicesController extends Controller
         return redirect()
             ->route('invoices.index');
     }
+
+    public function print_invoice($id)
+    {
+        $invoice = Invoice::with('products')->findOrFail($id);
+        return view('admin.invoices.print_invoice', compact('invoice'));
+    }
 }

@@ -78,6 +78,11 @@ Route::middleware(['roles:Admin'])->group(function () {
         'as' => 'payments.getInvoiceBalance'
     ]);
 
+    Route::get('/admin/invoices/print_invoice/{invoice}',[
+        'uses' => 'Admin\\InvoicesController@print_invoice',
+        'as' => 'invoices.print_invoice'
+    ]);
+
     Route::resource('admin/invoices', 'Admin\\InvoicesController');
     Route::resource('admin/payments', 'Admin\\PaymentsController');
     Route::resource('admin/roles', 'Admin\\RolesController');

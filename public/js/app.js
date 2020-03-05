@@ -49157,6 +49157,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! bootstrap-select */ "./node_modules/bootstrap-select/dist/js/bootstrap-select.js");
 
 __webpack_require__(/*! summernote */ "./node_modules/summernote/dist/summernote.js"); // window.Vue = require('vue');
+// require('vue');
 // require('vue-resource');
 
 
