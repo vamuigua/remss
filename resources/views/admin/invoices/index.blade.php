@@ -29,7 +29,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{$invoice->invoice_no}}</td>
                             <td>KSH. {{$invoice->grand_total}}</td>
-                            <td>{{$invoice->client}}</td>
+                            <td>{{$invoice->tenant->surname}} {{$invoice->tenant->other_names}}</td>
                             <td>{{$invoice->invoice_date}}</td>
                             <td>{{$invoice->due_date}}</td>
                             <td>{{$invoice->created_at->diffForHumans()}}</td>

@@ -18,9 +18,14 @@
                             {{ csrf_field() }}
                             <button type="submit" class="btn btn-danger btn-sm" title="Delete Payment" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                         </form>
-                        <br/>
-                        <br/>
 
+                        <div class="float-right">
+                            <a href="{{route('payments.print_receipt', $payment)}}" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print Receipt</a>
+                        </div>
+                        
+                        <br/>
+                        <br/>
+                        
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
@@ -33,6 +38,7 @@
                                     </tr>
                                     <tr><th> Payment Type </th><td> {{ $payment->payment_type }} </td></tr>
                                     <tr><th> Payment Date </th><td> {{ $payment->payment_date }} </td></tr>
+                                    <tr><th> Previous Balance </th><td> {{ $payment->prev_balance }} </td></tr>
                                     <tr><th> Amount Paid </th><td> {{ $payment->amount_paid }} </td></tr>
                                     <tr><th> Balance </th><td> {{ $payment->balance }} </td></tr>
                                     <tr><th> Comments </th><td> {{ $payment->comments }} </td></tr>

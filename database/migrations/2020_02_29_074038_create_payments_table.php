@@ -20,6 +20,7 @@ class CreatePaymentsTable extends Migration
             $table->string('payment_type')->nullable();
             $table->date('payment_date')->nullable();
             $table->string('payment_no')->nullable()->unique();
+            $table->decimal('prev_balance')->nullable();
             $table->decimal('amount_paid')->nullable();
             $table->decimal('balance')->nullable();
             $table->string('comments')->nullable();

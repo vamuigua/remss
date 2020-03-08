@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Invoice;
 use App\InvoiceProduct;
+use App\Tenant;
 use PDF;
 
 class InvoicesController extends Controller
@@ -22,7 +23,9 @@ class InvoicesController extends Controller
 
     public function create()
     {
-        return view('admin.invoices.create');
+        $tenants = Tenant::all();
+        $invoice = new Invoice();
+        return view('admin.invoices.create', compact('tenants','invoice'));
     }
 
     public function store(Request $request)
@@ -30,8 +33,9 @@ class InvoicesController extends Controller
         // validate request from create form
         $this->validate($request, [
             'invoice_no' => 'required|alpha_dash|unique:invoices',
-            'client' => 'required|max:255',
+            'tenant_id' => 'required|max:255',
             'client_address' => 'required|max:255',
+            'status' => 'required|max:255',
             'invoice_date' => 'required|date_format:Y-m-d',
             'due_date' => 'required|date_format:Y-m-d',
             'title' => 'required|max:255',
@@ -80,15 +84,16 @@ class InvoicesController extends Controller
 
     public function edit($id)
     {
+        $tenants = Tenant::all();
         $invoice = Invoice::with('products')->findOrFail($id);
-        return view('admin.invoices.edit', compact('invoice'));
+        return view('admin.invoices.edit', compact('invoice', 'tenants'));
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
             'invoice_no' => 'required|alpha_dash|unique:invoices,invoice_no,'.$id.',id',
-            'client' => 'required|max:255',
+            'tenant_id' => 'required|max:255',
             'client_address' => 'required|max:255',
             'invoice_date' => 'required|date_format:Y-m-d',
             'due_date' => 'required|date_format:Y-m-d',

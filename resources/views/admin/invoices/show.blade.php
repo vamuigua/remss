@@ -34,11 +34,15 @@
                         <label>Grand Total</label>
                         <p>KSH. {{$invoice->grand_total}}</p>
                     </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <p>{{$invoice->status}}</p>
+                    </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Client</label>
-                        <p>{{$invoice->client}}</p>
+                        <p>{{$invoice->tenant->surname}} {{$invoice->tenant->other_names}}</p>
                     </div>
                     <div class="form-group">
                         <label>Client Address</label>
@@ -104,7 +108,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>#</th><th>Payment No.</th><th>Amount Paid</th><th>Balance</th><th>Tenant</th><th>Payment Date</th><th>Payment Type</th><th>Actions</th>
+                        <th>#</th><th>Payment No.</th><th>Prev Balance</th><th>Amount Paid</th><th>Balance</th><th>Tenant</th><th>Payment Date</th><th>Payment Type</th><th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -113,6 +117,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $payment->payment_no }}</td>
+                                <td>{{ $payment->prev_balance }}</td>
                                 <td>{{ $payment->amount_paid }}</td>
                                 <td>{{ $payment->balance }}</td>
                                 <td>{{ $payment->tenant->surname }}</td>
@@ -121,8 +126,17 @@
                                 <td><a href="{{ url('/admin/payments/' . $payment->id) }}" title="View Payment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a></td>
                             </tr>
                         @endforeach
+                        <a href="{{ url('/admin/payments/create') }}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add New Payment
+                        </a>
                     @else
-                        <b>NO PAYMENTS FOR THIS INVOICE!</b>
+                        <div class="my-3">
+                            <b>NO PAYMENTS FOR THIS INVOICE!</b>
+                            <br>
+                            <a href="{{ url('/admin/payments/create') }}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Add New Payment
+                            </a>
+                        </div>
                     @endif
                 </tbody>       
             </table>

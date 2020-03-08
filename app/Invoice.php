@@ -9,9 +9,16 @@ class Invoice extends Model
     protected $fillable = [
         'invoice_no', 'invoice_date', 'due_date',
         'title', 'sub_total', 'discount',
-        'grand_total', 'tenant_id','client',
-        'client_address'
+        'grand_total', 'tenant_id',
+        'client_address', 'status'
     ];
+
+    public function statusOptions(){
+        return [
+            'active' => 'Active',
+            'closed' => 'Closed',
+        ];
+    }
 
     public function products()
     {

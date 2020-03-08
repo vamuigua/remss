@@ -18,7 +18,7 @@
     <label for="invoice_id" class="control-label">{{ 'Invoice No.' }}</label>
     <select name="invoice_id" class="form-control selectpicker" data-live-search="true" id="invoice_id" onchange="updateDetails()">
         @foreach ($invoices as $invoice)
-            <option value="{{ $invoice->id }}" {{ (isset($invoice->id))  && $payment->invoice_id == $invoice->id ? 'selected' : old('invoice_id')}}>{{ $invoice->invoice_no }}</option>
+            <option value="{{ $invoice->id }}" {{ (isset($invoice->id))  && $payment->invoice_id == $invoice->id && $payment->status ? 'selected' : old('invoice_id')}}>{{ $invoice->invoice_no }}</option>
         @endforeach
     </select>
     {!! $errors->first('invoice_id', '<p class="help-block">:message</p>') !!}
@@ -48,7 +48,7 @@
 
 <div class="form-group {{ $errors->has('prev_balance') ? 'has-error' : ''}}">
     <label for="prev_balance" class="control-label">{{ 'Previous Balance' }}</label>
-<input class="form-control" name="prev_balance" type="number" id="prev_balance" value="{{ old('prev_balance') }}" readonly>
+    <input class="form-control" name="prev_balance" type="number" id="prev_balance" value="{{ isset($payment->prev_balance) ? $payment->prev_balance : old('prev_balance')}}" readonly>
     {!! $errors->first('prev_balance', '<p class="help-block">:message</p>') !!}
 </div>
 

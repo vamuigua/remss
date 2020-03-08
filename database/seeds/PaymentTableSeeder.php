@@ -21,7 +21,7 @@ class PaymentTableSeeder extends Seeder
         $invoice_a = Invoice::where('id', '1')->first();
         $invoice_b = Invoice::where('id', '2')->first();
 
-        $array_payment_type = array('rent', 'water', 'electricity');
+        $array_payment_type = array('cash', 'cheque', 'mpesa', 'paypal');
 
         $faker = Factory::create();
 
@@ -32,6 +32,7 @@ class PaymentTableSeeder extends Seeder
             $payment_a->payment_type = $faker->randomElement($array_payment_type);
             $payment_a->payment_date = $faker->date();
             $payment_a->payment_no = $faker->numberBetween(1000, 2000);
+            $payment_a->prev_balance = $faker->numberBetween(1000, 10000);
             $payment_a->amount_paid = $faker->numberBetween(1000, 10000);
             $payment_a->balance = $faker->numberBetween(1000, 5000);
             $payment_a->comments = $faker->sentence;
@@ -43,6 +44,7 @@ class PaymentTableSeeder extends Seeder
             $payment_b->payment_type = $faker->randomElement($array_payment_type);
             $payment_b->payment_date = $faker->date();
             $payment_b->payment_no = $faker->numberBetween(1000, 2000);
+            $payment_b->prev_balance = $faker->numberBetween(1000, 10000);
             $payment_b->amount_paid = $faker->numberBetween(1000, 10000);
             $payment_b->balance = $faker->numberBetween(1000, 5000);
             $payment_b->comments = $faker->sentence;

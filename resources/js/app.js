@@ -9,7 +9,7 @@ require('bootstrap-select');
 require('summernote');
 
 // window.Vue = require('vue');
-// require('vue');
+require('vue');
 // require('vue-resource');
 
 $(document).ready(function () {

@@ -63,8 +63,18 @@ class PaymentsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $this->validateRequest($request);
-        
+
+        $balance = $validatedData['balance'];
+
         Payment::create($validatedData);
+
+        // checks if the final balance of the invoice_id was paid thus setting the status of the invoice_id to closed
+        if($balance == '0'){
+            $id = $validatedData['invoice_id'];
+            $invoice = Invoice::findOrFail($id);
+            $invoice->status = 'closed';
+            $invoice->save();
+        }
 
         return redirect('admin/payments')->with('flash_message', 'Payment added!');
     }
@@ -139,6 +149,7 @@ class PaymentsController extends Controller
             'payment_type' => 'required',
             'payment_date' => 'required|date',
             'payment_no' => 'required',
+            'prev_balance' => 'required',
             'amount_paid' => 'required',
             'balance' => 'required',
             'comments' => 'required'
@@ -150,13 +161,32 @@ class PaymentsController extends Controller
         $invoice_id = $request->get('invoice_id');
         
         $last_payment_balance = DB::select('select `balance` from payments where invoice_id = :invoice_id ORDER BY `id` DESC LIMIT 1', ['invoice_id' => $invoice_id]);
+        $invoice_status = DB::select('select `status` from invoices where id = :invoice_id ORDER BY `id` DESC LIMIT 1', ['invoice_id' => $invoice_id]);
 
-        if($last_payment_balance == null){
-            $balance = '0.00';
-        }else{
-            $balance = $last_payment_balance[0]->balance;
+        // checks if the invoice has any balance
+        if($last_payment_balance == null && $invoice_status[0]->status == 'active')
+        {
+            $invoice_grand_total = DB::select('select `grand_total` from invoices where id = :invoice_id ORDER BY `id` DESC LIMIT 1', ['invoice_id' => $invoice_id]);
+            $balance = $invoice_grand_total[0]->grand_total;
+        }
+        else
+        {
+            if($last_payment_balance[0]->balance == "0.00" && $invoice_status[0]->status == 'closed')
+            {
+                $balance = '0.00';
+            }
+            else if($last_payment_balance[0]->balance != null && $invoice_status[0]->status == 'active')
+            {
+                $balance = $last_payment_balance[0]->balance;
+            }
         }
         
         return response()->json(array('balance'=> $balance), 200);
+    }
+
+    //print receipt for payment
+    public function print_receipt($id){
+        $payment = Payment::findOrFail($id);
+        return view('admin.payments.print_receipt', compact('payment'));
     }
 }

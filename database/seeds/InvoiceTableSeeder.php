@@ -25,7 +25,7 @@ class InvoiceTableSeeder extends Seeder
         Invoice::truncate();
         InvoiceProduct::truncate();
 
-        foreach(range(1, 20) as $i) {
+        foreach(range(1, 2) as $i) {
             $products = collect();
             foreach(range(1, mt_rand(2, 10)) as $j) {
                 $unitPrice = $faker->numberBetween(100, 1000);
@@ -45,7 +45,6 @@ class InvoiceTableSeeder extends Seeder
 
             $invoice = Invoice::create([
                 'tenant_id' => $faker->numberBetween($tenant_a->id, $tenant_b->id),
-                'client' => $faker->randomElement($array_names),
                 'client_address' => $faker->randomElement($array_address),
                 'title' => $faker->sentence,
                 'invoice_no' => $faker->numberBetween(1000, 2000),
@@ -53,7 +52,8 @@ class InvoiceTableSeeder extends Seeder
                 'due_date' => $faker->date(),
                 'discount' => $discount,
                 'sub_total' => $subTotal,
-                'grand_total' => $total
+                'grand_total' => $total,
+                'status' => 'active'
             ]);
 
             $invoice->products()->saveMany($products);

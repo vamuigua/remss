@@ -20,11 +20,11 @@ class CreateInvoicesTable extends Migration
             $table->date('due_date');
             $table->string('title');
             $table->integer('tenant_id')->unsigned();
-            $table->string('client');
             $table->string('client_address');
             $table->decimal('sub_total');
             $table->decimal('discount');
             $table->decimal('grand_total');
+            $table->string('status');
             $table->timestamps();
         });
     }

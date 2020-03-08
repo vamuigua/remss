@@ -28,8 +28,9 @@
 
         window._form = {
             invoice_no: '',
-            client: '',
+            tenant_id: '',
             client_address: '',
+            status:'active',
             title: '',
             invoice_date: '',
             due_date: '',
@@ -41,5 +42,5 @@
             }]
         };
     </script>
-    {{-- <script src="/js/app.js"></script> --}}
+    <script src="/js/app.js"></script>
 @endpush

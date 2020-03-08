@@ -7,8 +7,11 @@
         </div>
         <div class="form-group">
             <label>Client</label>
-            <input type="text" class="form-control" v-model="form.client">
-            <p v-if="errors.client" class="error">@{{errors.client[0]}}</p>
+            <select name="tenant_id" class="form-control" data-live-search="true" id="tenant_id" v-model="form.tenant_id">
+                @foreach ($tenants as $tenant)
+                    <option value="{{ $tenant->id }}" {{ (isset($tenant->id)) ? 'selected' : old('tenant_id')}}>{{ $tenant->surname }} {{ $tenant->other_names }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="col-sm-4">
@@ -16,6 +19,14 @@
             <label>Client Address</label>
             <textarea class="form-control" v-model="form.client_address"></textarea>
             <p v-if="errors.client_address" class="error">@{{errors.client_address[0]}}</p>
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status" class="form-control" data-live-search="true" id="status" v-model="form.status">
+                @foreach ($invoice->statusOptions() as $optionKey => $optionValue)
+                    <option value="{{ $optionKey }}" {{ (isset($invoice->status) && $invoice->status == $optionKey) ? 'selected' : old('status')}}>{{ $optionValue }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="col-sm-4">
