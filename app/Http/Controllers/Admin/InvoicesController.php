@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Invoice;
 use App\InvoiceProduct;
+use PDF;
 
 class InvoicesController extends Controller
 {
@@ -146,5 +147,14 @@ class InvoicesController extends Controller
     {
         $invoice = Invoice::with('products')->findOrFail($id);
         return view('admin.invoices.print_invoice', compact('invoice'));
+    }
+
+    public function pdf_invoice($id)
+    {
+        $invoice = Invoice::with('products')->findOrFail($id);
+        return view('admin.invoices.pdf_invoice', compact('invoice'));
+
+        // $pdf = PDF::loadView('admin.invoices.pdf_invoice', array('data' => $data));
+        // return $pdf->download('invoice.pdf');
     }
 }

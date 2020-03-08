@@ -61,8 +61,6 @@ Route::middleware(['roles:Admin'])->group(function () {
         'as' => 'tenants.exportTenantsData'
     ]);
 
-    Route::resource('admin/tenants', 'Admin\\TenantsController');
-
     Route::get('/admin/roles/assign', [
         'uses' => 'Admin\\RolesController@assign',
         'as' => 'roles.assign'  
@@ -83,6 +81,12 @@ Route::middleware(['roles:Admin'])->group(function () {
         'as' => 'invoices.print_invoice'
     ]);
 
+    Route::get('/admin/invoices/pdf_invoice/{invoice}',[
+        'uses' => 'Admin\\InvoicesController@pdf_invoice',
+        'as' => 'invoices.pdf_invoice'
+    ]);
+
+    Route::resource('admin/tenants', 'Admin\\TenantsController');
     Route::resource('admin/invoices', 'Admin\\InvoicesController');
     Route::resource('admin/payments', 'Admin\\PaymentsController');
     Route::resource('admin/roles', 'Admin\\RolesController');
