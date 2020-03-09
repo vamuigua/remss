@@ -37,9 +37,6 @@ Route::middleware(['roles:Admin'])->group(function () {
         'uses' => 'Admin\\HousesController@exportHousesData',
         'as' => 'houses.exportHousesData'
     ]);
-    
-    Route::resource('admin/houses', 'Admin\\HousesController');
-
 
     Route::post('/admin/tenants/assignHouse', [
         'uses' => 'Admin\\TenantsController@assignHouse',
@@ -91,8 +88,10 @@ Route::middleware(['roles:Admin'])->group(function () {
         'as' => 'invoices.pdf_invoice'
     ]);
 
+    Route::resource('admin/houses', 'Admin\\HousesController');
     Route::resource('admin/tenants', 'Admin\\TenantsController');
     Route::resource('admin/invoices', 'Admin\\InvoicesController');
     Route::resource('admin/payments', 'Admin\\PaymentsController');
+    Route::resource('admin/notices', 'Admin\\NoticesController');
     Route::resource('admin/roles', 'Admin\\RolesController');
 });
