@@ -27,7 +27,7 @@
                                     <tr>
                                         <th>ID</th><td>{{ $notice->id }}</td>
                                     </tr>
-                                    <tr><th> Subject </th><td> {{ $notice->subject }} </td></tr><tr><th> Message </th><td> {{ $notice->message }} </td></tr>
+                                    <tr><th> Subject </th><td> {{ $notice->subject }} </td></tr><tr><th> Message </th><td> {!! $notice->message !!} </td></tr>
                                 </tbody>
                             </table>
                         </div>

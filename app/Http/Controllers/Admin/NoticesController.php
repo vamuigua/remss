@@ -45,7 +45,8 @@ class NoticesController extends Controller
      */
     public function create()
     {
-        return view('admin.notices.create');
+        $notice = new Notice;
+        return view('admin.notices.create', compact('notice'));
     }
 
     /**
@@ -57,11 +58,7 @@ class NoticesController extends Controller
      */
     public function store(Request $request)
     {
-        // remove the unwanted tags in the from the message request
-        // $message = $request->get('message');
-        // $latest = str_replace('/<\/?[^>]+(>|$)/g', "", $message);
-
-        $requestData = $request->all();
+        $requestData = $this->validateRequest($request);
         
         $notice = Notice::create($requestData);
 
@@ -117,7 +114,7 @@ class NoticesController extends Controller
     public function update(Request $request, $id)
     {
         
-        $requestData = $request->all();
+        $requestData = $this->validateRequest($request);
         
         $notice = Notice::findOrFail($id);
         $notice->update($requestData);
@@ -137,5 +134,12 @@ class NoticesController extends Controller
         Notice::destroy($id);
 
         return redirect('admin/notices')->with('flash_message', 'Notice deleted!');
+    }
+
+    public function validateRequest(Request $request){
+        return $request->validate([
+            'subject' => 'required',
+            'message' => 'required|min:5',
+        ]);
     }
 }
