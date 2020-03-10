@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\User; 
 use App\Payment;
 use App\Tenant;
 use App\Invoice;
-
+use App\Notifications\InvoicePaidNotification;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class PaymentsController extends Controller
 {
+    use Notifiable;
+
     /**
      * Display a listing of the resource.
      *
@@ -66,7 +71,7 @@ class PaymentsController extends Controller
 
         $balance = $validatedData['balance'];
 
-        Payment::create($validatedData);
+        $payment = Payment::create($validatedData);
 
         // checks if the final balance of the invoice_id was paid thus setting the status of the invoice_id to closed
         if($balance == '0'){
@@ -74,6 +79,20 @@ class PaymentsController extends Controller
             $invoice = Invoice::findOrFail($id);
             $invoice->status = 'closed';
             $invoice->save();
+        }
+
+        // Send InvoicePaid Noticifaction to Tenant & Admin
+        $tenant_id = $validatedData['tenant_id'];
+        $user = User::findOrFail($tenant_id);
+        $when = Carbon::now()->addSeconds(5);
+        $user->notify((new InvoicePaidNotification($payment))->delay($when));
+
+        // Notify admin of payment
+        $users = User::all();
+        foreach ($users as $user) {
+            if($user->hasRole('admin')){
+                $user->notify((new InvoicePaidNotification($payment))->delay($when));
+            }
         }
 
         return redirect('admin/payments')->with('flash_message', 'Payment added!');
