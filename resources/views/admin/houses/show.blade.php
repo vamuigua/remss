@@ -28,7 +28,7 @@
                                         <th>ID</th><td>{{ $house->id }}</td>
                                     </tr>
                                     <tr><th> House No </th><td> {{ $house->house_no }} </td></tr>
-                                    <tr><th> Features </th><td> {{ $house->features }} </td></tr>
+                                    <tr><th> Features </th><td> {!! $house->features !!} </td></tr>
                                     <tr><th> Rent </th><td> {{ $house->rent }} </td></tr>
                                     <tr><th> Status </th><td> {{ $house->status }} </td></tr>
                                     <tr><th> Water Meter No: </th><td> {{ $house->water_meter_no }} </td></tr>

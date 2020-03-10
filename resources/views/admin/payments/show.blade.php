@@ -41,7 +41,7 @@
                                     <tr><th> Previous Balance </th><td> {{ $payment->prev_balance }} </td></tr>
                                     <tr><th> Amount Paid </th><td> {{ $payment->amount_paid }} </td></tr>
                                     <tr><th> Balance </th><td> {{ $payment->balance }} </td></tr>
-                                    <tr><th> Comments </th><td> {{ $payment->comments }} </td></tr>
+                                    <tr><th> Comments </th><td> {!! $payment->comments !!} </td></tr>
                                 </tbody>
                             </table>
                         </div>

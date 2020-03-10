@@ -34,6 +34,11 @@
                     Payments
                 </a>
             </li>
+            <li class="list-group-item">
+                <a href="{{ url('/admin/expenditures') }}">
+                    Expenditures
+                </a>
+            </li>
         </ul>
     </div>
 </div>

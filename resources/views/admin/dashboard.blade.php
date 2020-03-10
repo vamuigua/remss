@@ -67,7 +67,7 @@
                             </a>
                         </div>
                     </div>
-                    {{-- Payments --}}
+                    {{-- Notices --}}
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-gradient-warning">
                             <div class="inner">
@@ -78,6 +78,21 @@
                                 <i class="nav-icon fas fa-bell nav-icon"></i>
                             </div>
                             <a href="/admin/notices" class="small-box-footer">
+                                More info <i class="fas fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {{-- Expenditures --}}
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-gradient-danger">
+                            <div class="inner">
+                                <h3>{{$expenditures->count()}}</h3>
+                                <p>Expenditures</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-money-bill-alt nav-icon"></i>
+                            </div>
+                            <a href="/admin/expenditures" class="small-box-footer">
                                 More info <i class="fas fa-arrow-circle-right"></i>
                             </a>
                         </div>

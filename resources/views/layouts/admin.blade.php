@@ -150,6 +150,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </li>
                 </ul>
               </li>
+              <li class="nav-item">
+                <a href="/admin/expenditures" class="nav-link">
+                  <i class="fas fa-money-bill-alt nav-icon"></i>
+                  <p>Expenditures</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">

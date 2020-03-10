@@ -5,7 +5,7 @@
 </div>
 <div class="form-group {{ $errors->has('features') ? 'has-error' : ''}}">
     <label for="features" class="control-label">{{ 'Features' }}</label>
-    <textarea class="form-control" rows="5" name="features" type="textarea" id="features" >{{ old('features') ?? $house->features }}</textarea>
+    <textarea class="form-control" rows="5" name="features" type="textarea" id="summernote" >{{ old('features') ?? $house->features }}</textarea>
     {!! $errors->first('features', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('rent') ? 'has-error' : ''}}">

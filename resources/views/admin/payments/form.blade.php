@@ -60,7 +60,7 @@
 
 <div class="form-group {{ $errors->has('comments') ? 'has-error' : ''}}">
     <label for="comments" class="control-label">{{ 'Comments' }}</label>
-    <textarea class="form-control" rows="5" name="comments" type="textarea" id="comments" >{{ isset($payment->comments) ? $payment->comments : old('comments') }}</textarea>
+    <textarea class="form-control" rows="5" name="comments" type="textarea" id="summernote" >{{ isset($payment->comments) ? $payment->comments : old('comments') }}</textarea>
     {!! $errors->first('comments', '<p class="help-block">:message</p>') !!}
 </div>
 

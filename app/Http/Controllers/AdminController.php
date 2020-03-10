@@ -8,6 +8,7 @@ use App\House;
 use App\Invoice;
 use App\Payment;
 use App\Notice;
+use App\Expenditure;
 
 class AdminController extends Controller
 {
@@ -17,6 +18,7 @@ class AdminController extends Controller
         $invoices = Invoice::all();
         $payments = Payment::all();
         $notices = Notice::all();
-        return view ('admin.dashboard', compact('tenants', 'houses', 'invoices', 'payments', 'notices'));   
+        $expenditures = Expenditure::all();
+        return view ('admin.dashboard', compact('tenants', 'houses', 'invoices', 'payments', 'notices', 'expenditures'));   
     }
 }
