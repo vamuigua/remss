@@ -5,14 +5,21 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Http\Requests;
+use PDF;
+use App\User;
+use App\Tenant;
 use App\Invoice;
 use App\InvoiceProduct;
-use App\Tenant;
-use PDF;
+use App\Http\Requests;
+use App\Notifications\InvoiceSentNotification;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\Notifiable;
 
 class InvoicesController extends Controller
 {
+    use Notifiable;
+
     public function index()
     {
         $invoices = Invoice::orderBy('created_at', 'desc')
@@ -31,7 +38,7 @@ class InvoicesController extends Controller
     public function store(Request $request)
     {
         // validate request from create form
-        $this->validate($request, [
+        $validatedRequest = $this->validate($request, [
             'invoice_no' => 'required|alpha_dash|unique:invoices',
             'tenant_id' => 'required|max:255',
             'client_address' => 'required|max:255',
@@ -67,6 +74,12 @@ class InvoicesController extends Controller
         $invoice = Invoice::create($data);
 
         $invoice->products()->saveMany($products);
+
+        // Send Invoice Noticifaction to Tenant
+        $tenant_id = $validatedRequest['tenant_id'];
+        $user = User::findOrFail($tenant_id);
+        $when = Carbon::now()->addSeconds(5);
+        $user->notify((new InvoiceSentNotification($invoice))->delay($when));
 
         // return a json response on successful creation of an invoice
         return response()

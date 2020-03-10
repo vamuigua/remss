@@ -67,6 +67,7 @@ class NoticesController extends Controller
 
         $users = User::all();
 
+        //Send Notice Notification to Tenant
         foreach ($users as $user) {
             if($user->hasRole('user')){
                 $when = Carbon::now()->addSeconds(5);
