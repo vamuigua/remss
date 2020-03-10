@@ -64,8 +64,6 @@
     {!! $errors->first('comments', '<p class="help-block">:message</p>') !!}
 </div>
 
-{{-- <div id="summernote">Hello Summernote</div> --}}
-
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>

@@ -7,10 +7,11 @@ use App\Http\Controllers\Controller;
 
 use App\Notice;
 use App\User;
-use App\Notifications\NoticeSent;
+use App\Notifications\NoticeSentNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Carbon;
 
 class NoticesController extends Controller
 {
@@ -56,7 +57,10 @@ class NoticesController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // remove the unwanted tags in the from the message request
+        // $message = $request->get('message');
+        // $latest = str_replace('/<\/?[^>]+(>|$)/g', "", $message);
+
         $requestData = $request->all();
         
         $notice = Notice::create($requestData);
@@ -65,12 +69,12 @@ class NoticesController extends Controller
 
         foreach ($users as $user) {
             if($user->hasRole('user')){
-                // $user->notify(new NoticeSent($notice));
-                Notification::send($user, new NoticeSent($notice));
+                $when = Carbon::now()->addSeconds(5);
+                $user->notify((new NoticeSentNotification($notice))->delay($when));
             }
         }
 
-        return redirect('admin/notices')->with('flash_message', 'Notice added & Sent to Tenants!');
+        return redirect('admin/notices')->with('flash_message', 'Notice added! Tenants will receive a Notice Notification shortly!');
     }
 
     /**

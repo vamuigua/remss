@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NoticeSent extends Notification
+class NoticeSentNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -32,7 +32,7 @@ class NoticeSent extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return explode(', ', $notifiable->notification_preference); 
     }
 
     /**
@@ -52,6 +52,13 @@ class NoticeSent extends Notification
                     ->line('Thank you for using our application!');
     }
 
+    public function toDatabase()
+    {
+        return [
+            'subject' => $this->notice->subject,
+            'message' => $this->notice->message,
+        ];
+    }
     /**
      * Get the array representation of the notification.
      *

@@ -61422,7 +61422,11 @@ __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // requ
 
 
 $(document).ready(function () {
-  $('#summernote').summernote();
+  $('#summernote').summernote({
+    height: 150,
+    theme: 'cerulian',
+    focus: true
+  });
 });
 /**
  * The following block of code may be used to automatically register your

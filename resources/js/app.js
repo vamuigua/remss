@@ -13,7 +13,11 @@ require('vue');
 // require('vue-resource');
 
 $(document).ready(function () {
-    $('#summernote').summernote();
+    $('#summernote').summernote({
+        height: 150,
+        theme: 'cerulian',
+        focus: true,
+    });
 });
 
 /**
