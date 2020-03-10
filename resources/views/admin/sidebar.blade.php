@@ -20,6 +20,11 @@
                 </a>
             </li>
             <li class="list-group-item">
+                <a href="{{ url('/admin/notices') }}">
+                    Notices
+                </a>
+            </li>
+            <li class="list-group-item">
                 <a href="{{ url('/admin/invoices') }}">
                     Invoices
                 </a>

@@ -101,6 +101,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/admin/notices" class="nav-link">
+                  <i class="fas fa-bell nav-icon"></i>
+                  <p>Notices</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/admin/invoices" class="nav-link">
                   <i class="fas fa-file-invoice nav-icon"></i>
                   <p>Invoices</p>
