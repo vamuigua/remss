@@ -94,4 +94,5 @@ Route::middleware(['roles:Admin'])->group(function () {
     Route::resource('admin/payments', 'Admin\\PaymentsController');
     Route::resource('admin/notices', 'Admin\\NoticesController');
     Route::resource('admin/roles', 'Admin\\RolesController');
+    Route::resource('admin/expenditures', 'Admin\\ExpendituresController');
 });
