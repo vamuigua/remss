@@ -22,6 +22,7 @@ Route::get('/home', [
     'as' => 'home'
 ]);
 
+// ADMIN ROUTES
 Route::middleware(['roles:Admin'])->group(function () {
     Route::get('/admin/dashboard', [
         'uses' => 'AdminController@index',
@@ -95,4 +96,12 @@ Route::middleware(['roles:Admin'])->group(function () {
     Route::resource('admin/notices', 'Admin\\NoticesController');
     Route::resource('admin/roles', 'Admin\\RolesController');
     Route::resource('admin/expenditures', 'Admin\\ExpendituresController');
+});
+
+// USER ROUTES
+Route::middleware(['roles:User'])->group(function () {
+    Route::get('/user/dashboard', [
+        'uses' => 'User\\UsersController@index',
+        'as' => 'user.dashboard'
+    ]);
 });

@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>Admin Panel</title>
+  <title>Account Panel</title>
   {{-- All CSS Compiled Assets --}}
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <!-- Google Font: Source Sans Pro -->
@@ -51,7 +51,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <a href="/admin/dashboard" class="brand-link">
       <img src="/img/AdminLTELogo.png" alt="REMSS Admin Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">{{ config('app.name') }} ADMIN</span>
+      <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
     </a>
 
     <!-- Sidebar -->
@@ -62,7 +62,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="/img/avatar.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="/admin/dashboard" class="d-block">{{ Auth::user()->name }}</a>
+          <a href="/user/dashboard" class="d-block">{{ Auth::user()->tenant->surname }} {{ Auth::user()->tenant->other_names }}</a>
         </div>
       </div>
 
@@ -89,15 +89,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/tenants" class="nav-link">
-                  <i class="fas fa-user nav-icon"></i>
-                  <p>Tenants</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/houses" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="fas fa-home nav-icon"></i>
-                  <p>Houses</p>
+                  <p>My House</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -107,53 +101,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/invoices" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="fas fa-file-invoice nav-icon"></i>
                   <p>Invoices</p>
                 </a>
               </li>
-              <li class="nav-item has-treeview">
-                 <a href="#" class="nav-link active">
-                  <i class="nav-icon fas fa-dollar-sign"></i>
-                  <p>
-                    Payments
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="/admin/payments" class="nav-link">
-                      <i class="nav-icon fas fa-money-check-alt"></i>
-                      <p>All Payments</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                       <i class="fas fa-dollar-sign"></i>
-                      <i class="fas fa-home nav-icon"></i>
-                      <p>Rent</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                       <i class="fas fa-dollar-sign"></i>
-                      <i class="fas fa-bolt nav-icon"></i>
-                      <p>Electricity</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                       <i class="fas fa-dollar-sign"></i>
-                      <i class="fas fa-water nav-icon"></i>
-                      <p>Water</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
               <li class="nav-item">
-                <a href="/admin/expenditures" class="nav-link">
-                  <i class="fas fa-money-bill-alt nav-icon"></i>
-                  <p>Expenditures</p>
+                <a href="#" class="nav-link">
+                  <i class="fas fas fa-dollar-sign nav-icon"></i>
+                  <p>Payments</p>
                 </a>
               </li>
             </ul>
@@ -168,18 +124,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/roles" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="fas fa-user-circle nav-icon"></i>
                   <p>
-                    Roles
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/roles/assign" class="nav-link">
-                  <i class="fas fa-user-circle nav-icon"></i>
-                  <p>
-                    Assign Roles
+                    Profile
                   </p>
                 </a>
               </li>
@@ -215,7 +163,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/home">Home</a></li>
-              <li class="breadcrumb-item active">Admin Dashboard</li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
