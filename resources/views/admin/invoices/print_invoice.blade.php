@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Invoice_{{$invoice->invoice_no}}_{{$invoice->client}}</title>
+  <title>Invoice_{{$invoice->invoice_no}}_{{$invoice->tenant->surname}}_{{$invoice->tenant->other_names}}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -35,7 +35,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Client</label>
-                        <p>{{$invoice->client}}</p>
+                        <p>{{$invoice->tenant->surname}} {{$invoice->tenant->other_names}}</p>
                     </div>
                     <div class="form-group">
                         <label>Client Address</label>

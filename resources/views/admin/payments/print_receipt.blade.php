@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Receipt_{{$payment->payment_no}}_{{$payment->tenant->surname}}</title>
+  <title>Receipt_{{$payment->payment_no}}_{{$payment->tenant->surname}}_{{$payment->tenant->other_names}}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 

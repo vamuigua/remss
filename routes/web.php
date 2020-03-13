@@ -100,8 +100,53 @@ Route::middleware(['roles:Admin'])->group(function () {
 
 // USER ROUTES
 Route::middleware(['roles:User'])->group(function () {
+    // Dashnoard
     Route::get('/user/dashboard', [
         'uses' => 'User\\UsersController@index',
         'as' => 'user.dashboard'
+    ]);
+
+    // House
+    Route::get('/user/house', [
+        'uses' => 'User\\UsersController@house',
+        'as' => 'user.house'
+    ]);
+
+    // Invoices
+    Route::get('/user/invoices', [
+        'uses' => 'User\\UsersController@invoices',
+        'as' => 'user.invoices.index'
+    ]);
+
+    Route::get('/user/invoices/{invoice}', [
+        'uses' => 'User\\UsersController@invoicesShow',
+        'as' => 'user.invoices.show'
+    ]);
+
+    Route::get('/user/invoices/print_invoice/{invoice}',[
+        'uses' => 'User\\UsersController@print_invoice',
+        'as' => 'user.invoices.print_invoice'
+    ]);
+
+    Route::get('/user/invoices/pdf_invoice/{invoice}',[
+        'uses' => 'User\\UsersController@pdf_invoice',
+        'as' => 'user.invoices.pdf_invoice'
+    ]);
+
+    // Payments
+    Route::get('/user/payments', [
+        'uses' => 'User\\UsersController@payments',
+        'as' => 'user.payments.index'
+    ]);
+
+    Route::get('/user/payments/{payment}', [
+        'uses' => 'User\\UsersController@paymentsShow',
+        'as' => 'user.payments.show'
+    ]);
+
+    // Print Receipt
+    Route::get('/user/payments/print_receipt/{payment}',[
+        'uses' => 'User\\UsersController@print_receipt',
+        'as' => 'user.payments.print_receipt'
     ]);
 });

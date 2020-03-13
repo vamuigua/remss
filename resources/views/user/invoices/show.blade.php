@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Invoice_{{$invoice->invoice_no}}_{{$invoice->tenant->surname}}_{{$invoice->tenant->other_names}}</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.user')
 
-  {{-- All CSS Compiled Assets --}}
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
-<body>
-<div class="panel panel-default">
+@section('content')
+    <div class="panel panel-default">
         <div class="panel-heading">
             <div class="clearfix">
                 <span class="panel-title"><h2>Invoice</h2></span>
+                <div class="float-left my-3">
+                    <a href="{{route('user.invoices.index')}}" class="btn btn-warning mx-2"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+                <div class="float-right">
+                    <a href="{{route('user.invoices.pdf_invoice', $invoice)}}" target="_blank" class="btn btn-danger"><i class="fas fa-file-pdf"></i> PDF</a>
+                    <a href="{{route('user.invoices.print_invoice', $invoice)}}" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                </div>
             </div>
         </div>
         <div class="panel-body">
@@ -30,6 +24,10 @@
                     <div class="form-group">
                         <label>Grand Total</label>
                         <p>KSH. {{$invoice->grand_total}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <p>{{$invoice->status}}</p>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -97,13 +95,42 @@
                     </tr>
                 </tfoot>
             </table>
+            {{-- INVOICE PAYMENTS --}}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th><th>Payment No.</th><th>Prev Balance</th><th>Amount Paid</th><th>Balance</th><th>Tenant</th><th>Payment Date</th><th>Payment Type</th><th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ($invoice->payments()->count() > 0)
+                        @foreach($invoice->payments as $payment)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $payment->payment_no }}</td>
+                                <td>{{ $payment->prev_balance }}</td>
+                                <td>{{ $payment->amount_paid }}</td>
+                                <td>{{ $payment->balance }}</td>
+                                <td>{{ $payment->tenant->surname }}</td>
+                                <td>{{ $payment->payment_date }}</td>
+                                <td>{{ $payment->payment_type }}</td>
+                                <td><a href="{{ url('/user/payments/' . $payment->id) }}" title="View Payment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a></td>
+                            </tr>
+                        @endforeach
+                        <a href="#" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
+                        </a>
+                    @else
+                        <div class="my-3">
+                            <b>NO PAYMENTS FOR THIS INVOICE!</b>
+                            <br>
+                            <a href="#" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
+                            </a>
+                        </div>
+                    @endif
+                </tbody>       
+            </table>
         </div>
     </div>
-
-<script type="text/javascript"> 
-  window.addEventListener("load", window.print());
-</script>
-
-<script src="{{ asset('js/app.js') }}"></script>
-</body>
-</html>
+@endsection
