@@ -179,4 +179,14 @@ Route::middleware(['roles:User'])->group(function () {
         'uses' => 'User\\UsersController@notifications',
         'as' => 'user.notifications.index'
     ]);
+    
+    Route::post('/user/settings/updateProfilePic', [
+        'uses' => 'User\\UsersController@updateProfilePic',
+        'as' => 'user.settings.updateProfilePic'
+    ]);
+
+    Route::get('/user/settings/profile/{user}', [
+        'uses' => 'User\\UsersController@profile',
+        'as' => 'user.settings.profile'
+    ]);
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 use App\User;
 use App\Invoice;
 use App\Payment;
@@ -157,6 +158,31 @@ class UsersController extends Controller
         $user = Auth::user();
         $user->notifications->find($id)->markAsRead();
 
-        return redirect()->back()->with('flash_message', 'Notification Marked as Read!');;   
+        return redirect()->back()->with('flash_message', 'Notification Marked as Read!');  
+    }
+
+    // Settings
+    // Profile
+     public function profile($id){
+        $user = Auth::user($id);
+        return view ('user.settings.profile', compact('user'));     
+    }
+
+    // Update Profile Picture
+    public function updateProfilePic(Request $request){
+        $request->validate(['image' => 'image']);
+
+        if ($request->hasFile('image')) {
+            $img_filePath = $request->file('image')->store('uploads/tenants_img', 'public');
+
+            //resize uploaded tenant image
+            $image = Image::make(public_path("storage/{$img_filePath}"))->fit(200, 200);
+            $image->save();
+
+            $user = Auth::user();
+            $user->tenant->update(['image' => $img_filePath]);
+        }
+
+        return redirect()->back()->with('flash_message', 'Profile Photo updated!');
     }
 }

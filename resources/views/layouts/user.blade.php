@@ -15,7 +15,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-footer-fixed layout-navbar-fixed layout-fixed">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -182,7 +182,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+              <a href="/user/settings/profile/{{ Auth::user()->id }}" class="nav-link">
                   <i class="fas fa-user-circle nav-icon"></i>
                   <p>
                     Profile
@@ -229,6 +229,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- /.content-header -->
 
+    {{-- Success Alert --}}
+    @if(session()->has('flash_message'))
+        <div class="alert alert-success" role="alert">
+            <strong>Success:</strong> {{ session()->get('flash_message')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    {{-- Error/Danger Alert --}}
+    @if(session()->has('flash_message_error'))
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> {{ session()->get('flash_message_error')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
@@ -242,13 +262,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
+    <div class="float-right d-none d-sm-block">
       Always with You!
     </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; {{date('Y')}} <a href="#">REMSS</a>.</strong> All rights reserved.
   </footer>
-</div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->

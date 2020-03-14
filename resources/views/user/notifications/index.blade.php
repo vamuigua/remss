@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header"><h2>Notifiactions</h2></div>
-                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    <div class="card-body" style="overflow-y: auto;">
                         <br/>
                         <br/>
                         {{-- Notifications Timeline --}}
