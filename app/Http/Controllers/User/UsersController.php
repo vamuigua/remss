@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Invoice;
 use App\Payment;
+use App\Notice;
 
 class UsersController extends Controller
 {
@@ -107,5 +108,55 @@ class UsersController extends Controller
     public function print_receipt($id){
         $payment = Payment::findOrFail($id);
         return view('admin.payments.print_receipt', compact('payment'));
+    }
+
+    // Notices index
+    public function notices(Request $request){
+        $keyword = $request->get('search');
+        $perPage = 25;
+
+        if (!empty($keyword)) {
+            $notices = Notice::where('subject', 'LIKE', "%$keyword%")
+                ->orWhere('message', 'LIKE', "%$keyword%")
+                ->latest()->paginate($perPage);
+        } else {
+            $notices = Notice::latest()->paginate($perPage);
+        }
+
+        return view ('user.notices.index', compact('notices'));   
+    }
+
+    // Notices Show 
+    public function noticesShow($id){
+        $notice = Notice::findOrFail($id);
+        return view ('user.notices.show', compact('notice'));   
+    }
+
+    // Notifications
+
+    // Mark all Notifications as Read
+    public function markNotificationsAsRead(){
+        $user = Auth::user();
+        $user->unreadNotifications->markAsRead();
+
+        return redirect()->back()->with('flash_message', 'All Notifications Marked as Read!');;   
+    }
+
+    // Notifications Index
+    public function notifications(Request $request){
+        $perPage = 25;
+        $user = Auth::user();
+
+        $notifications = $user->notifications;
+
+        return view ('user.notifications.index', compact('notifications'));   
+    }
+
+    // Mark specific Notification as Read
+    public function notificationRead($id){
+        $user = Auth::user();
+        $user->notifications->find($id)->markAsRead();
+
+        return redirect()->back()->with('flash_message', 'Notification Marked as Read!');;   
     }
 }

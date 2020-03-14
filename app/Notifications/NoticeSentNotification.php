@@ -57,6 +57,8 @@ class NoticeSentNotification extends Notification implements ShouldQueue
         return [
             'subject' => $this->notice->subject,
             'message' => $this->notice->message,
+            'id' => $this->notice->id,
+            'notification_type' => 'notice',
         ];
     }
     /**

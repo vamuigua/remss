@@ -56,7 +56,8 @@ class InvoicePaidNotification extends Notification implements ShouldQueue
     {
         return [
             'subject' => 'Invoice Paid from REMSS!',
-            'invoice_id' => $this->payment->invoice->id,
+            'id' => $this->payment->invoice->id,
+            'notification_type' => 'invoice paid',
         ];
     }
 

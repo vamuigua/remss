@@ -149,4 +149,34 @@ Route::middleware(['roles:User'])->group(function () {
         'uses' => 'User\\UsersController@print_receipt',
         'as' => 'user.payments.print_receipt'
     ]);
+
+    // Notices
+    Route::get('/user/notices', [
+        'uses' => 'User\\UsersController@notices',
+        'as' => 'user.notices.index'
+    ]);
+
+    Route::get('/user/notices/{notice}', [
+        'uses' => 'User\\UsersController@noticesShow',
+        'as' => 'user.notices.show'
+    ]);
+
+    // Notifications
+
+    // Mark Notification as Read
+    Route::get('/user/notifications/{notification}/notificationRead', [
+        'uses' => 'User\\UsersController@notificationRead',
+        'as' => 'user.notifications.notificationRead'
+    ]);
+
+    // Mark All Notifications as Read
+    Route::get('/user/notifications/markNotificationsAsRead', [
+        'uses' => 'User\\UsersController@markNotificationsAsRead',
+        'as' => 'user.notifications.markNotificationsAsRead'
+    ]);
+
+    Route::get('/user/notifications', [
+        'uses' => 'User\\UsersController@notifications',
+        'as' => 'user.notifications.index'
+    ]);
 });

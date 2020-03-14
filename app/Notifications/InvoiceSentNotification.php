@@ -54,7 +54,8 @@ class InvoiceSentNotification extends Notification implements ShouldQueue
     {
         return [
             'subject' => 'You have a New Invoice!',
-            'invoice_id' => $this->invoice->id,
+            'id' => $this->invoice->id,
+            'notification_type' => 'invoice sent',
         ];
     }
 
