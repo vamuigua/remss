@@ -180,13 +180,20 @@ Route::middleware(['roles:User'])->group(function () {
         'as' => 'user.notifications.index'
     ]);
     
+    //Settings
     Route::post('/user/settings/updateProfilePic', [
-        'uses' => 'User\\UsersController@updateProfilePic',
+        'uses' => 'User\\SettingsController@updateProfilePic',
         'as' => 'user.settings.updateProfilePic'
     ]);
 
     Route::get('/user/settings/profile/{user}', [
-        'uses' => 'User\\UsersController@profile',
+        'uses' => 'User\\SettingsController@profile',
         'as' => 'user.settings.profile'
+    ]);
+
+    // Update Password
+    Route::post('/user/settings/updatePassword', [
+        'uses' => 'User\\SettingsController@updatePassword',
+        'as' => 'user.settings.updatePassword'
     ]);
 });

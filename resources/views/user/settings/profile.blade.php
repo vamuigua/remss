@@ -47,30 +47,40 @@
               <div class="card-body">
                 <div class="tab-content">
                     <div class="active tab-pane" id="password">
-                        <form class="form-horizontal">
+                        
+                        @if ($errors->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+
+                        <form method="POST" action="{{ route('user.settings.updatePassword') }}" class="form-horizontal" enctype="multipart/form-data">
+                            {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="inputPassword" class="col-form-label">Old Password</label>
+                                <label for="old_password" class="col-form-label">Old Password</label>
                                 <div class="col-sm-12">
-                                <input type="password" class="form-control row" id="inputPassword" placeholder="">
+                                <input type="password" class="form-control row" id="old_password" name="old_password" value={{old('old_password')}}>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputNewPassword" class="col-form-label">New Password</label>
+                                <label for="password" class="col-form-label">New Password</label>
                                 <div class="col-sm-12">
-                                <input type="password" class="form-control row" id="inputNewPassword" placeholder="">
+                                <input type="password" class="form-control row" id="password" name="password" value={{old('password')}}>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputReTypeNewPassword" class="col-form-label">Re-type New Password</label>
+                                <label for="password_confirmation" class="col-form-label">Confirm Password</label>
                                 <div class="col-sm-12">
-                                <input type="password" class="form-control row" id="inputReTypeNewPassword" placeholder="">
+                                <input type="password" class="form-control row" id="password_confirmation" name="password_confirmation" value={{old('password_confirmation')}}>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
                                 <div class="checkbox">
                                     <label>
-                                    <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+                                        <input type="checkbox" name="checkbox"> I agree to the <a href="#">terms and conditions</a>
                                     </label>
                                 </div>
                                 </div>
