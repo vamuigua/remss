@@ -27,68 +27,68 @@
                                         {{-- INVOICE SENT --}}
                                         @if ($notification->data['notification_type'] == 'invoice sent')
                                             <!-- timeline item -->
-                                        <div>
-                                            <i class="fas fa-file-invoice bg-danger"></i>
-                                            <div class="timeline-item">
-                                            <span class="time"><i class="fas fa-clock"></i> {{$notification->created_at->diffForHumans()}}</span>
-                                            <h3 class="timeline-header"><a href="#">From REMSS:</a> You have new {{$notification->data['notification_type']}}</h3>
+                                            <div>
+                                                <i class="fas fa-file-invoice bg-danger"></i>
+                                                <div class="timeline-item">
+                                                <span class="time"><i class="fas fa-clock"></i> {{$notification->created_at->diffForHumans()}}</span>
+                                                <h3 class="timeline-header"><a href="#">From REMSS:</a> You have new {{$notification->data['notification_type']}}</h3>
 
-                                            <div class="timeline-body">
-                                                {{$notification->data['subject']}}
+                                                <div class="timeline-body">
+                                                    {{$notification->data['subject']}}
+                                                </div>
+                                                <div class="timeline-footer">
+                                                    <a class="btn btn-success btn-sm" href="/user/invoices/{{$notification->data['id']}}">Read more</a>
+                                                    @if ($notification->read_at == null)
+                                                        <a class="btn btn-primary btn-sm" href="/user/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
+                                                    @endif
+                                                </div>
+                                                </div>
                                             </div>
-                                            <div class="timeline-footer">
-                                                <a class="btn btn-success btn-sm" href="/user/invoices/{{$notification->data['id']}}">Read more</a>
-                                                @if ($notification->read_at == null)
-                                                    <a class="btn btn-primary btn-sm" href="/user/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
-                                                @endif
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <!-- END timeline item -->
+                                            <!-- END timeline item -->
                                         @endif
                                         {{-- INVOICE PAID --}}
                                         @if ($notification->data['notification_type'] == 'invoice paid')
                                             <!-- timeline item -->
-                                        <div>
-                                            <i class="fas fas fa-dollar-sign bg-success"></i>
-                                            <div class="timeline-item">
-                                            <span class="time"><i class="fas fa-clock"></i> {{$notification->created_at->diffForHumans()}}</span>
-                                            <h3 class="timeline-header"><a href="#">From REMSS:</a> You have new {{$notification->data['notification_type']}}</h3>
+                                            <div>
+                                                <i class="fas fas fa-dollar-sign bg-success"></i>
+                                                <div class="timeline-item">
+                                                <span class="time"><i class="fas fa-clock"></i> {{$notification->created_at->diffForHumans()}}</span>
+                                                <h3 class="timeline-header"><a href="#">From REMSS:</a> You have new {{$notification->data['notification_type']}}</h3>
 
-                                            <div class="timeline-body">
-                                                {{$notification->data['subject']}}
+                                                <div class="timeline-body">
+                                                    {{$notification->data['subject']}}
+                                                </div>
+                                                <div class="timeline-footer">
+                                                    <a class="btn btn-success btn-sm" href="/user/payments/{{$notification->data['id']}}">Read more</a>
+                                                    @if ($notification->read_at == null)
+                                                        <a class="btn btn-primary btn-sm" href="/user/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
+                                                    @endif
+                                                </div>
+                                                </div>
                                             </div>
-                                            <div class="timeline-footer">
-                                                <a class="btn btn-success btn-sm" href="/user/payments/{{$notification->data['id']}}">Read more</a>
-                                                @if ($notification->read_at == null)
-                                                    <a class="btn btn-primary btn-sm" href="/user/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
-                                                @endif
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <!-- END timeline item -->
+                                            <!-- END timeline item -->
                                         @endif
                                         {{-- NOTICE  --}}
                                         @if ($notification->data['notification_type'] == 'notice')
                                             <!-- timeline item -->
-                                        <div>
-                                            <i class="fas fa-envelope bg-warning"></i>
-                                            <div class="timeline-item">
-                                            <span class="time"><i class="fas fa-clock"></i> {{$notification->created_at->diffForHumans()}}</span>
-                                            <h3 class="timeline-header"><a href="#">From REMSS:</a> You have new {{$notification->data['notification_type']}}</h3>
+                                            <div>
+                                                <i class="fas fa-envelope bg-warning"></i>
+                                                <div class="timeline-item">
+                                                <span class="time"><i class="fas fa-clock"></i> {{$notification->created_at->diffForHumans()}}</span>
+                                                <h3 class="timeline-header"><a href="#">From REMSS:</a> You have new {{$notification->data['notification_type']}}</h3>
 
-                                            <div class="timeline-body">
-                                                {{$notification->data['subject']}}
+                                                <div class="timeline-body">
+                                                    {{$notification->data['subject']}}
+                                                </div>
+                                                <div class="timeline-footer">
+                                                    <a class="btn btn-success btn-sm" href="/user/notices/{{$notification->data['id']}}">Read more</a>
+                                                    @if ($notification->read_at == null)
+                                                        <a class="btn btn-primary btn-sm" href="/user/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
+                                                    @endif
+                                                </div>
+                                                </div>
                                             </div>
-                                            <div class="timeline-footer">
-                                                <a class="btn btn-success btn-sm" href="/user/notices/{{$notification->data['id']}}">Read more</a>
-                                                @if ($notification->read_at == null)
-                                                    <a class="btn btn-primary btn-sm" href="/user/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
-                                                @endif
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <!-- END timeline item -->
+                                            <!-- END timeline item -->
                                         @endif
                                     @endforeach
                                 @endif

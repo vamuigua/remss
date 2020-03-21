@@ -23,7 +23,7 @@ Route::get('/home', [
 ]);
 
 // ADMIN ROUTES
-Route::middleware(['roles:Admin'])->group(function () {
+Route::middleware(['roles:Admin', 'auth'])->group(function () {
     Route::get('/admin/dashboard', [
         'uses' => 'AdminController@index',
         'as' => 'admin.dashboard'
@@ -99,7 +99,7 @@ Route::middleware(['roles:Admin'])->group(function () {
 });
 
 // USER ROUTES
-Route::middleware(['roles:User'])->group(function () {
+Route::middleware(['roles:User', 'auth'])->group(function () {
     // Dashnoard
     Route::get('/user/dashboard', [
         'uses' => 'User\\UsersController@index',
@@ -196,4 +196,24 @@ Route::middleware(['roles:User'])->group(function () {
         'uses' => 'User\\SettingsController@updatePassword',
         'as' => 'user.settings.updatePassword'
     ]);
+
+    // Mpesa
+    // Access-Token
+    Route::get('/user/access_token', [
+        'uses' => 'Mpesa\\MpesaController@access_token',
+        'as' => 'user.access_token'
+    ]);
+
+    // Register URLs
+    Route::get('/user/register_url', [
+        'uses' => 'Mpesa\\MpesaController@register_url',
+        'as' => 'user.register_url'
+    ]);
+
+    // Simulate C2B Transaction
+    Route::get('/user/C2B_simulate', [
+        'uses' => 'Mpesa\\MpesaController@C2B_simulate',
+        'as' => 'user.C2B_simulate'
+    ]);
+    
 });

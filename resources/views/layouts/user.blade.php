@@ -83,8 +83,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
             
             {{-- UNREAD NOTIFICATIONS --}}
             @foreach(Auth::user()->unreadNotifications as $notification)
-              <a class="dropdown-item bg-light" href="/user/notices/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
-              <div class="dropdown-divider"></div>
+              @if ($notification->data['notification_type'] == 'notice')
+                <a class="dropdown-item bg-light" href="/user/notices/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
+                <div class="dropdown-divider"></div>
+              @endif
+              @if ($notification->data['notification_type'] == 'invoice paid')
+                <a class="dropdown-item bg-light" href="/user/payments/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
+                <div class="dropdown-divider"></div>
+              @endif
+              @if ($notification->data['notification_type'] == 'invoice sent')
+                <a class="dropdown-item bg-light" href="/user/invoices/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
+                <div class="dropdown-divider"></div>
+              @endif
             @endforeach
 
             <a href="{{route('user.notifications.index')}}" class="dropdown-item dropdown-footer">See All Notifications</a>
