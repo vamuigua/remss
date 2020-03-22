@@ -139,9 +139,24 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
         'as' => 'user.payments.index'
     ]);
 
+    Route::get('/user/payments/create', [
+        'uses' => 'User\\UsersController@paymentsCreate',
+        'as' => 'user.payments.create'
+    ]);
+
     Route::get('/user/payments/{payment}', [
         'uses' => 'User\\UsersController@paymentsShow',
         'as' => 'user.payments.show'
+    ]);
+
+    Route::post('/user/payments', [
+        'uses' => 'User\\UsersController@paymentsStore',
+        'as' => 'user.paymentsStore'
+    ]);
+
+    Route::post('/admin/payments/getInvoiceBalance', [
+        'uses' => 'Admin\\PaymentsController@getInvoiceBalance',
+        'as' => 'payments.getInvoiceBalance'
     ]);
 
     // Print Receipt
@@ -211,9 +226,9 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     ]);
 
     // Simulate C2B Transaction
-    Route::get('/user/C2B_simulate', [
+    Route::get('/user/C2B_simulate/{amount_paid}/{invoice_no}', [
         'uses' => 'Mpesa\\MpesaController@C2B_simulate',
         'as' => 'user.C2B_simulate'
     ]);
-    
+
 });

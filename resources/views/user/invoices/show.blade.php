@@ -117,14 +117,14 @@
                                 <td><a href="{{ url('/user/payments/' . $payment->id) }}" title="View Payment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a></td>
                             </tr>
                         @endforeach
-                        <a href="#" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                        <a href="{{route('user.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
                             <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
                         </a>
                     @else
                         <div class="my-3">
                             <b>NO PAYMENTS FOR THIS INVOICE!</b>
                             <br>
-                            <a href="#" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                            <a href="{{route('user.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
                             </a>
                         </div>

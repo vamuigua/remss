@@ -40,8 +40,8 @@ class MpesaController extends Controller
         
         $access_token = $this->access_token();
         $shortCode = '601383';
-        $confirmationUrl = 'https://bdbbe5bd.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
-        $validationUrl = 'https://bdbbe5bd.ngrok.io/remss/validation_url.php';
+        $confirmationUrl = 'https://d574b6bb.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
+        $validationUrl = 'https://d574b6bb.ngrok.io/remss/validation_url.php';
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -68,14 +68,15 @@ class MpesaController extends Controller
     }
 
     // Simulate C2B Paybill Transaction
-    public function C2B_Simulate(){
+    public function C2B_Simulate($amount_paid, $invoice_no){
+        // dd("Success! Amount:" .$amount_paid." Invoice No:".$invoice_no);
         $url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate';
         
         $access_token = $this->access_token();
         $shortCode = '601383';
-        $amount = '7500';
+        $amount = $amount_paid;
         $msisdn = '254708374149';
-        $billRef = 'INV_075'; //This is anything that helps identify the specific transaction. Can be a clients ID, Account Number, Invoice amount, cart no.. etc
+        $billRef = $invoice_no; //This is anything that helps identify the specific transaction. Can be a clients ID, Account Number, Invoice amount, cart no.. etc
         
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -98,9 +99,17 @@ class MpesaController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
     
         $curl_response = curl_exec($curl);
-        print_r($curl_response);
-    
-        echo $curl_response;
+        // print_r($curl_response);
+
+        $jsonMpesaResponse = json_decode($curl_response, true);
+        $response = $jsonMpesaResponse['ResponseDescription'];
+
+        if($response == "Accept the service request successfully."){
+            return redirect('user/payments')->with('flash_message', 'Payment Made! You will receive a Payment Notification shortly');
+            // app('App\Http\Controllers\User\UsersController')->paymentsStore();
+        }else{
+            return redirect('user/payments')->with('flash_message_error', 'The Payment was Unsuccessful! Try again in a few minutes');
+        }
     }
 
 
