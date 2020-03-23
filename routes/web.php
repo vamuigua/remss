@@ -96,6 +96,7 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
     Route::resource('admin/notices', 'Admin\\NoticesController');
     Route::resource('admin/roles', 'Admin\\RolesController');
     Route::resource('admin/expenditures', 'Admin\\ExpendituresController');
+    Route::resource('admin/messages', 'Admin\\MessagesController');
 });
 
 // USER ROUTES
@@ -232,3 +233,4 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     ]);
 
 });
+

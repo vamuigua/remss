@@ -69,7 +69,7 @@
                 <tfoot>
                     <tr>
                         <td class="table-label"><b>Comments:</b></td>
-                        <td class="table-empty" colspan="3">{{$payment->comments}}</td>
+                        <td class="table-empty" colspan="3">{!! $payment->comments !!}</td>
                     </tr>
                     <tr>
                         <td class="table-label">STAMP</td>

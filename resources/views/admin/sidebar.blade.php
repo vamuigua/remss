@@ -39,6 +39,11 @@
                     Expenditures
                 </a>
             </li>
+            <li class="list-group-item">
+                <a href="{{ url('/admin/messages') }}">
+                    BulkSMS
+                </a>
+            </li>
         </ul>
     </div>
 </div>

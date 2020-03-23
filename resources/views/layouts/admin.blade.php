@@ -156,6 +156,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Expenditures</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/admin/messages" class="nav-link">
+                  <i class="fas fa-mail-bulk nav-icon"></i>
+                  <p>BulkSMS</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
@@ -222,6 +228,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+
+    {{-- Success Alert --}}
+    @if(session()->has('flash_message'))
+        <div class="alert alert-success" role="alert">
+            <strong>Success:</strong> {{ session()->get('flash_message')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    {{-- Error/Danger Alert --}}
+    @if(session()->has('flash_message_error'))
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> {{ session()->get('flash_message_error')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
     <!-- Main content -->
     <div class="content">
