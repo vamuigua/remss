@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Expenditures</div>
                     <div class="card-body">
