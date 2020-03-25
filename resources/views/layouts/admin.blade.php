@@ -72,7 +72,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="/user/dashboard" class="nav-link">
+            <a href="/admin/dashboard" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
@@ -112,43 +112,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Invoices</p>
                 </a>
               </li>
-              <li class="nav-item has-treeview">
-                 <a href="#" class="nav-link active">
+              <li class="nav-item">
+                <a href="/admin/payments" class="nav-link">
                   <i class="nav-icon fas fa-dollar-sign"></i>
-                  <p>
-                    Payments
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
+                  <p>Payments</p>
                 </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="/admin/payments" class="nav-link">
-                      <i class="nav-icon fas fa-money-check-alt"></i>
-                      <p>All Payments</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                       <i class="fas fa-dollar-sign"></i>
-                      <i class="fas fa-home nav-icon"></i>
-                      <p>Rent</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                       <i class="fas fa-dollar-sign"></i>
-                      <i class="fas fa-bolt nav-icon"></i>
-                      <p>Electricity</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                       <i class="fas fa-dollar-sign"></i>
-                      <i class="fas fa-water nav-icon"></i>
-                      <p>Water</p>
-                    </a>
-                  </li>
-                </ul>
               </li>
               <li class="nav-item">
                 <a href="/admin/expenditures" class="nav-link">

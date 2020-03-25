@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Message;
-use App\Tenant;
 use AfricasTalking\SDK\AfricasTalking;
 
 use Illuminate\Bus\Queueable;
@@ -36,7 +35,7 @@ class SendMessageJob implements ShouldQueue
     public function handle()
     {
         // send bulksms to recepients
-        $this->sendSMS($this->message->message);
+        $this->sendSMS($this->message);
     }
 
     // function to send messages through AT API
@@ -44,28 +43,25 @@ class SendMessageJob implements ShouldQueue
         // Set your app credentials
         $username   = "sandbox";
         $apiKey     = "d4ae8a06372c53410112a3045f896f7fb05ac192d23033c7c8e1fff1210211e8";
-
+        
+        // Set your shortCode or senderId
+        $from = "REMSS";
+        
         // Initialize the SDK
         $AT = new AfricasTalking($username, $apiKey);
 
         // Get the SMS service
         $sms = $AT->sms();
 
-        // get all the tenants
-        $tenants = Tenant::all();
-        
         // Set the numbers you want to send to in international format
-        foreach ($tenants as $tenant) {
-            $recipients = $tenant->phone_no;
+        $recipients_array = explode(", ",$message->recepients);  
 
-            // Set your shortCode or senderId
-            $from = "REMSS";
-
+        foreach ($recipients_array as $recipient) {
             try {
                 // Thats it, hit send and we'll take care of the rest
                 $result = $sms->send([
-                    'to'      => $recipients,
-                    'message' => $message,
+                    'to'      => $recipient,
+                    'message' => $message->message,
                     'from'    => $from
                 ]);
                 
@@ -83,6 +79,7 @@ class SendMessageJob implements ShouldQueue
                  // decode the bulksms response
                 $json = json_decode($str_json, true);
                 
+                // Check for errors
                 // print_r($json['data']['SMSMessageData']['Recipients'][0]['statusCode']);
                 
             } catch (Exception $e) {
@@ -97,7 +94,7 @@ class SendMessageJob implements ShouldQueue
                 fwrite($log, $str_json);
                 fclose($log);
             }
+
         }
-        
     }
 }

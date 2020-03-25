@@ -7,8 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Jobs\SendMessageJob;
 
 use App\Message;
+use App\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use SimpleXLSX;
 
 class MessagesController extends Controller
 {
@@ -39,7 +42,8 @@ class MessagesController extends Controller
      */
     public function create()
     {
-        return view('admin.messages.create');
+        $message = new Message();
+        return view('admin.messages.create', compact('message'));
     }
 
     /**
@@ -51,11 +55,39 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $requestData = $request->all();
+        $recepients = [];
+        $requestData = $this->validateRequest($request);
+
+        // check option of send_to
+        // option for excel
+        if($requestData['send_to'] == "excel"){
+            $request->validate(['import_file' => 'required|file|mimes:xlsx']);
+            
+            // Open Excel File and store phone numbers 
+            if ( $xlsx = SimpleXLSX::parse($request->file('import_file')) ) {
+                foreach ($xlsx->rows() as $row) {
+                    array_push($recepients, $row[0]);
+                }
+                $recepients_str = implode(", ",$recepients);
+            } else {
+                dd(SimpleXLSX::parseError());
+            }
+        }
+        // option for all_tenants
+        else if($requestData['send_to'] == "all_tenants"){
+            $tenants = Tenant::all();
+            
+            foreach ($tenants as $tenant){
+                array_push($recepients, $tenant->phone_no);
+            }
+            $recepients_str = implode(", ",$recepients);
+        }
         
         // create a new message entry
-        $message = Message::create($requestData);
+        $message = Message::create(array_merge(
+            $requestData,
+            ['recepients' => $recepients_str]
+        ));
 
         // dispatch job for sending bulk message
         $when = Carbon::now()->addSeconds(5);
@@ -123,5 +155,13 @@ class MessagesController extends Controller
         Message::destroy($id);
 
         return redirect('admin/messages')->with('flash_message', 'Message deleted!');
+    }
+
+    // Validates Tenant Request Details
+    public function validateRequest(Request $request){
+        return $request->validate([
+            'message' => 'required',
+            'send_to' => 'required',
+        ]);
     }
 }

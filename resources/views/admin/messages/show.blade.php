@@ -27,6 +27,7 @@
                                         <th>ID</th><td>{{ $message->id }}</td>
                                     </tr>
                                     <tr><th> Message </th><td> {{ $message->message }} </td></tr>
+                                    <tr><th> Recepients </th><td> {{ $message->recepients }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
