@@ -115,44 +115,50 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
 
     // Invoices
     Route::get('/user/invoices', [
-        'uses' => 'User\\UsersController@invoices',
+        'uses' => 'User\\InvoicesController@invoices',
         'as' => 'user.invoices.index'
     ]);
 
     Route::get('/user/invoices/{invoice}', [
-        'uses' => 'User\\UsersController@invoicesShow',
+        'uses' => 'User\\InvoicesController@invoicesShow',
         'as' => 'user.invoices.show'
     ]);
 
     Route::get('/user/invoices/print_invoice/{invoice}',[
-        'uses' => 'User\\UsersController@print_invoice',
+        'uses' => 'User\\InvoicesController@print_invoice',
         'as' => 'user.invoices.print_invoice'
     ]);
 
     Route::get('/user/invoices/pdf_invoice/{invoice}',[
-        'uses' => 'User\\UsersController@pdf_invoice',
+        'uses' => 'User\\InvoicesController@pdf_invoice',
         'as' => 'user.invoices.pdf_invoice'
     ]);
 
     // Payments
     Route::get('/user/payments', [
-        'uses' => 'User\\UsersController@payments',
+        'uses' => 'User\\PaymentsController@payments',
         'as' => 'user.payments.index'
     ]);
 
     Route::get('/user/payments/create', [
-        'uses' => 'User\\UsersController@paymentsCreate',
+        'uses' => 'User\\PaymentsController@paymentsCreate',
         'as' => 'user.payments.create'
     ]);
 
     Route::get('/user/payments/{payment}', [
-        'uses' => 'User\\UsersController@paymentsShow',
+        'uses' => 'User\\PaymentsController@paymentsShow',
         'as' => 'user.payments.show'
     ]);
 
     Route::post('/user/payments', [
-        'uses' => 'User\\UsersController@paymentsStore',
+        'uses' => 'User\\PaymentsController@paymentsStore',
         'as' => 'user.paymentsStore'
+    ]);
+
+    // Print Receipt
+    Route::get('/user/payments/print_receipt/{payment}',[
+        'uses' => 'User\\PaymentsController@print_receipt',
+        'as' => 'user.payments.print_receipt'
     ]);
 
     Route::post('/admin/payments/getInvoiceBalance', [
@@ -160,40 +166,33 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
         'as' => 'payments.getInvoiceBalance'
     ]);
 
-    // Print Receipt
-    Route::get('/user/payments/print_receipt/{payment}',[
-        'uses' => 'User\\UsersController@print_receipt',
-        'as' => 'user.payments.print_receipt'
-    ]);
-
     // Notices
     Route::get('/user/notices', [
-        'uses' => 'User\\UsersController@notices',
+        'uses' => 'User\\NoticesController@notices',
         'as' => 'user.notices.index'
     ]);
 
     Route::get('/user/notices/{notice}', [
-        'uses' => 'User\\UsersController@noticesShow',
+        'uses' => 'User\\NoticesController@noticesShow',
         'as' => 'user.notices.show'
     ]);
 
     // Notifications
+    Route::get('/user/notifications', [
+        'uses' => 'User\\NotificationsController@index',
+        'as' => 'user.notifications.index'
+    ]);
 
     // Mark Notification as Read
     Route::get('/user/notifications/{notification}/notificationRead', [
-        'uses' => 'User\\UsersController@notificationRead',
+        'uses' => 'User\\NotificationsController@notificationRead',
         'as' => 'user.notifications.notificationRead'
     ]);
 
     // Mark All Notifications as Read
     Route::get('/user/notifications/markNotificationsAsRead', [
-        'uses' => 'User\\UsersController@markNotificationsAsRead',
+        'uses' => 'User\\NotificationsController@markNotificationsAsRead',
         'as' => 'user.notifications.markNotificationsAsRead'
-    ]);
-
-    Route::get('/user/notifications', [
-        'uses' => 'User\\UsersController@notifications',
-        'as' => 'user.notifications.index'
     ]);
     
     //Settings
