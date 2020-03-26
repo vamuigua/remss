@@ -9,6 +9,7 @@ use App\Invoice;
 use App\Payment;
 use App\Notice;
 use App\Expenditure;
+use App\WaterReading;
 
 class AdminController extends Controller
 {
@@ -19,6 +20,7 @@ class AdminController extends Controller
         $payments = Payment::all();
         $notices = Notice::all();
         $expenditures = Expenditure::all();
-        return view ('admin.dashboard', compact('tenants', 'houses', 'invoices', 'payments', 'notices', 'expenditures'));   
+        $water_readings = WaterReading::all();
+        return view ('admin.dashboard', compact('tenants', 'houses', 'invoices', 'payments', 'notices', 'expenditures','water_readings'));   
     }
 }

@@ -20,6 +20,34 @@ function updateDetails() {
     $("#balance").val(current_balance);
 }
 
+// Updates the values in the Water Reading Form through Ajax
+function updateWaterReading() {
+    //get Invoice Balance
+    var house_id = $("#house_id").val();
+    var _token = $('input[name="_token"]').val();
+
+    $.ajax({
+        url: "/admin/water-readings/getPrevWaterReading",
+        method: "POST",
+        data: { house_id: house_id, _token: _token },
+        success: function(data) {
+            $("#prev_reading").val(data.prev_reading);
+        }
+    });
+
+    //calculate units_used
+    var current_reading = $("#current_reading").val();
+    var prev_reading = $("#prev_reading").val();
+    var units_used = current_reading - prev_reading;
+    $("#units_used").val(units_used);
+
+    // calculate total_charges
+    var cost_per_unit = $("#cost_per_unit").val();
+    var units_used = $("#units_used").val();
+    var total_charges = units_used * cost_per_unit;
+    $("#total_charges").val(total_charges);
+}
+
 // Toggle importFile style display
 function toggleImport() {
     var x = document.getElementById("importFile");

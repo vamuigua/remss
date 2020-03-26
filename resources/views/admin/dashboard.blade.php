@@ -97,6 +97,21 @@
                             </a>
                         </div>
                     </div>
+                    {{-- Water Readings --}}
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-gradient-primary">
+                            <div class="inner">
+                                <h3>{{$water_readings->count()}}</h3>
+                                <p>Water Readings</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-water nav-icon"></i>
+                            </div>
+                            <a href="/admin/water-readings" class="small-box-footer">
+                                More info <i class="fas fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 {{-- <div class="card">
                     <div class="card-header">Dashboard</div>

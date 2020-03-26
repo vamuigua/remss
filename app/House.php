@@ -41,4 +41,9 @@ class House extends Model
     {
         return $this->belongsTo('App\Tenant');
     }
+
+    public function waterReadings()
+    {
+        return $this->hasMany('App\WaterReading');
+    }
 }

@@ -22,6 +22,14 @@ Route::get('/home', [
     'as' => 'home'
 ]);
 
+// Get Invoice Balance Route
+Route::middleware(['auth','web'])->group(function () {
+    Route::post('/admin/payments/getInvoiceBalance', [
+        'uses' => 'Admin\\PaymentsController@getInvoiceBalance',
+        'as' => 'payments.getInvoiceBalance'
+    ]);
+});
+
 // ADMIN ROUTES
 Route::middleware(['roles:Admin', 'auth'])->group(function () {
     Route::get('/admin/dashboard', [
@@ -68,11 +76,6 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'uses' => 'Admin\\RolesController@assignRoles',
         'as' => 'roles.assignRoles'
     ]);
-    
-    Route::post('/admin/payments/getInvoiceBalance', [
-        'uses' => 'Admin\\PaymentsController@getInvoiceBalance',
-        'as' => 'payments.getInvoiceBalance'
-    ]);
 
     Route::get('/admin/payments/print_receipt/{payment}',[
         'uses' => 'Admin\\PaymentsController@print_receipt',
@@ -89,6 +92,11 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'invoices.pdf_invoice'
     ]);
 
+    Route::post('/admin/water-readings/getPrevWaterReading', [
+        'uses' => 'Admin\\WaterReadingsController@getPrevWaterReading',
+        'as' => 'water-readings.getPrevWaterReading'
+    ]);
+
     Route::resource('admin/houses', 'Admin\\HousesController');
     Route::resource('admin/tenants', 'Admin\\TenantsController');
     Route::resource('admin/invoices', 'Admin\\InvoicesController');
@@ -97,6 +105,7 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
     Route::resource('admin/roles', 'Admin\\RolesController');
     Route::resource('admin/expenditures', 'Admin\\ExpendituresController');
     Route::resource('admin/messages', 'Admin\\MessagesController');
+    Route::resource('admin/water-readings', 'Admin\\WaterReadingsController');
 });
 
 // USER ROUTES
@@ -159,11 +168,6 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     Route::get('/user/payments/print_receipt/{payment}',[
         'uses' => 'User\\PaymentsController@print_receipt',
         'as' => 'user.payments.print_receipt'
-    ]);
-
-    Route::post('/admin/payments/getInvoiceBalance', [
-        'uses' => 'Admin\\PaymentsController@getInvoiceBalance',
-        'as' => 'payments.getInvoiceBalance'
     ]);
 
     // Notices
@@ -232,4 +236,3 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     ]);
 
 });
-

@@ -130,6 +130,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>BulkSMS</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/admin/water-readings" class="nav-link">
+                  <i class="fas fa-water nav-icon"></i>
+                  <p>Water Readings</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
