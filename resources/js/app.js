@@ -1,23 +1,25 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-require('./bootstrap');
-require('bootstrap-select');
-require('summernote');
+require("./bootstrap");
+require("bootstrap-select");
+require("summernote");
+require("datatables.net");
+require("datatables.net-bs4");
 
 // window.Vue = require('vue');
-require('vue');
+require("vue");
 // require('vue-resource');
 
-$(document).ready(function () {
-    $('#summernote').summernote({
+$(document).ready(function() {
+    $("#summernote").summernote({
         height: 150,
-        theme: 'cerulian',
-        focus: true,
+        theme: "cerulian",
+        focus: true
     });
+    $("#datatable").DataTable();
 });
 
 /**
@@ -40,62 +42,66 @@ $(document).ready(function () {
  */
 
 const app = new Vue({
-    el: '#invoice',
+    el: "#invoice",
     data: {
         isProcessing: false,
         form: {},
         errors: {}
     },
-    created: function () {
-        Vue.set(this.$data, 'form', _form);
+    created: function() {
+        Vue.set(this.$data, "form", _form);
     },
     methods: {
-        addLine: function () {
-            this.form.products.push({ name: '', price: 0, qty: 1 });
+        addLine: function() {
+            this.form.products.push({ name: "", price: 0, qty: 1 });
         },
-        remove: function (product) {
+        remove: function(product) {
             this.form.products.$remove(product);
         },
-        create: function () {
+        create: function() {
             this.isProcessing = true;
-            this.$http.post('/admin/invoices', this.form)
-                .then(function (response) {
+            this.$http
+                .post("/admin/invoices", this.form)
+                .then(function(response) {
                     if (response.ok) {
                         // window.location = '/admin/invoices/' + response.data.id;
-                        window.location = '/admin/invoices/';
+                        window.location = "/admin/invoices/";
                     } else {
                         this.isProcessing = false;
                     }
                 })
-                .catch(function (response) {
+                .catch(function(response) {
                     this.isProcessing = false;
-                    Vue.set(this.$data, 'errors', response.data);
-                })
+                    Vue.set(this.$data, "errors", response.data);
+                });
         },
-        update: function () {
+        update: function() {
             this.isProcessing = true;
-            this.$http.put('/admin/invoices/' + this.form.id, this.form)
-                .then(function (response) {
+            this.$http
+                .put("/admin/invoices/" + this.form.id, this.form)
+                .then(function(response) {
                     if (response.ok) {
                         // window.location = '/admin/invoices/' + response.data.id;
-                        window.location = '/admin/invoices/';
+                        window.location = "/admin/invoices/";
                     } else {
                         this.isProcessing = false;
                     }
                 })
-                .catch(function (response) {
+                .catch(function(response) {
                     this.isProcessing = false;
-                    Vue.set(this.$data, 'errors', response.data);
-                })
+                    Vue.set(this.$data, "errors", response.data);
+                });
         }
     },
     computed: {
-        subTotal: function () {
-            return this.form.products.reduce(function (carry, product) {
-                return carry + (parseFloat(product.qty) * parseFloat(product.price));
+        subTotal: function() {
+            return this.form.products.reduce(function(carry, product) {
+                return (
+                    carry + parseFloat(product.qty) * parseFloat(product.price)
+                );
             }, 0);
         },
-        grandTotal: function () {
+        grandTotal: function() {
             return this.subTotal - parseFloat(this.form.discount);
         }
     }

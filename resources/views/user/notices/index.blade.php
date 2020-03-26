@@ -20,7 +20,7 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="datatable" class="table table table-hover table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th><th>Subject</th><th>Message</th><th>Sent</th><th>Actions</th>

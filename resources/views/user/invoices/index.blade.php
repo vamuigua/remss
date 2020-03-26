@@ -5,21 +5,14 @@
         <div class="panel-heading">
             <div class="clearfix my-2">
                 <span class="panel-title"><h2>Invoices</h2></span>
-                <form method="GET" action="{{route('user.invoices.index')}}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                        <span class="input-group-append">
-                            <button class="btn btn-secondary" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
+                <a href="{{route('user.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
+                </a>
             </div>
         </div>
         <div class="panel-body">
             @if($invoices->count())
-            <table class="table table-striped">
+            <table id="datatable" class="table table table-hover table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>#</th>

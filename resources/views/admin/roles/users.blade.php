@@ -8,18 +8,6 @@
                 <div class="card">
                     <div class="card-header">User Roles</div>
                     <div class="card-body">
-
-                        <form method="GET" action="{{ route('roles.assign') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                                <span class="input-group-append">
-                                    <button class="btn btn-secondary" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </form>
-
                         <br/>
                         <br/>
                         <div class="table-responsive">
@@ -32,14 +20,14 @@
                                 <tbody>
                                 @foreach($users as $user)
                                     <form action="{{ route('roles.assignRoles') }}" method="POST">
+                                        {{ csrf_field() }}
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }} <input type="hidden" name="email" value="{{ $user->email }}"></td>
                                             <td><input type="checkbox" {{ $user->hasRole('User') ? 'checked' : '' }} name="role_user"></td>
                                             <td><input type="checkbox" {{ $user->hasRole('Admin') ? 'checked' : '' }} name="role_admin"></td>
-                                            {{ csrf_field() }}
-                                            <td><button type="submit"  class="btn btn-success btn-sm">Assign Roles</button></td>
+                                            <td><button type="submit" class="btn btn-success btn-sm">Assign Roles</button></td>
                                         </tr>
                                     </form>
                                 @endforeach

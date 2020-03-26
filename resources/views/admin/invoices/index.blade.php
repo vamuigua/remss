@@ -10,7 +10,7 @@
         </div>
         <div class="panel-body">
             @if($invoices->count())
-            <table class="table table-striped">
+            <table id="datatable" class="table table-hover table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>#</th>

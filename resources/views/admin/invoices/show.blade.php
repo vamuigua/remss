@@ -105,7 +105,7 @@
                 </tfoot>
             </table>
             {{-- INVOICE PAYMENTS --}}
-            <table class="table table-bordered table-striped">
+            <table id="datatable" class="table table-hover table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>#</th><th>Payment No.</th><th>Prev Balance</th><th>Amount Paid</th><th>Balance</th><th>Tenant</th><th>Payment Date</th><th>Payment Type</th><th>Actions</th>

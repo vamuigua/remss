@@ -52,7 +52,7 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         
-        $requestData = $request->all();
+        $requestData = $this->validateData($request);
         
         Role::create($requestData);
 
@@ -98,7 +98,7 @@ class RolesController extends Controller
     public function update(Request $request, $id)
     {
         
-        $requestData = $request->all();
+        $requestData = $this->validateData($request);
         
         $role = Role::findOrFail($id);
         $role->update($requestData);
@@ -118,6 +118,13 @@ class RolesController extends Controller
         Role::destroy($id);
 
         return redirect('admin/roles')->with('flash_message', 'Role deleted!');
+    }
+
+    public function validateData(Request $request){
+        return $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
     }
 
     public function assign(Request $request){

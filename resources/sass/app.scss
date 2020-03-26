@@ -1,29 +1,31 @@
-
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
-//Admin-lte
-@import '~admin-lte/dist/css/adminlte.min.css';
+// Admin-lte
+@import "~admin-lte/dist/css/adminlte.min.css";
 
-//Font-awesome
+// Font-awesome
 @import "~admin-lte/plugins/fontawesome-free/css/fontawesome.css";
 @import "~admin-lte/plugins/fontawesome-free/css/solid.css";
 @import "~admin-lte/plugins/fontawesome-free/css/brands.css";
 
-//Bootstrap-select
+// Bootstrap-select
 @import "~bootstrap-select/dist/css/bootstrap-select.min.css";
 
 //Summernote
 @import "~summernote/dist/summernote.css";
 @import "~summernote/dist/summernote-bs4.css";
 
+// DataTables
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+
 .navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }

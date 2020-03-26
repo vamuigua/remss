@@ -22,7 +22,7 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="datatable" class="table table table-hover table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th><th>Payment No.</th><th>Amount Paid</th><th>Tenant</th><th>Payment Date</th>
