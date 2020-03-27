@@ -1,11 +1,16 @@
 <div class="form-group {{ $errors->has('house_id') ? 'has-error' : ''}}">
-    <label for="house_id" class="control-label">{{ 'House Id' }}</label>
+    <label for="house_id" class="control-label">{{ 'House No' }}</label>
     <select name="house_id" class="form-control selectpicker" data-live-search="true" id="house_id" onchange="updateWaterReading()">
         @foreach ($houses as $house)
             <option value="{{ $house->id }}" {{ (isset($waterreading->id)) && $house->id == $waterreading->house_id ? 'selected' : old('house_id')}}>{{ $house->house_no }}</option>
         @endforeach
     </select>
     {!! $errors->first('house_id', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group {{ $errors->has('tenant_names') ? 'has-error' : ''}}">
+    <label for="tenant_names" class="control-label">{{ 'Tenant Name' }}</label>
+    <input class="form-control" name="tenant_names" type="text" id="tenant_names" value="{{ isset($waterreading->tenant_names) ? $waterreading->tenant_names : old('tenant_names') }}"  readonly>
+    {!! $errors->first('tenant_names', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('prev_reading') ? 'has-error' : ''}}">
     <label for="prev_reading" class="control-label">{{ 'Prev Reading' }}</label>
@@ -32,7 +37,11 @@
     <input class="form-control" name="total_charges" type="number" id="total_charges" value="{{ isset($waterreading->total_charges) ? $waterreading->total_charges : old('total_charges')}}" readonly>
     {!! $errors->first('total_charges', '<p class="help-block">:message</p>') !!}
 </div>
-
+<div class="form-group {{ $errors->has('date') ? 'has-error' : ''}}">
+    <label for="date" class="control-label">{{ 'Date' }}</label>
+    <input class="form-control" name="date" type="date" id="date" value="{{ isset($waterreading->date) ? $waterreading->date : old('date')}}" >
+    {!! $errors->first('date', '<p class="help-block">:message</p>') !!}
+</div>
 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">

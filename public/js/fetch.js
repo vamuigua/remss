@@ -32,6 +32,18 @@ function updateWaterReading() {
         data: { house_id: house_id, _token: _token },
         success: function(data) {
             $("#prev_reading").val(data.prev_reading);
+
+            // checks if the tenant data is available
+            if (data.tenant != null) {
+                $("#tenant_names").val(
+                    data.tenant["surname"] + " " + data.tenant["other_names"]
+                );
+            } else if (data.tenant == null) {
+                $("#tenant_names").val("");
+                alert(
+                    "The House selected has No Tenant! Please select another House."
+                );
+            }
         }
     });
 

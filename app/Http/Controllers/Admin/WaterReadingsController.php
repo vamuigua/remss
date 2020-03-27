@@ -59,12 +59,11 @@ class WaterReadingsController extends Controller
      */
     public function store(Request $request)
     {
-        
         $requestData = $this->validateRequest($request);
         
         WaterReading::create($requestData);
 
-        return redirect('admin/water-readings')->with('flash_message', 'WaterReading added!');
+        return redirect('admin/water-readings')->with('flash_message', 'Water Reading added!');
     }
 
     /**
@@ -112,7 +111,7 @@ class WaterReadingsController extends Controller
         $waterreading = WaterReading::findOrFail($id);
         $waterreading->update($requestData);
 
-        return redirect('admin/water-readings')->with('flash_message', 'WaterReading updated!');
+        return redirect('admin/water-readings')->with('flash_message', 'Water Reading updated!');
     }
 
     /**
@@ -126,17 +125,20 @@ class WaterReadingsController extends Controller
     {
         WaterReading::destroy($id);
 
-        return redirect('admin/water-readings')->with('flash_message', 'WaterReading deleted!');
+        return redirect('admin/water-readings')->with('flash_message', 'Water Reading deleted!');
     }
 
+    // validate requests from the form
     public function validateRequest(Request $request){
         return $request->validate([
             'house_id' => 'required',
+            'tenant_names' => 'required',
             'prev_reading' => 'required',
             'current_reading' => 'required',
             'units_used' => 'required',
             'cost_per_unit' => 'required|max:10',
             'total_charges' => 'required',
+            'date' => 'required|date',
         ]);
     }
 
@@ -144,7 +146,12 @@ class WaterReadingsController extends Controller
     public function getPrevWaterReading(Request $request){
         $house_id = $request->get('house_id');
         
+        // get the previous_water_reading
         $prev_reading = DB::select('select `prev_reading` from water_readings where house_id = :house_id ORDER BY `id` DESC LIMIT 1', ['house_id' => $house_id]);
+
+        // find the tenant of the requested house_id
+        $house = House::find($house_id);
+        $tenant = $house->tenant;
 
         // checks conditions of the previous water reading
         if($prev_reading == null)
@@ -156,6 +163,6 @@ class WaterReadingsController extends Controller
             $prev_reading = $current_reading[0]->current_reading;
         }
         
-        return response()->json(array('prev_reading'=> $prev_reading), 200);
+        return response()->json(array('prev_reading'=> $prev_reading, 'tenant'=> $tenant), 200);
     }
 }

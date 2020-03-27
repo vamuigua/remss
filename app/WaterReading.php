@@ -25,7 +25,7 @@ class WaterReading extends Model
      *
      * @var array
      */
-    protected $fillable = ['house_id', 'prev_reading', 'current_reading', 'units_used', 'cost_per_unit', 'total_charges'];
+    protected $fillable = ['house_id', 'tenant_names', 'prev_reading', 'current_reading', 'units_used', 'cost_per_unit', 'total_charges', 'date'];
 
     public function house()
     {

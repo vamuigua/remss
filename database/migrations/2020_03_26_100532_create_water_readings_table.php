@@ -16,11 +16,13 @@ class CreateWaterReadingsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->unsignedInteger('house_id')->nullable();
+            $table->string('tenant_names')->nullable();
             $table->string('prev_reading')->nullable();
             $table->integer('current_reading')->nullable();
             $table->integer('units_used')->nullable();
             $table->integer('cost_per_unit')->nullable();
             $table->integer('total_charges')->nullable();
+            $table->date('date')->nullable();
         });
     }
 
