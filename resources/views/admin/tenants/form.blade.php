@@ -32,6 +32,13 @@
     <input class="form-control" name="email" type="text" id="email" value="{{ old('email') ?? $tenant->email }}" >
     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 </div>
+
+<div class="form-group {{ $errors->has('file') ? 'has-error' : ''}}">
+    <label for="file" class="control-label">{{ 'Agreement Document' }}</label>
+    <input class="form-control" name="file" type="file" id="file" accept=".docx, .pdf" value="{{ isset($tenant->file) ? $tenant->file : ''}}" >
+    {!! $errors->first('file', '<p class="help-block">:message</p>') !!}
+</div>
+
 <div class="form-group {{ $errors->has('image') ? 'has-error' : ''}}">
     <label for="image" class="control-label">{{ 'Image' }}</label>
     <input class="form-control" name="image" type="file" id="image" value="{{ isset($tenant->image) ? $tenant->image : ''}}" >

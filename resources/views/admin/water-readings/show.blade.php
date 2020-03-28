@@ -24,6 +24,7 @@
                             <table class="table">
                                 <tbody>
                                     <tr><th> House No. </th><td><a href="{{ url('/admin/houses/'.$waterreading->house->id) }}">{{ $waterreading->house->house_no }}</a></td></tr>
+                                    <tr><th> Tenant </th><td> {{ $waterreading->tenant_names }} </td></tr>
                                     <tr><th> Prev Reading </th><td> {{ $waterreading->prev_reading }} </td></tr>
                                     <tr><th> Current Reading </th><td> {{ $waterreading->current_reading }} </td></tr>
                                     <tr><th> Units used </th><td> {{ $waterreading->units_used }} </td></tr>

@@ -12,6 +12,7 @@ use App\Tenant;
 use App\House;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class TenantsController extends Controller
 {
@@ -59,25 +60,63 @@ class TenantsController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
-    {   
+    {
         $validatedData = $this->validateRequest($request);
 
-        if ($request->hasFile('image')) {
-            $img_filePath = $request->file('image')->store('uploads/tenants_img', 'public');
-
-            //resize uploaded tenant image
-            $image = Image::make(public_path("storage/{$img_filePath}"))->fit(200, 200);
-            $image->save();
-
+        // Conditions to check if image or file was passed or even both
+        if($request->hasFile('image') && !($request->hasFile('file'))){
+            // Image Only
             Tenant::create(array_merge(
                 $validatedData,
-                ['image' => $img_filePath]
+                ['image' => $this->store_image($request)]
             ));
-        }else{
+        }elseif($request->hasFile('file') && !($request->hasFile('image'))){
+            // File Only
+            Tenant::create(array_merge(
+                $validatedData,
+                ['file' => $this->store_file($request)]
+            ));
+        }else if($request->hasFile('image') && $request->hasFile('file')){
+            // Image and File
+            Tenant::create(array_merge(
+                $validatedData,
+                ['image' => $this->store_image($request)],
+                ['file' => $this->store_file($request)]
+            ));
+        }
+        else
+        {
             Tenant::create($validatedData);
         }
 
         return redirect('admin/tenants')->with('flash_message', 'Tenant added!');
+    }
+
+    // stores tenant's image
+    public function store_image(Request $request){
+        $img_filePath = $request->file('image')->store('uploads/tenants_img', 'public');
+
+        //resize uploaded tenant image
+        $image = Image::make(public_path("storage/{$img_filePath}"))->fit(200, 200);
+        $image->save();
+
+        return $img_filePath;
+    }
+
+    // stores tenant's agreement document
+    public function store_file(Request $request){
+        // get name of Agreement doc. file
+        $fileNameWithExt = $request->file('file')->getClientOriginalName();
+        // file name
+        $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        // extension of file
+        $extension = $request->file('file')->getClientOriginalExtension();
+        // file name to store
+        $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+        // Upload File
+        $file_path = $request->file('file')->storeAs('public/uploads/agreement_docs', $fileNameToStore);
+        
+        return $fileNameToStore;
     }
 
     /**
@@ -123,19 +162,29 @@ class TenantsController extends Controller
         $validatedData = $this->validateRequest($request);
         $tenant = Tenant::findOrFail($id);
 
-        if ($request->hasFile('image')) {
-            $img_filePath = $request->file('image')->store('uploads/tenants_img', 'public');
-
-            //resize uploaded tenant image
-            $image = Image::make(public_path("storage/{$img_filePath}"))->fit(200, 200);
-            $image->save();
-
+        // Conditions to check if image or file was passed or even both
+        if($request->hasFile('image') && !($request->hasFile('file'))){
+            // Image Only
             $tenant->update(array_merge(
                 $validatedData,
-                ['image' => $img_filePath]
+                ['image' => $this->store_image($request)]
             ));
-
-        }else{
+        }elseif($request->hasFile('file') && !($request->hasFile('image'))){
+            // File Only
+            $tenant->update(array_merge(
+                $validatedData,
+                ['file' => $this->store_file($request)]
+            ));
+        }else if($request->hasFile('image') && $request->hasFile('file')){
+            // Image and File
+            $tenant->update(array_merge(
+                $validatedData,
+                ['image' => $this->store_image($request)],
+                ['file' => $this->store_file($request)]
+            ));
+        }
+        else
+        {
             $tenant->update($validatedData);
         }
 
@@ -174,7 +223,8 @@ class TenantsController extends Controller
             'national_id' => 'required',
             'phone_no' => 'required|max:12',
             'email' => 'required|email',
-            'image' => 'image',
+            'image' => 'image|max:1999',
+            'file' => 'file|nullable|max:1999',
         ]);
     }
 
@@ -256,5 +306,12 @@ class TenantsController extends Controller
              return back()->with('flash_message_error', 'Tenant does not have an assigned House!');
         }
 
+    }
+
+    // Download Agreement Document
+    public function download_doc($id){
+        $tenant = Tenant::findOrFail($id);
+        $file_path = 'public/uploads/agreement_docs/'.$tenant->file;
+        return Storage::download($file_path, $tenant->file);
     }
 }

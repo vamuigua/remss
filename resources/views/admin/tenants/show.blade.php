@@ -37,7 +37,7 @@
                                                 @if ( $tenant->house !== null)
                                                     <a href="{{ url('/admin/houses/' . $tenant->house->id) }}">{{ $tenant->house->house_no }}</a>
                                                 @else
-                                                    <p>None</p>
+                                                    <p>Not Assigned</p>
                                                 @endif
                                                 
                                                 <div class="btn-group my-3" role="group" aria-label="Basic example">
@@ -86,6 +86,11 @@
                                                     </form>
                                                 </div>
                                             </div>
+                                        </td>
+                                    </tr>
+                                    <tr><th> Agreement Document: </th>
+                                        <td>
+                                            <a href="{{ route('tenants.download_doc', $tenant->id) }}" target="_blank" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Download Agreement Doc.</a>
                                         </td>
                                     </tr>
                                     <tr><th> Tenant Photo: </th><td> <img src="{{$tenant->tenantImage()}}" alt="tenantImage"> </td></tr>

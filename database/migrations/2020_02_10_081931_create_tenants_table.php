@@ -22,7 +22,8 @@ class CreateTenantsTable extends Migration
             $table->string('phone_no');
             $table->string('email')->unique();
             $table->string('image')->nullable();
-            $table->integer('user_id')->unsigned();
+            $table->string('file')->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
         });
     }
 

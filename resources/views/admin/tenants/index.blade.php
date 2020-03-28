@@ -72,14 +72,21 @@
                             <table id="datatable" class="table table table-hover table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Surname</th><th>Other Names</th><th>Email</th><th>House</th><th>Actions</th>
+                                        <th>#</th><th>Surname</th><th>Other Names</th><th>Email</th><th>House No</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($tenants as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->surname }}</td><td>{{ $item->other_names }}</td><td>{{ $item->email }}</td><td>{{ $item->house->house_no }}</td>
+                                    <td>{{ $item->surname }}</td><td>{{ $item->other_names }}</td><td>{{ $item->email }}</td>
+                                    <td>
+                                        @if ( $item->house !== null)
+                                            <a href="{{ url('/admin/houses/' . $item->house->id) }}">{{ $item->house->house_no }}</a>
+                                        @else
+                                            <p>Not Assigned</p>
+                                        @endif
+                                    </td>
                                         <td>
                                             <a href="{{ url('/admin/tenants/' . $item->id) }}" title="View Tenant"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/admin/tenants/' . $item->id . '/edit') }}" title="Edit Tenant"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

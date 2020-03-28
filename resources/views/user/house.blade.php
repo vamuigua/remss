@@ -4,7 +4,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-9">
-                <div class="card">
+                @if ($house !== null)
+                    <div class="card">
                     <div class="card-header">House {{ $house->house_no }}</div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -28,12 +29,24 @@
                                             @endif
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>Agreement Document: </th>
+                                        <td>
+                                            @if ($house->tenant->file !== null)
+                                                <a href="{{ route('tenants.download_doc', $house->tenant->id) }}" target="_blank" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Download Agreement Doc.</a>
+                                            @else
+                                                <p>Not Uploaded</p>
+                                            @endif
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
+                @else
+                    <b><p>You have not been assigned a House!</p></b>
+                @endif
             </div>
         </div>
     </div>

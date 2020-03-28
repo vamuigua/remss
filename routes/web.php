@@ -28,6 +28,11 @@ Route::middleware(['auth','web'])->group(function () {
         'uses' => 'Admin\\PaymentsController@getInvoiceBalance',
         'as' => 'payments.getInvoiceBalance'
     ]);
+    
+    Route::get('admin/tenants/download_doc/{tenant}', [
+        'uses' => 'Admin\\TenantsController@download_doc',
+        'as' => 'tenants.download_doc'
+    ]);
 });
 
 // ADMIN ROUTES
