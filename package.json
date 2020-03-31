@@ -26,6 +26,7 @@
     "dependencies": {
         "admin-lte": "^3.0.2",
         "bootstrap-select": "^1.13.12",
+        "owl.carousel": "^2.3.4",
         "vue-resource": "^1.5.1"
     }
 }
