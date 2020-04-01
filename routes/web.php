@@ -11,21 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
+Route::view('/featured-listings', 'static.featured-listings');
+Route::view('/about-us', 'static.about');
 
-Route::get('/featured-listings', function () {
-    return view('static.featured-listings');
-});
+Route::get('/contact', [
+    'uses' => 'ContactFormController@index',
+    'as' => 'contact.index'
+]);
 
-Route::get('/about-us', function () {
-    return view('static.about');
-});
-
-Route::get('/contact', function () {
-    return view('static.contact');
-});
+Route::post('/contact', [
+    'uses' => 'ContactFormController@store',
+    'as' => 'contact.store'
+]);
 
 Auth::routes();
 
