@@ -1,229 +1,10 @@
-{{-- <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>{{ config('app.name') }}</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    {{ config('app.name') }}
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
-</html> --}}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>LERAMIZ - Landing Page Template</title>
-	<meta charset="UTF-8">
-	<meta name="description" content="LERAMIZ Landing Page Template">
-	<meta name="keywords" content="LERAMIZ, unica, creative, html">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Favicon -->   
-	<link href="img/favicon.ico" rel="shortcut icon"/>
-
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-
-    <!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/animate.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.css"/>
-	<link rel="stylesheet" href="css/style.css"/>
-
-
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-<body>
-	<!-- Page Preloder -->
-	<div id="preloder">
-		<div class="loader"></div>
-	</div>
-	
-	<!-- Header section -->
-	<header class="header-section">
-		<div class="header-top">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-6 header-top-left">
-						<div class="top-info">
-							<i class="fa fa-phone"></i>
-							(+88) 666 121 4321
-						</div>
-						<div class="top-info">
-							<i class="fa fa-envelope"></i>
-							info.leramiz@colorlib.com
-						</div>
-					</div>
-					<div class="col-lg-6 text-lg-right header-top-right">
-						<div class="top-social">
-							<a href="#"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-instagram"></i></a>
-							<a href="#"><i class="fa fa-pinterest"></i></a>
-							<a href="#"><i class="fa fa-linkedin"></i></a>
-						</div>
-						<div class="user-panel">
-                            {{-- <div class="flex-center position-ref full-height"> --}}
-                            @if (Route::has('login'))
-                                <div class="top-right links">
-                                    @auth
-                                        {{-- DASHBOARD --}}
-                                        @if (Auth::user()->hasRole('Admin'))
-                                            <a href="{{ route('admin.dashboard') }}"><i class="fa fa-th"></i> Dashboard</a>
-                                        @elseif(Auth::user()->hasRole('User'))
-                                            <a href="{{ route('user.dashboard') }}"><i class="fa fa-th"></i> Dashboard</a>
-                                        @endif
-
-                                        {{-- LOGOUT --}}
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                            <i class="fa fa-power-off"></i>
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-
-                                        @else
-
-                                        @if (Route::has('register'))
-                                            <a href="{{ url('register') }}"><i class="fa fa-user"></i> Register</a>
-                                        @endif
-                                        <a href="{{ url('login') }}"><i class="fa fa-sign-in"></i> Login</a>
-                                    @endauth
-                                </div>
-                            @endif
-
-							{{-- <a href=""><i class="fas fa-user-circle"></i> Register</a>
-							<a href=""><i class="fas fa-sign-in-alt"></i> Login</a> --}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="site-navbar">
-						<a href="#" class="site-logo"><img src="img/logo.png" alt=""></a>
-						<div class="nav-switch">
-							<i class="fa fa-bars"></i>
-						</div>
-						<ul class="main-menu">
-							<li><a href="index.html">Home</a></li>
-							<li><a href="categories.html">FEATURED LISTING</a></li>
-							<li><a href="about.html">ABOUT US</a></li>
-							<li><a href="single-list.html">Pages</a></li>
-							<li><a href="blog.html">Blog</a></li>
-							<li><a href="contact.html">Contact</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-	<!-- Header section end -->
-
-
+@extends('layouts.main')
+@section('static')
 	<!-- Hero section -->
 	<section class="hero-section set-bg" data-setbg="img/bg.jpg">
 		<div class="container hero-text text-white">
 			<h2>find your place with our local life style</h2>
-			<p>Search real estate property records, houses, condos, land and more on leramiz.com®.<br>Find property info from the most comprehensive source data.</p>
+			<p>Search real estate property records, houses, condos, land and more on remss.com®.<br>Find property info from the most comprehensive source data.</p>
 			<a href="#" class="site-btn">VIEW DETAIL</a>
 		</div>
 	</section>
@@ -246,8 +27,6 @@
 		</div>
 	</div>
 	<!-- Filter form section end -->
-
-
 
 	<!-- Properties section -->
 	<section class="properties-section spad">
@@ -661,7 +440,7 @@
 						<i class="fa fa-star"></i>
 						<i class="fa fa-star"></i>
 					</div>
-					<p>“Leramiz was quick to understand my needs and steer me in the right direction. Their professionalism and warmth made the process of finding a suitable home a lot less stressful than it could have been. Thanks, agent Tony Holland.”</p>
+					<p>REMSS was quick to understand my needs and steer me in the right direction. Their professionalism and warmth made the process of finding a suitable home a lot less stressful than it could have been. Thanks, agent Tony Holland.”</p>
 					<h5>Stacy Mc Neeley</h5>
 					<span>CEP’s Director</span>
 					<div class="clint-pic set-bg" data-setbg="img/review/1.jpg"></div>
@@ -674,7 +453,7 @@
 						<i class="fa fa-star"></i>
 						<i class="fa fa-star"></i>
 					</div>
-					<p>“Leramiz was quick to understand my needs and steer me in the right direction. Their professionalism and warmth made the process of finding a suitable home a lot less stressful than it could have been. Thanks, agent Tony Holland.”</p>
+					<p>REMSS was quick to understand my needs and steer me in the right direction. Their professionalism and warmth made the process of finding a suitable home a lot less stressful than it could have been. Thanks, agent Tony Holland.”</p>
 					<h5>Stacy Mc Neeley</h5>
 					<span>CEP’s Director</span>
 					<div class="clint-pic set-bg" data-setbg="img/review/1.jpg"></div>
@@ -687,7 +466,7 @@
 						<i class="fa fa-star"></i>
 						<i class="fa fa-star"></i>
 					</div>
-					<p>“Leramiz was quick to understand my needs and steer me in the right direction. Their professionalism and warmth made the process of finding a suitable home a lot less stressful than it could have been. Thanks, agent Tony Holland.”</p>
+					<p>REMSS was quick to understand my needs and steer me in the right direction. Their professionalism and warmth made the process of finding a suitable home a lot less stressful than it could have been. Thanks, agent Tony Holland.”</p>
 					<h5>Stacy Mc Neeley</h5>
 					<span>CEP’s Director</span>
 					<div class="clint-pic set-bg" data-setbg="img/review/1.jpg"></div>
@@ -737,114 +516,4 @@
 		</div>
 	</section>
 	<!-- Blog section end -->
-
-	<!-- Clients section -->
-	<div class="clients-section">
-		<div class="container">
-			<div class="clients-slider owl-carousel">
-				<a href="#">
-					<img src="img/partner/1.png" alt="">
-				</a>
-				<a href="#">
-					<img src="img/partner/2.png" alt="">
-				</a>
-				<a href="#">
-					<img src="img/partner/3.png" alt="">
-				</a>
-				<a href="#">
-					<img src="img/partner/4.png" alt="">
-				</a>
-				<a href="#">
-					<img src="img/partner/5.png" alt="">
-				</a>
-			</div>
-		</div>
-	</div>
-	<!-- Clients section end -->
-
-
-
-	<!-- Footer section -->
-	<footer class="footer-section set-bg" data-setbg="img/footer-bg.jpg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6 footer-widget">
-					<img src="img/logo.png" alt="">
-					<p>Lorem ipsum dolo sit azmet, consecter dipise consult  elit. Maecenas mamus antesme non anean a dolor sample tempor nuncest erat.</p>
-					<div class="social">
-						<a href="#"><i class="fa fa-facebook"></i></a>
-						<a href="#"><i class="fa fa-twitter"></i></a>
-						<a href="#"><i class="fa fa-instagram"></i></a>
-						<a href="#"><i class="fa fa-pinterest"></i></a>
-						<a href="#"><i class="fa fa-linkedin"></i></a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6 footer-widget">
-					<div class="contact-widget">
-						<h5 class="fw-title">CONTACT US</h5>
-						<p><i class="fa fa-map-marker"></i>3711-2880 Nulla St, Mankato, Mississippi </p>
-						<p><i class="fa fa-phone"></i>(+88) 666 121 4321</p>
-						<p><i class="fa fa-envelope"></i>info.leramiz@colorlib.com</p>
-						<p><i class="fa fa-clock-o"></i>Mon - Sat, 08 AM - 06 PM</p>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6 footer-widget">
-					<div class="double-menu-widget">
-						<h5 class="fw-title">POPULAR PLACES</h5>
-						<ul>
-							<li><a href="">Florida</a></li>
-							<li><a href="">New York</a></li>
-							<li><a href="">Washington</a></li>
-							<li><a href="">Los Angeles</a></li>
-							<li><a href="">Chicago</a></li>
-						</ul>
-						<ul>
-							<li><a href="">St Louis</a></li>
-							<li><a href="">Jacksonville</a></li>
-							<li><a href="">San Jose</a></li>
-							<li><a href="">San Diego</a></li>
-							<li><a href="">Houston</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6  footer-widget">
-					<div class="newslatter-widget">
-						<h5 class="fw-title">NEWSLETTER</h5>
-						<p>Subscribe your email to get the latest news and new offer also discount</p>
-						<form class="footer-newslatter-form">
-							<input type="text" placeholder="Email address">
-							<button><i class="fa fa-send"></i></button>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="footer-bottom">
-				<div class="footer-nav">
-					<ul>
-						<li><a href="">Home</a></li>
-						<li><a href="">Featured Listing</a></li>
-						<li><a href="">About us</a></li>
-						<li><a href="">Pages</a></li>
-						<li><a href="">Blog</a></li>
-						<li><a href="">Contact</a></li>
-					</ul>
-				</div>
-				<div class="copyright">
-					<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- Footer section end -->
-                                        
-	<!--====== Javascripts & Jquery ======-->
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/masonry.pkgd.min.js"></script>
-	<script src="js/magnific-popup.min.js"></script>
-	<script src="js/main.js"></script>
-</body>
-</html>
+@endsection

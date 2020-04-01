@@ -15,6 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/featured-listings', function () {
+    return view('static.featured-listings');
+});
+
+Route::get('/about-us', function () {
+    return view('static.about');
+});
+
+Route::get('/contact', function () {
+    return view('static.contact');
+});
+
 Auth::routes();
 
 Route::get('/home', [
