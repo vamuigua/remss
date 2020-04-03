@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\Mail\ContactFormMail;
 use Illuminate\Http\Request;
+use App\Mail\ContactFormMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
-class ContactFormController extends Controller
+class QuestionsController extends Controller
 {
     public function index(){
-        return view('static.contact.index');
+        return view ('user.questions.index');
     }
 
-    // sends message from contact form
     public function store(Request $request){
-        // validate request
+       // validate request
         $data = $request->validate([
             'subject' => 'required',
             'name' => 'required',
@@ -23,9 +22,11 @@ class ContactFormController extends Controller
             'message' => 'required',
         ]);
 
-        // Send email
+        // dd($data);
+
+        // Send email in a queue
         Mail::to('info.remss@gmail.com')->queue(new ContactFormMail($data));
 
-        return redirect('/contact')->with('main_flash_message', 'Thank you for your message! We will get back to you through the email you provided');
+        return redirect('/user/questions')->with('flash_message', 'Thank you for your message! We will get back to you through the email you provided');
     }
 }

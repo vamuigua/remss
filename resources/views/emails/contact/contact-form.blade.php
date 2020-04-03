@@ -1,5 +1,5 @@
 @component('mail::message')
-# You have a new Message!
+# You have a new {{$data['subject'] }} From REMSS!
 
 <strong>From:</strong>
 {{$data['name'] }} - <i>( {{$data['email'] }} )</i>

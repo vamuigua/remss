@@ -6,6 +6,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header"><h2>Payments</h2></div>
+                    <div class="col-md-3">
+                        <a href="{{route('user.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
+                        </a>
+                    </div>
                     <div class="card-body">
 
                         <form method="GET" action="{{ route('user.payments.index') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">

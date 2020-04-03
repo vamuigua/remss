@@ -30,6 +30,8 @@ class ContactFormMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.contact.contact-form');
+        return $this->subject($this->data['subject'] . ' from REMSS!')
+                    ->markdown('emails.contact.contact-form')
+                    ->from($this->data['email']);
     }
 }

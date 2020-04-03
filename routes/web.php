@@ -250,4 +250,15 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
         'as' => 'user.C2B_simulate'
     ]);
 
+    // Feedback / Questions
+    Route::get('/user/questions',[
+        'uses' =>'User\\QuestionsController@index',
+        'as' => 'user.questions'
+    ]);
+
+    Route::post('/user/questions',[
+        'uses' =>'User\\QuestionsController@store',
+        'as' => 'user.questions'
+    ]);
+
 });

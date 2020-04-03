@@ -202,6 +202,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
           <li class="nav-item">
+            <a href="/user/questions" class="nav-link">
+              <i class="nav-icon fas fa-question-circle"></i>
+              <p>
+                Feedback / Questions
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link" 
                     onclick="event.preventDefault();
                       document.getElementById('logout-form').submit();">
