@@ -223,7 +223,7 @@ class TenantsController extends Controller
             'national_id' => 'required',
             'phone_no' => 'required|max:12',
             'email' => 'required|email',
-            'image' => 'image|max:1999',
+            'image' => 'image|mimes:jpeg,png,jpg|max:1999',
             'file' => 'file|nullable|max:1999',
         ]);
     }

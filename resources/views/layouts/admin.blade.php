@@ -71,6 +71,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+          
+          {{-- DASHBOARD --}}
           <li class="nav-item">
             <a href="/admin/dashboard" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -79,6 +81,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+
+          {{-- MANAGEMENT --}}
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -125,19 +129,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/messages" class="nav-link">
-                  <i class="fas fa-mail-bulk nav-icon"></i>
-                  <p>BulkSMS</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="/admin/water-readings" class="nav-link">
                   <i class="fas fa-water nav-icon"></i>
                   <p>Water Readings</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/admin/house-adverts" class="nav-link">
+                  <i class="fas fa-home nav-icon"></i>
+                  <p>House Adverts</p>
+                </a>
+              </li>
             </ul>
           </li>
+
+          {{-- SERVICES --}}
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-wrench"></i>
+              <p>
+                Services
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/admin/messages" class="nav-link">
+                  <i class="fas fa-mail-bulk nav-icon"></i>
+                  <p>BulkSMS</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {{-- SETTINGS --}}
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link active">
               <i class="fas fa-cog nav-icon"></i>

@@ -12,9 +12,15 @@
 */
 
 Route::view('/', 'welcome');
-Route::view('/featured-listings', 'static.featured-listings');
 Route::view('/about-us', 'static.about');
 
+// Featured Listings
+Route::get('/featured-listings', [
+    'uses' => 'FeaturedListingsController@index',
+    'as' => 'featured-listings.index'
+]);
+
+// Contact Page
 Route::get('/contact', [
     'uses' => 'ContactFormController@index',
     'as' => 'contact.index'
@@ -121,6 +127,7 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
     Route::resource('admin/expenditures', 'Admin\\ExpendituresController');
     Route::resource('admin/messages', 'Admin\\MessagesController');
     Route::resource('admin/water-readings', 'Admin\\WaterReadingsController');
+    Route::resource('admin/house-adverts', 'Admin\\HouseAdvertsController');
 });
 
 // USER ROUTES
@@ -262,3 +269,4 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     ]);
 
 });
+
