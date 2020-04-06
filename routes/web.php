@@ -20,6 +20,16 @@ Route::get('/featured-listings', [
     'as' => 'featured-listings.index'
 ]);
 
+Route::get('/featured-listings/{id}', [
+    'uses' => 'FeaturedListingsController@show',
+    'as' => 'featured-listings.show'
+]);
+
+Route::post('/featured-listings/question/{id}', [
+    'uses' => 'FeaturedListingsController@sendQuestion',
+    'as' => 'featured-listing.sendQuestion'
+]);
+
 // Contact Page
 Route::get('/contact', [
     'uses' => 'ContactFormController@index',

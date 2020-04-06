@@ -88,8 +88,8 @@ class HouseAdvertsController extends Controller
             array_push($data, $img_filePath);
 
             // resize uploaded tenant image
-            $image = Image::make(public_path("storage/{$img_filePath}"))->fit(500, 500);
-            $image->save();
+            // $image = Image::make(public_path("storage/{$img_filePath}"))->fit(500, 500);
+            // $image->save();
         }
 
         // separate the image file path with commas

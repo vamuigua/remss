@@ -7,17 +7,17 @@
 	<meta name="keywords" content="REMSS, real estate, management, html">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Favicon -->   
-	<link href="img/favicon.ico" rel="shortcut icon"/>
+	<link href="../img/favicon.ico" rel="shortcut icon"/>
 
 	<!-- Google Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 
     <!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/animate.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.css"/>
-	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="../css/animate.css"/>
+	<link rel="stylesheet" href="../css/owl.carousel.css"/>
+	<link rel="stylesheet" href="../css/style.css"/>
 
 
 	<!--[if lt IE 9]>
@@ -100,7 +100,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="site-navbar">
-						<a href="#" class="site-logo"><img src="img/logo.png" alt=""></a>
+						<a href="#" class="site-logo"><img src="../img/logo.png" alt=""></a>
 						<div class="nav-switch">
 							<i class="fa fa-bars"></i>
 						</div>
@@ -125,19 +125,19 @@
 		<div class="container">
 			<div class="clients-slider owl-carousel">
 				<a href="#">
-					<img src="img/partner/1.png" alt="">
+					<img src="../img/partner/1.png" alt="">
 				</a>
 				<a href="#">
-					<img src="img/partner/2.png" alt="">
+					<img src="../img/partner/2.png" alt="">
 				</a>
 				<a href="#">
-					<img src="img/partner/3.png" alt="">
+					<img src="../img/partner/3.png" alt="">
 				</a>
 				<a href="#">
-					<img src="img/partner/4.png" alt="">
+					<img src="../img/partner/4.png" alt="">
 				</a>
 				<a href="#">
-					<img src="img/partner/5.png" alt="">
+					<img src="../img/partner/5.png" alt="">
 				</a>
 			</div>
 		</div>
@@ -147,11 +147,11 @@
 	{{-- @extends('layouts.footer') --}}
 
 	<!-- Footer section -->
-	<footer class="footer-section set-bg" data-setbg="img/footer-bg.jpg">
+	<footer class="footer-section set-bg" data-setbg="../img/footer-bg.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 col-md-6 footer-widget">
-					<img src="img/logo.png" alt="">
+					<img src="../img/logo.png" alt="">
 					<p>Lorem ipsum dolo sit azmet, consecter dipise consult  elit. Maecenas mamus antesme non anean a dolor sample tempor nuncest erat.</p>
 					<div class="social">
 						<a href="#"><i class="fa fa-facebook"></i></a>
@@ -220,11 +220,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<!-- Footer section end -->
                                         
 	<!--====== Javascripts & Jquery ======-->
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/masonry.pkgd.min.js"></script>
-	<script src="js/magnific-popup.min.js"></script>
-	<script src="js/main.js"></script>
+	<script src="../js/jquery-3.2.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/masonry.pkgd.min.js"></script>
+	<script src="../js/magnific-popup.min.js"></script>
+	<script src="../js/main.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('static')
+
 	<!-- Page top section -->
 	<section class="page-top-section set-bg" data-setbg="img/page-top-bg.jpg">
 		<div class="container text-white">
@@ -52,7 +53,8 @@
 										</div>	
 									</div>
 								</div>
-								<a href="#" class="room-price">KSH {{ $houseadvert->rent }} </a>
+								<div class="room-price">KSH {{ $houseadvert->rent }} </div>
+								<a href="{{ url('/featured-listings/' . $houseadvert->id) }}" class="room-price" style="background-color:#01796F">VIEW</a>
 							</div>
 						</div>
 					</div>

@@ -1,7 +1,7 @@
 <div class="row">
     <input type="hidden" name="subject" value="Contact">
     <div class="col-md-6 form-group" {{ $errors->has('name') ? 'has-error' : ''}}">
-        <input class="form-control" name="name" type="text" id="subject" placeholder="Your name" value="{{ old('name') }}" >
+        <input class="form-control" name="name" type="text" id="name" placeholder="Your name" value="{{ old('name') }}" >
         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
     </div>
 
