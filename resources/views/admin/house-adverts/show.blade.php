@@ -31,9 +31,10 @@
                                     <tr><th> Details </th><td> {{ $houseadvert->details }} </td></tr>
                                     <tr><th> Description </th><td> {{ $houseadvert->description }} </td></tr>
                                     <tr><th> Rent </th><td> {{ $houseadvert->rent }} </td></tr>
+                                    <tr><th> Booking Status </th><td> {{ $houseadvert->booking_status }} </td></tr>
                                     <tr>
                                         <th> Images </th>
-                                         @foreach($images as $image)
+                                        @foreach($images as $image)
                                             <td> <img src="/storage/{{ $image }}" alt="houseImage"> </td>
                                         @endforeach
                                     </tr>

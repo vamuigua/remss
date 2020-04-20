@@ -25,9 +25,14 @@ Route::get('/featured-listings/{id}', [
     'as' => 'featured-listings.show'
 ]);
 
-Route::post('/featured-listings/question/{id}', [
+Route::post('/featured-listings/{id}/question', [
     'uses' => 'FeaturedListingsController@sendQuestion',
     'as' => 'featured-listing.sendQuestion'
+]);
+
+Route::post('/featured-listings/{id}/bookHouse', [
+    'uses' => 'FeaturedListingsController@bookHouse',
+    'as' => 'featured-listing.bookHouse'
 ]);
 
 // Contact Page

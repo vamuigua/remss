@@ -18,14 +18,14 @@
                             <table id="datatable" class="table table-hover table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>House</th><th>Location</th><th>Actions</th>
+                                        <th>#</th><th>House</th><th>Location</th><th>Booking Status</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($houseadverts as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->house }}</td><td>{{ $item->location }}</td>
+                                        <td>{{ $item->house }}</td><td>{{ $item->location }}</td><td>{{ $item->booking_status }}</td>
                                         <td>
                                             <a href="{{ url('/admin/house-adverts/' . $item->id) }}" title="View HouseAdvert"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/admin/house-adverts/' . $item->id . '/edit') }}" title="Edit HouseAdvert"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

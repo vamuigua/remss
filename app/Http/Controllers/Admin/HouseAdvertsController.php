@@ -43,7 +43,8 @@ class HouseAdvertsController extends Controller
      */
     public function create()
     {
-        return view('admin.house-adverts.create');
+        $houseadvert = new HouseAdvert();
+        return view('admin.house-adverts.create', compact('houseadvert'));
     }
 
     /**
@@ -180,7 +181,8 @@ class HouseAdvertsController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg|max:2048', // validates the image files themselves
             'details' => 'required',
             'description' => 'required',
-            'rent' => 'required'
+            'rent' => 'required',
+            'booking_status' => 'required'
         ]);
     }
 }

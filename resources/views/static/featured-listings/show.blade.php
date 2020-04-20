@@ -67,6 +67,16 @@
 								<div class="price-btn">KSH. {{ $houseadvert->rent }}</div>
 							</div>
 						</div>
+						
+						{{-- Request for House Booking --}}
+						<div class="mb-3">
+							@if ($houseadvert->booking_status == 'Not Booked')
+								<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target=".bd-example-modal-lg">Request for House Booking</button>
+							@else
+								<button type="button" class="btn btn-dark btn-lg btn-block" data-toggle="modal" data-target=".bd-example-modal-lg" disabled>House has been Booked</button>
+							@endif
+						</div>
+
 						<h3 class="sl-sp-title">Property Details</h3>
 						<div class="row property-details-list">
 							<div class="col-md-4 col-sm-6">
@@ -108,6 +118,7 @@
 						</div>
 					</div>
 				</div>
+
 				<!-- sidebar -->
 				<div class="col-lg-4 col-md-7 sidebar">
 					<div class="author-card">
@@ -123,7 +134,7 @@
 					</div>
 					<div class="contact-form-card">
 						<h5>Do you have any question?</h5>
-						<form method="POST" action="{{ url('/featured-listings/question/'.$houseadvert->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+						<form method="POST" action="{{ url('/featured-listings/'.$houseadvert->id.'/question') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
                             @include ('static.featured-listings.form')
@@ -143,6 +154,42 @@
 							<a href="#" class="rp-price">$1,200,000</a>
 						</div>
 					</div>
+
+					{{-- Book House modal --}}
+					<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Book House Form</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p>Please fill out the form below:</p>
+									{{-- Errors --}}
+									@if ($errors->any())
+										<ul class="alert alert-danger">
+											@foreach ($errors->all() as $error)
+												<li>{{ $error }}</li>
+											@endforeach
+										</ul>
+									@endif
+									{{-- Form --}}
+									<form method="POST" action="{{ url('/featured-listings/'.$houseadvert->id.'/bookHouse') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+										{{ csrf_field() }}
+
+										@include ('static.featured-listings.book-form')
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{-- End of Request of House Booking Modal --}}
+
 				</div>
 			</div>
 		</div>

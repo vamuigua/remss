@@ -20,6 +20,7 @@
 	<!-- page -->
 	<section class="page-section categories-page">
 		<div class="container">
+			@if ($houseadverts->count() > 0)
 			<div class="row">
 				@foreach ($houseadverts as $houseadvert)
 					<div class="col-lg-4 col-md-6">
@@ -60,13 +61,20 @@
 					</div>
 				@endforeach
 			</div>
-			
-			<div class="site-pagination">
+
+			{{-- Pagination --}}
+			{{ $houseadverts->links() }}
+
+			{{-- <div class="site-pagination">
 				<span>1</span>
 				<a href="#">2</a>
 				<a href="#">3</a>
 				<a href="#"><i class="fa fa-angle-right"></i></a>
-			</div>
+			</div> --}}
+			@else
+				<h3>Sorry!</h3>
+				<h4>There are currently {{$houseadverts->count()}} Featured Listings at the moment! Come back later</h4>
+			@endif
 		</div>
 	</section>
 	<!-- page end -->

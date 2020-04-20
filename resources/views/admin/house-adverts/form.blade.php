@@ -30,7 +30,15 @@
     <input class="form-control" name="rent" type="text" id="rent" value="{{ isset($houseadvert->rent) ? $houseadvert->rent : old('rent')}}" >
     {!! $errors->first('rent', '<p class="help-block">:message</p>') !!}
 </div>
-
+<div class="form-group {{ $errors->has('booking_status') ? 'has-error' : ''}}">
+    <label for="booking_status" class="control-label">{{ 'Booking status' }}</label>
+    <select name="booking_status" class="form-control" id="booking_status" >
+    @foreach ($houseadvert->bookingStatusOptions() as $optionKey => $optionValue)
+        <option value="{{ $optionKey }}" {{ (isset($houseadvert->booking_status) && $houseadvert->booking_status == $optionKey) ? 'selected' : ''}}>{{ $optionValue }}</option>
+    @endforeach
+    </select>
+    {!! $errors->first('booking_status', '<p class="help-block">:message</p>') !!}
+</div>
 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
