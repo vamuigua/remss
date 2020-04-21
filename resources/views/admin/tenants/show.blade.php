@@ -91,6 +91,7 @@
                                     <tr><th> Agreement Document: </th>
                                         <td>
                                             <a href="{{ route('tenants.download_doc', $tenant->id) }}" target="_blank" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Download Agreement Doc.</a>
+                                            <a href="{{ route('tenants.view_doc', $tenant->id) }}" target="_blank" class="btn btn-primary"><i class="fas fa-file-pdf"></i> View Agreement Doc.</a>
                                         </td>
                                     </tr>
                                     <tr><th> Tenant Photo: </th><td> <img src="{{$tenant->tenantImage()}}" alt="tenantImage"> </td></tr>

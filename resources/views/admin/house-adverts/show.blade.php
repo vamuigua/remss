@@ -32,6 +32,7 @@
                                     <tr><th> Description </th><td> {{ $houseadvert->description }} </td></tr>
                                     <tr><th> Rent </th><td> {{ $houseadvert->rent }} </td></tr>
                                     <tr><th> Booking Status </th><td> {{ $houseadvert->booking_status }} </td></tr>
+                                    <tr><th> Agreement Document </th><td> <a href="{{ route('house_ads.view_doc', $houseadvert->id) }}" target="_blank" class="btn btn-primary"><i class="fas fa-file-pdf"></i> View</a> </td></tr>
                                     <tr>
                                         <th> Images </th>
                                         @foreach($images as $image)

@@ -39,6 +39,11 @@
     </select>
     {!! $errors->first('booking_status', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group {{ $errors->has('file') ? 'has-error' : ''}}">
+    <label for="file" class="control-label">{{ 'Agreement Document' }}</label>
+    <input class="form-control" name="file" type="file" id="file" accept=".pdf" value="{{ isset($houseadvert->file) ? $houseadvert->file : ''}}" >
+    {!! $errors->first('file', '<p class="help-block">:message</p>') !!}
+</div>
 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">

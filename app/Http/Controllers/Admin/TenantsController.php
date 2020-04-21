@@ -312,6 +312,32 @@ class TenantsController extends Controller
     public function download_doc($id){
         $tenant = Tenant::findOrFail($id);
         $file_path = 'public/uploads/agreement_docs/'.$tenant->file;
-        return Storage::download($file_path, $tenant->file);
+
+        if($filename != null){
+           return Storage::download($file_path, $tenant->file);
+        }else{
+            return "The Agreement Document does not exist in the Database. Please add one";
+        }
+    }
+
+    // View Agreement Document in Browser
+    public function view_doc($id){
+        $tenant = Tenant::findOrFail($id);
+        $filename = $tenant->file;
+        $pathToFile = public_path('storage\uploads\agreement_docs\\'.$filename);
+
+        // headers for pdf file
+        $headers =  [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$tenant->file.'"',
+            'Content-Transfer-Encoding' => 'binary',
+            'Accept-Ranges' => 'bytes'
+        ];
+
+        if($filename != null){
+            return response()->file($pathToFile, $headers);
+        }else{
+            return "The Agreement Document does not exist in the Database. Please add one";
+        }
     }
 }

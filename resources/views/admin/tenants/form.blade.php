@@ -35,7 +35,7 @@
 
 <div class="form-group {{ $errors->has('file') ? 'has-error' : ''}}">
     <label for="file" class="control-label">{{ 'Agreement Document' }}</label>
-    <input class="form-control" name="file" type="file" id="file" accept=".docx, .pdf" value="{{ isset($tenant->file) ? $tenant->file : ''}}" >
+    <input class="form-control" name="file" type="file" id="file" accept=".pdf" value="{{ isset($tenant->file) ? $tenant->file : ''}}" >
     {!! $errors->first('file', '<p class="help-block">:message</p>') !!}
 </div>
 

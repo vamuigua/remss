@@ -25,7 +25,7 @@ class HouseAdvert extends Model
      *
      * @var array
      */
-    protected $fillable = ['house', 'location', 'images', 'details', 'description', 'rent', 'booking_status'];
+    protected $fillable = ['house', 'location', 'images', 'details', 'description', 'rent', 'booking_status', 'file'];
 
     public function bookingStatusOptions(){
         return [

@@ -42,7 +42,7 @@
     <div class="checkbox">
     <div {{ $errors->has('agreement_checkbox') ? 'has-error' : ''}}">
         <label for="agreement_checkbox">
-            <input type="checkbox" name="agreement_checkbox"> I agree to the <a href="#">Terms and Conditions</a>
+            <input type="checkbox" name="agreement_checkbox"> I agree to the Terms and Conditions in the <a href="{{ route('house_ads.view_doc', $houseadvert->id) }}" target="_blank">Agreement Doc.</a>
         </label>
          {!! $errors->first('agreement_checkbox', '<p class="help-block">:message</p>') !!}
     </div>

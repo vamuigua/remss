@@ -22,6 +22,7 @@ class CreateHouseAdvertsTable extends Migration
             $table->text('description')->nullable();
             $table->string('rent')->nullable();
             $table->string('booking_status')->nullable();
+            $table->string('file')->nullable();
             });
     }
 
