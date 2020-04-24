@@ -76920,11 +76920,9 @@ __webpack_require__(/*! summernote */ "./node_modules/summernote/dist/summernote
 
 __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
 
-__webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js"); // window.Vue = require('vue');
+__webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
 
-
-__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // require('vue-resource');
-
+__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 $(document).ready(function () {
   $("#summernote").summernote({
@@ -76975,29 +76973,39 @@ var app = new Vue({
     create: function create() {
       this.isProcessing = true;
       this.$http.post("/admin/invoices", this.form).then(function (response) {
-        if (response.ok) {
-          // window.location = '/admin/invoices/' + response.data.id;
-          window.location = "/admin/invoices/";
+        data = response.data;
+        new_data = JSON.parse(data);
+
+        if (new_data.created) {
+          window.location = "/admin/invoices/" + new_data.id;
         } else {
           this.isProcessing = false;
         }
       })["catch"](function (response) {
+        data = response.data; //string
+
+        new_data = JSON.parse(data);
         this.isProcessing = false;
-        Vue.set(this.$data, "errors", response.data);
+        Vue.set(this.$data, "errors", new_data.errors);
       });
     },
     update: function update() {
       this.isProcessing = true;
       this.$http.put("/admin/invoices/" + this.form.id, this.form).then(function (response) {
-        if (response.ok) {
-          // window.location = '/admin/invoices/' + response.data.id;
-          window.location = "/admin/invoices/";
+        data = response.data;
+        new_data = JSON.parse(data);
+
+        if (new_data.updated) {
+          window.location = "/admin/invoices/" + new_data.id;
         } else {
           this.isProcessing = false;
         }
       })["catch"](function (response) {
+        data = response.data; //string
+
+        new_data = JSON.parse(data);
         this.isProcessing = false;
-        Vue.set(this.$data, "errors", response.data);
+        Vue.set(this.$data, "errors", new_data.errors);
       });
     }
   },
