@@ -100,7 +100,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="site-navbar">
-						<a href="#" class="site-logo"><img src="../img/logo.png" alt=""></a>
+						<a href="/" class="site-logo img-fluid"><img src="../img/logo_remss_3.png" alt="remss logo"></a>
 						<div class="nav-switch">
 							<i class="fa fa-bars"></i>
 						</div>
@@ -151,7 +151,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 col-md-6 footer-widget">
-					<img src="../img/logo.png" alt="">
+					<a href="/"><img src="../img/logo_remss_3.png" alt="remss_logo"></a>
 					<p>Lorem ipsum dolo sit azmet, consecter dipise consult  elit. Maecenas mamus antesme non anean a dolor sample tempor nuncest erat.</p>
 					<div class="social">
 						<a href="#"><i class="fa fa-facebook"></i></a>
