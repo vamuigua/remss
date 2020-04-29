@@ -72,7 +72,7 @@
                                         @if ($notification->data['notification_type'] == 'notice')
                                             <!-- timeline item -->
                                             <div>
-                                                <i class="fas fa-envelope bg-warning"></i>
+                                                <i class="fas fa-bullhorn bg-warning"></i>
                                                 <div class="timeline-item">
                                                 <span class="time"><i class="fas fa-clock"></i> {{$notification->created_at->diffForHumans()}}</span>
                                                 <h3 class="timeline-header"><a href="#">From REMSS:</a> You have new {{$notification->data['notification_type']}}</h3>

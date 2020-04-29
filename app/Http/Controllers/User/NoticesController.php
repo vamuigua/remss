@@ -9,21 +9,6 @@ use App\Notice;
 
 class NoticesController extends Controller
 {
-
-    private $validatedData = '';
-
-    public function index(){
-        $user = Auth::user();
-        return view ('user.dashboard', compact('user'));   
-    }
-
-    public function house(){
-        $user = Auth::user();
-        $house = $user->tenant->house;
-
-        return view ('user.house', compact('house'));   
-    }
-
     // Notices index
     public function notices(Request $request){
         $keyword = $request->get('search');

@@ -48,7 +48,7 @@ class NoticeSentNotification extends Notification implements ShouldQueue
                     ->line('You have a New Notice!.')
                     ->line($this->notice->subject)
                     ->line($this->notice->message)
-                    ->action('Check Notice', url('/admin/notices/' . $this->notice->id))
+                    ->action('Check Notice', url('/user/notices/' . $this->notice->id))
                     ->line('Thank you for using our application!');
     }
 

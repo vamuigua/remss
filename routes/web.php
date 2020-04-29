@@ -143,6 +143,24 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'water-readings.getPrevWaterReading'
     ]);
 
+    // Notifications
+    Route::get('/admin/notifications', [
+        'uses' => 'Admin\\NotificationsController@index',
+        'as' => 'admin.notifications.index'
+    ]);
+
+    // Mark Notification as Read
+    Route::get('/admin/notifications/{notification}/notificationRead', [
+        'uses' => 'Admin\\NotificationsController@notificationRead',
+        'as' => 'admin.notifications.notificationRead'
+    ]);
+
+    // Mark All Notifications as Read
+    Route::get('/admin/notifications/markNotificationsAsRead', [
+        'uses' => 'Admin\\NotificationsController@markNotificationsAsRead',
+        'as' => 'admin.notifications.markNotificationsAsRead'
+    ]);
+
     Route::resource('admin/houses', 'Admin\\HousesController');
     Route::resource('admin/tenants', 'Admin\\TenantsController');
     Route::resource('admin/invoices', 'Admin\\InvoicesController');

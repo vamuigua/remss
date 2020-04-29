@@ -74,13 +74,13 @@ class PaymentsController extends Controller
         $tenant_id = $this->validatedData['tenant_id'];
         $user = User::findOrFail($tenant_id);
         $when = Carbon::now()->addSeconds(5);
-        $user->notify((new InvoicePaidNotification($payment))->delay($when));
+        $user->notify((new InvoicePaidNotification($payment, 'user'))->delay($when));
 
         // Send InvoicePaid Noticifaction to Admin
         $users = User::all();
         foreach ($users as $user) {
             if($user->hasRole('admin')){
-                $user->notify((new InvoicePaidNotification($payment))->delay($when));
+                $user->notify((new InvoicePaidNotification($payment, 'admin'))->delay($when));
             }
         }
 

@@ -13,15 +13,17 @@ class InvoicePaidNotification extends Notification implements ShouldQueue
     use Queueable;
 
     public $payment;
+    public $user_route;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Payment $payment)
+    public function __construct(Payment $payment, $user_route)
     {
         $this->payment = $payment;
+        $this->user_route = $user_route;
     }
 
     /**
@@ -48,15 +50,15 @@ class InvoicePaidNotification extends Notification implements ShouldQueue
                     ->line('Invoice No' . $this->payment->invoice->invoice_no)
                     ->line('Payment No' . $this->payment->payment_no)
                     ->line('Amount Paid' . $this->payment->amount_paid)
-                    ->action('Check Payment', url('/admin/payments/' . $this->payment->id))
-                    ->line('Thank you for using our application!');
+                    ->action('Check Payment', url('/'.$this->user_route.'/payments/' . $this->payment->id))
+                    ->line('Thank you for using REMSS Payment platform!');
     }
 
     public function toDatabase()
     {
         return [
             'subject' => 'Invoice Paid from REMSS!',
-            'id' => $this->payment->invoice->id,
+            'id' => $this->payment->id,
             'notification_type' => 'invoice paid',
         ];
     }

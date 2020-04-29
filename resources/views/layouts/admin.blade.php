@@ -42,6 +42,60 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </div>
     </form>
 
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+    <!-- Notifications Dropdown Menu -->
+      <li class="mr-6">
+        <div class="dropdown">
+          <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-bell nav-icon"></i> 
+              @if (Auth::user()->unreadNotifications->count())
+                <span class="badge badge-warning navbar-badge ml-2">
+                  {{Auth::user()->unreadNotifications->count()}}
+                </span>
+            @endif
+          </a>
+
+          <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="dropdownMenuLink">
+            
+            {{-- Show Unread Notification Count --}}
+            @if (Auth::user()->unreadNotifications->count())
+              @if (Auth::user()->notifications->count() > 1)
+                <div class="d-flex justify-content-center">
+                  <p class="dropdown-item dropdown-header bg-warning"><b>{{Auth::user()->unreadNotifications->count()}} Notifications</b></p>
+                  <div class="dropdown-divider"></div>
+                    <a class="dropdown-item dropdown-header" href="{{route('admin.notifications.markNotificationsAsRead')}}" style="color:#007bff">Mark All as Read</a>
+                  <div class="dropdown-divider"></div>
+                </div>
+              @else
+                <div class="d-flex justify-content-center">
+                  <p class="dropdown-item dropdown-header bg-warning"><b>{{Auth::user()->unreadNotifications->count()}} Notification</b></p>
+                  <div class="dropdown-divider"></div>
+                    <a class="dropdown-item dropdown-header" href="{{route('admin.notifications.markNotificationsAsRead')}}" style="color:#007bff">Mark All as Read</a>
+                  <div class="dropdown-divider"></div>
+                </div>
+              @endif
+            @else
+              <div class="d-flex justify-content-center">
+                  <p class="dropdown-item dropdown-header bg-warning"><b>You don't have any new Notifications!</b></p>
+              </div>
+            @endif
+            
+            {{-- UNREAD NOTIFICATIONS --}}
+            @foreach(Auth::user()->unreadNotifications as $notification)
+              @if ($notification->data['notification_type'] == 'invoice paid')
+                <a class="dropdown-item bg-light" href="/admin/payments/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
+                <div class="dropdown-divider"></div>
+              @endif
+            @endforeach
+
+            <a href="{{route('admin.notifications.index')}}" class="dropdown-item dropdown-footer">See All Notifications</a>
+          </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
   </nav>
   <!-- /.navbar -->
 
@@ -105,8 +159,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/notices" class="nav-link">
+                <a href="{{route('admin.notifications.index')}}" class="nav-link">
                   <i class="fas fa-bell nav-icon"></i>
+                  <p>Notifications</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/notices" class="nav-link">
+                  <i class="fas fa-bullhorn nav-icon"></i>
                   <p>Notices</p>
                 </a>
               </li>
