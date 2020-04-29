@@ -234,7 +234,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/admin/roles" class="nav-link">
-                  <i class="fas fa-user-circle nav-icon"></i>
+                  <i class="fas fa-users nav-icon"></i>
                   <p>
                     Roles
                   </p>
@@ -242,9 +242,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
               <li class="nav-item">
                 <a href="/admin/roles/assign" class="nav-link">
-                  <i class="fas fa-user-circle nav-icon"></i>
+                  <i class="fas fa-user-plus nav-icon"></i>
                   <p>
                     Assign Roles
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/settings/profile/{{ Auth::user()->id }}" class="nav-link">
+                  <i class="fas fa-user-edit nav-icon"></i>
+                  <p>
+                    Profile
                   </p>
                 </a>
               </li>

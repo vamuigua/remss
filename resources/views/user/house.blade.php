@@ -11,9 +11,6 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $house->id }}</td>
-                                    </tr>
                                     <tr><th> House No </th><td> {{ $house->house_no }} </td></tr>
                                     <tr><th> Features </th><td> {!! $house->features !!} </td></tr>
                                     <tr><th> Rent </th><td> {{ $house->rent }} </td></tr>

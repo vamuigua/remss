@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container">
@@ -9,24 +9,19 @@
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle"
-                       src="{{ $user->tenant->tenantImage() }}"
-                       alt="User profile picture">
+                    <img class="profile-user-img img-fluid img-circle"
+                       src="/img/avatar.png"
+                       alt="Admin profile picture">
                 </div>
 
-                <h3 class="profile-username text-center">{{ $user->surname }} {{ $user->other_names }}</h3>
+                <h3 class="profile-username text-center">{{ $user->name }}</h3>
 
-                <p class="text-muted text-center">Tenant</p>
+                <p class="text-muted text-center">Admin</p>
                 <div class="table-responsive">
                     <table class="table">
                         <tbody>
-                            <tr><th> Surname </th><td> {{ $user->tenant->surname }} </td></tr>
-                            <tr><th> Other Names </th><td> {{ $user->tenant->other_names }} </td></tr>
-                            <tr><th> Gender </th><td> {{ $user->tenant->gender }} </td></tr>
-                            <tr><th> National ID </th><td> {{ $user->tenant->national_id }} </td></tr>
-                            <tr><th> Mobile No. </th><td> {{ $user->tenant->phone_no }} </td></tr>
-                            <tr><th> Email </th><td> {{ $user->tenant->email }} </td></tr>
-                            <tr><th> Occupying House </th><td> {{ $user->tenant->house->house_no }} </td>
+                            <tr><th >Name </th><td>{{ $user->name }}</td></tr>
+                            <tr><th> Email </th><td> {{ $user->email }} </td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -40,7 +35,7 @@
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
                   <li class="nav-item"><a class="nav-link active" href="#password" data-toggle="tab">Password</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#profilePic" data-toggle="tab">Profile Picture</a></li>
+                  {{-- <li class="nav-item"><a class="nav-link" href="#profilePic" data-toggle="tab">Profile Picture</a></li> --}}
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
@@ -55,7 +50,7 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ route('user.settings.updatePassword') }}" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.settings.updatePassword') }}" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="old_password" class="col-form-label">Old Password</label>
@@ -92,7 +87,7 @@
                         </form>
                   </div>
                   <!-- /.tab-pane -->
-                  <div class="tab-pane" id="profilePic">
+                  {{-- <div class="tab-pane" id="profilePic">
                       <form method="POST" action="{{ route('user.settings.updateProfilePic') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-group {{ $errors->has('image') ? 'has-error' : ''}}">
@@ -107,7 +102,7 @@
                             </div>
                         </div>
                       </form>
-                  </div>
+                  </div> --}}
                 </div>
                 <!-- /.tab-content -->
               </div><!-- /.card-body -->

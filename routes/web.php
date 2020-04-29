@@ -161,6 +161,18 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'admin.notifications.markNotificationsAsRead'
     ]);
 
+    //Settings
+    Route::get('/admin/settings/profile/{user}', [
+        'uses' => 'Admin\\SettingsController@profile',
+        'as' => 'admin.settings.profile'
+    ]);
+
+    // Update Password
+    Route::post('/admin/settings/updatePassword', [
+        'uses' => 'Admin\\SettingsController@updatePassword',
+        'as' => 'admin.settings.updatePassword'
+    ]);
+
     Route::resource('admin/houses', 'Admin\\HousesController');
     Route::resource('admin/tenants', 'Admin\\TenantsController');
     Route::resource('admin/invoices', 'Admin\\InvoicesController');

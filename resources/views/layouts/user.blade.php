@@ -193,7 +193,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
               <a href="/user/settings/profile/{{ Auth::user()->id }}" class="nav-link">
-                  <i class="fas fa-user-circle nav-icon"></i>
+                  <i class="fas fa-user-edit nav-icon"></i>
                   <p>
                     Profile
                   </p>
