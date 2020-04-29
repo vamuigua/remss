@@ -105,7 +105,7 @@
                 </tfoot>
             </table>
             {{-- INVOICE PAYMENTS --}}
-            <table id="datatable" class="table table-hover table-striped table-bordered">
+            <table id="datatable" class="table table table-hover table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>#</th><th>Payment No.</th><th>Prev Balance</th><th>Amount Paid</th><th>Balance</th><th>Tenant</th><th>Payment Date</th><th>Payment Type</th><th>Actions</th>
@@ -127,14 +127,14 @@
                             </tr>
                         @endforeach
                         <a href="{{ url('/admin/payments/create') }}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New Payment
+                            <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
                         </a>
                     @else
                         <div class="my-3">
                             <b>NO PAYMENTS FOR THIS INVOICE!</b>
                             <br>
                             <a href="{{ url('/admin/payments/create') }}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
-                                <i class="fa fa-plus" aria-hidden="true"></i> Add New Payment
+                                <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
                             </a>
                         </div>
                     @endif
@@ -143,9 +143,3 @@
         </div>
     </div>
 @endsection
-
-<script type="text/javascript">
-    function print_invoice() {
-        window.print();
-    }
-</script>
