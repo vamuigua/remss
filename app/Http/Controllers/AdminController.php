@@ -21,6 +21,9 @@ class AdminController extends Controller
         $notices = Notice::all();
         $expenditures = Expenditure::all();
         $water_readings = WaterReading::all();
-        return view ('admin.dashboard', compact('tenants', 'houses', 'invoices', 'payments', 'notices', 'expenditures','water_readings'));   
+
+        $months = Expenditure::monthsOfTheYear();
+        
+        return view ('admin.dashboard', compact('tenants', 'houses', 'invoices', 'payments', 'notices', 'expenditures','water_readings','months'));   
     }
 }

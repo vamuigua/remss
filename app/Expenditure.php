@@ -27,5 +27,13 @@ class Expenditure extends Model
      */
     protected $fillable = ['outgoings', 'amount', 'particulars', 'expenditure_date'];
 
-    
+    // get all months of the year
+    public static function monthsOfTheYear(){
+        $months = array();
+        for ($m=1; $m<=12; $m++) {
+            $month = date('F', mktime(0,0,0,$m, 1, date('Y')));
+            array_push($months, $month);
+        }
+        return $months;
+    }
 }

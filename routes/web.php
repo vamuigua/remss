@@ -173,6 +173,12 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'admin.settings.updatePassword'
     ]);
 
+    // Expenditures Per Month Request
+    Route::post('/admin/expenditure-months', [
+        'uses' => 'Admin\\ExpendituresController@expenditureMonths',
+        'as' => 'admin.expenditureMonths'
+    ]);
+
     Route::resource('admin/houses', 'Admin\\HousesController');
     Route::resource('admin/tenants', 'Admin\\TenantsController');
     Route::resource('admin/invoices', 'Admin\\InvoicesController');

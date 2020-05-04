@@ -8,9 +8,13 @@ require("bootstrap-select");
 require("summernote");
 require("datatables.net");
 require("datatables.net-bs4");
+require("moment");
+require("chart.js");
+require("bootstrap-datepicker");
 require("vue");
 
 $(document).ready(function() {
+    // summernote
     $("#summernote").summernote({
         height: 150,
         theme: "cerulian",

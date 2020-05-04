@@ -130,4 +130,8 @@ class ExpendituresController extends Controller
             'expenditure_date' => 'required|date_format:Y-m-d',
         ]);
     }
+
+    public function expenditureMonths(Request $request){
+        dd($request);
+    }
 }
