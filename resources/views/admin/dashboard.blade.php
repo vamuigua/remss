@@ -160,7 +160,9 @@
                                 <div class="m-2"><label for="months" class="control-label">{{ 'Choose Month(s): ' }}</label></div>
                                  <select class="selectpicker" multiple data-live-search="true" name="months[]" id="months" required>
                                     @foreach ($months as $month)
-                                        <option>{{$month}}</option>
+                                        @foreach ($month as $optionKey => $optionValue)
+                                            <option value="{{ $optionValue }}">{{ $optionKey }}</option>
+                                        @endforeach
                                     @endforeach
                                 </select>
                                 </div>

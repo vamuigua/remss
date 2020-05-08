@@ -145,7 +145,7 @@ class ExpendituresController extends Controller
         foreach ($months as $month) {
             // array of amounts of $month
             $amount = DB::select('select `amount` from expenditures where YEAR(expenditure_date) = :year AND MONTH(expenditure_date) = :month ORDER BY `id`',
-                                ['year' => $year, 'month' => '05']);
+                                ['year' => $year, 'month' => $month]);
             
             // sum all the expenditures for the selected month
             foreach ($amount as $value) {
@@ -155,8 +155,11 @@ class ExpendituresController extends Controller
 
             // add total amount for a month to an array
             array_push($amount_data, $total_amount_for_month);
+            $total_amount_for_month = 0;
+
             // add the calculated month expenditure into a year array
-            array_push($month_labels, $month);
+            $current_month = date('F', mktime(0,0,0,$month, 1, date('Y')));
+            array_push($month_labels, $current_month);
         }
         
         // return results in json  
