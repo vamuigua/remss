@@ -153,12 +153,12 @@
                         </div>
 
                         {{-- Expenditures Chart Form --}}
-                        <form action="{{ url('/admin/expenditure-months') }}" method="POST">
+                        <form id="expenditure_chart_form">
                             {{ csrf_field() }}
                             <div class="d-flex justify-content-center form-row">
                                 <div class="form-group col-md-4">
                                 <div class="m-2"><label for="months" class="control-label">{{ 'Choose Month(s): ' }}</label></div>
-                                 <select class="selectpicker" multiple data-live-search="true" name="months[]">
+                                 <select class="selectpicker" multiple data-live-search="true" name="months[]" id="months" required>
                                     @foreach ($months as $month)
                                         <option>{{$month}}</option>
                                     @endforeach
@@ -166,7 +166,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                 <div class="m-2"><label for="date" class="control-label">{{ 'Choose Year: ' }}</label></div>
-                                <input class="form-control" type="text" id="datepicker" name="year">
+                                <input class="form-control" type="text" id="datepicker" name="year" required>
                                 </div>
                             </div>
                             <div class="mx-5 d-flex justify-content-center form-group">

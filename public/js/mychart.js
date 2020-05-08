@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    "use strict";
+    ("use strict");
 
     var ticksStyle = {
         fontColor: "#495057",
@@ -21,13 +21,13 @@ $(document).ready(function() {
                     borderColor: "#007bff",
                     // Expenditure amount This Year
                     data: [1000, 2000, 3000, 2500, 2700, 2500, 3000]
-                },
-                {
-                    backgroundColor: "#ced4da",
-                    borderColor: "#ced4da",
-                    // Expenditure amount Another Year
-                    data: [700, 1700, 2700, 2000, 1800, 1500, 2000]
                 }
+                // {
+                //     backgroundColor: "#ced4da",
+                //     borderColor: "#ced4da",
+                //     // Expenditure amount Another Year
+                //     data: [700, 1700, 2700, 2000, 1800, 1500, 2000]
+                // }
             ]
         },
         options: {
@@ -88,5 +88,25 @@ $(document).ready(function() {
         format: " yyyy", // Notice the Extra space at the beginning
         viewMode: "years",
         minViewMode: "years"
+    });
+});
+
+$("#expenditure_chart_form").submit(function(event) {
+    // prevent the form from reloading the page
+    event.preventDefault();
+
+    // get values form the user
+    var months = $("#months").val();
+    var year = $("#datepicker").val();
+    var _token = $('input[name="_token"]').val();
+
+    $.ajax({
+        url: "/admin/expenditure-months",
+        method: "POST",
+        data: { months: months, year: year, _token: _token },
+        success: function(data) {
+            // $("#prev_balance").val(data.balance);
+            console.log(data);
+        }
     });
 });

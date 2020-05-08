@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Expenditure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExpendituresController extends Controller
 {
@@ -132,6 +133,33 @@ class ExpendituresController extends Controller
     }
 
     public function expenditureMonths(Request $request){
-        dd($request);
+        $amount_data = array();
+        $month_labels = array();
+        $total_amount_for_month = 0;
+
+        // get request from user ==> Months + Year
+        $months = $request->get('months');  //array
+        $year = $request->get('year');      // string
+
+        // for each month in year selected, fetch the expenditure
+        foreach ($months as $month) {
+            // array of amounts of $month
+            $amount = DB::select('select `amount` from expenditures where YEAR(expenditure_date) = :year AND MONTH(expenditure_date) = :month ORDER BY `id`',
+                                ['year' => $year, 'month' => '05']);
+            
+            // sum all the expenditures for the selected month
+            foreach ($amount as $value) {
+                // store total amount for a month
+                $total_amount_for_month += ($value->amount);
+            }
+
+            // add total amount for a month to an array
+            array_push($amount_data, $total_amount_for_month);
+            // add the calculated month expenditure into a year array
+            array_push($month_labels, $month);
+        }
+        
+        // return results in json  
+        return response()->json(array('amount_data'=> $amount_data, 'month_labels'=> $month_labels), 200);
     }
 }
