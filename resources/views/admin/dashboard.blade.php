@@ -126,7 +126,7 @@
                     <div class="card-body">
                         <div class="d-flex">
                         <p class="d-flex flex-column">
-                            <span class="text-bold text-lg">$18,230.00</span>
+                            <span class="text-bold text-lg">KSH.18,230.00</span>
                             <span>Expenditures Over Time</span>
                         </p>
                         <p class="ml-auto d-flex flex-column text-right">
@@ -138,8 +138,8 @@
                         </div>
                         <!-- /.d-flex -->
 
-                        <div class="position-relative mb-4">
-                            <canvas id="expenditure-chart" height="200"></canvas>
+                        <div class="position-relative mb-4" id="graph-container">
+                            <canvas id="expenditure-chart" height="200" style="display:none"></canvas>
                         </div>
 
                         <div class="d-flex flex-row justify-content-end">

@@ -1,4 +1,41 @@
 $(document).ready(function() {
+    // datepicker to show Years only
+    $("#datepicker").datepicker({
+        format: " yyyy", // Notice the Extra space at the beginning
+        viewMode: "years",
+        minViewMode: "years"
+    });
+
+    // submit Months and Year from expenditure_chart_form for processing
+    $("#expenditure_chart_form").submit(function(event) {
+        // prevent the form from reloading the page
+        event.preventDefault();
+
+        // get values form the user
+        var months = $("#months").val();
+        var year = $("#datepicker").val();
+        var _token = $('input[name="_token"]').val();
+
+        $.ajax({
+            url: "/admin/expenditure-months",
+            method: "POST",
+            data: { months: months, year: year, _token: _token },
+            success: function(data) {
+                // remove the prevoius expenditure-chart
+                $("#expenditure-chart").remove();
+                // create a new expenditure-chart canvas and append to the parent element
+                $("#graph-container").append(
+                    '<canvas id="expenditure-chart" height="200"></canvas>'
+                );
+                // generate a new expenditure-chart using processed data
+                generate_expenditure_chart(data.month_labels, data.amount_data);
+            }
+        });
+    });
+});
+
+// function that generated expenditure-chart processed data
+function generate_expenditure_chart(labels, data) {
     ("use strict");
 
     var ticksStyle = {
@@ -14,13 +51,13 @@ $(document).ready(function() {
         type: "bar",
         data: {
             // MONTHS
-            labels: ["JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+            labels: labels,
             datasets: [
                 {
                     backgroundColor: "#007bff",
                     borderColor: "#007bff",
                     // Expenditure amount This Year
-                    data: [1000, 2000, 3000, 2500, 2700, 2500, 3000]
+                    data: data
                 }
                 // {
                 //     backgroundColor: "#ced4da",
@@ -63,7 +100,7 @@ $(document).ready(function() {
                                         value /= 1000;
                                         value += "k";
                                     }
-                                    return "$" + value;
+                                    return "KSH." + value;
                                 }
                             },
                             ticksStyle
@@ -82,31 +119,4 @@ $(document).ready(function() {
             }
         }
     });
-
-    // datepicker to show Years only
-    $("#datepicker").datepicker({
-        format: " yyyy", // Notice the Extra space at the beginning
-        viewMode: "years",
-        minViewMode: "years"
-    });
-});
-
-$("#expenditure_chart_form").submit(function(event) {
-    // prevent the form from reloading the page
-    event.preventDefault();
-
-    // get values form the user
-    var months = $("#months").val();
-    var year = $("#datepicker").val();
-    var _token = $('input[name="_token"]').val();
-
-    $.ajax({
-        url: "/admin/expenditure-months",
-        method: "POST",
-        data: { months: months, year: year, _token: _token },
-        success: function(data) {
-            // $("#prev_balance").val(data.balance);
-            console.log(data);
-        }
-    });
-});
+}

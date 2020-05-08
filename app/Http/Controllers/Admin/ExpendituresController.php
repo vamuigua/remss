@@ -132,6 +132,7 @@ class ExpendituresController extends Controller
         ]);
     }
 
+    // calculates the Expenditures for selected months of a specific year to display on the expenditure-chart
     public function expenditureMonths(Request $request){
         $amount_data = array();
         $month_labels = array();
