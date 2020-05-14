@@ -29,6 +29,12 @@ $(document).ready(function() {
                 );
                 // generate a new expenditure-chart using processed data
                 generate_expenditure_chart(data.month_labels, data.amount_data);
+                $("#expenditure_total").html(
+                    "KSH." + data.total_expenditure_months_selected
+                );
+                $("#blue_bar_year").html(
+                    '<i class="fas fa-square text-primary"></i>' + year
+                );
             }
         });
     });
@@ -120,3 +126,51 @@ function generate_expenditure_chart(labels, data) {
         }
     });
 }
+
+// function to generate a pdf / print the Expenditure chart with computed results
+$("#downloadChartPDF").click(function(event) {
+    event.preventDefault();
+    var year = $("#datepicker").val();
+    var expenditure_total = $("#expenditure_total").html();
+
+    var canvas = document.querySelector("#expenditure-chart");
+    var canvas_img = canvas.toDataURL("image/png", 1.0); //JPEG will not match background color
+    var pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "in",
+        format: "a4"
+    });
+    pdf.addImage(canvas_img, "PNG", 0.5, 1.75); //image, type, padding left, padding top, width, height
+    pdf.text(
+        [
+            "REMSS",
+            "Total Expenditure for Selected Months: " + expenditure_total,
+            "Year: " + year
+        ],
+        1,
+        1
+    );
+
+    // pdf.print("Expenditure_" + year + ".pdf"); //save as pdf directly
+
+    pdf.autoPrint(); //print window automatically opened with pdf
+    var blob = pdf.output("bloburl");
+    window.open(blob);
+});
+
+function beforePrint() {
+    for (const id in Chart.instances) {
+        Chart.instances[id].resize();
+    }
+}
+
+if (window.matchMedia) {
+    let mediaQueryList = window.matchMedia("print");
+    mediaQueryList.addListener(mql => {
+        if (mql.matches) {
+            beforePrint();
+        }
+    });
+}
+
+window.onbeforeprint = beforePrint;

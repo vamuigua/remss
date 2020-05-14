@@ -115,41 +115,41 @@
                 </div>
             </div>
             {{-- EXPENDIRURES CHART --}}
-            <div class="col-md-12">
+            <div class="col-md-12" id="expenditures_chart">
                 <div class="card">
                     <div class="card-header border-0">
                         <div class="d-flex justify-content-between">
                         <h3 class="card-title">Expenditures</h3>
-                        <a href="javascript:void(0);">View Report</a>
+                        <a href="#" id="downloadChartPDF">Download Chart as PDF</a>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="d-flex">
                         <p class="d-flex flex-column">
-                            <span class="text-bold text-lg">KSH.18,230.00</span>
-                            <span>Expenditures Over Time</span>
+                            <span class="text-bold text-lg" id="expenditure_total">KSH.0</span>
+                            <span>Total Expenditure for Selected Months</span>
                         </p>
-                        <p class="ml-auto d-flex flex-column text-right">
+                        {{-- <p class="ml-auto d-flex flex-column text-right">
                             <span class="text-success">
                             <i class="fas fa-arrow-up"></i> 33.1%
                             </span>
                             <span class="text-muted">Since last month</span>
-                        </p>
+                        </p> --}}
                         </div>
                         <!-- /.d-flex -->
 
                         <div class="position-relative mb-4" id="graph-container">
-                            <canvas id="expenditure-chart" height="200" style="display:none"></canvas>
+                            <canvas id="expenditure-chart" style="display:none"></canvas>
                         </div>
 
                         <div class="d-flex flex-row justify-content-end">
-                            <span class="mr-2">
+                            <span class="mr-2" id="blue_bar_year">
                                 <i class="fas fa-square text-primary"></i> This year
                             </span>
 
-                            <span>
+                            {{-- <span>
                                 <i class="fas fa-square text-gray"></i> Last year
-                            </span>
+                            </span> --}}
                         </div>
 
                         {{-- Expenditures Chart Form --}}

@@ -137,6 +137,7 @@ class ExpendituresController extends Controller
         $amount_data = array();
         $month_labels = array();
         $total_amount_for_month = 0;
+        $total_expenditure_months_selected = 0;
 
         // get request from user ==> Months + Year
         $months = $request->get('months');  //array
@@ -154,6 +155,9 @@ class ExpendituresController extends Controller
                 $total_amount_for_month += ($value->amount);
             }
 
+            // total expenditure amount for selected months
+            $total_expenditure_months_selected += $total_amount_for_month;
+
             // add total amount for a month to an array
             array_push($amount_data, $total_amount_for_month);
             $total_amount_for_month = 0;
@@ -164,6 +168,9 @@ class ExpendituresController extends Controller
         }
         
         // return results in json  
-        return response()->json(array('amount_data'=> $amount_data, 'month_labels'=> $month_labels), 200);
+        return response()->json(array(
+            'amount_data'=> $amount_data,
+            'month_labels'=> $month_labels,
+            'total_expenditure_months_selected' => $total_expenditure_months_selected), 200);
     }
 }
