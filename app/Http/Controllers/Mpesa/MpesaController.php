@@ -11,8 +11,8 @@ class MpesaController extends Controller
 
     // access token
     public function access_token(){
-        $consumerKey = '00VYUw8a9QNWPpEe0xMmQo5FxGMgVuJ5';
-        $consumerSecret = 'cSuw5KuVBeXIIEQT'; 
+        $consumerKey = env('MPESA_CONSUMER_KEY');
+        $consumerSecret = env('MPESA_CONSUMER_SECRET'); 
 
         $headers = ['Content-Type:application/json; charset=utf8'];
 
@@ -39,9 +39,9 @@ class MpesaController extends Controller
         $url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl';
         
         $access_token = $this->access_token();
-        $shortCode = '601383';
-        $confirmationUrl = 'https://d574b6bb.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
-        $validationUrl = 'https://d574b6bb.ngrok.io/remss/validation_url.php';
+        $shortCode = env('MPESA_SHORTCODE');
+        $confirmationUrl = env('MPESA_ConfirmationUrl');  // remember to make urls https and use ngrok
+        $validationUrl = env('MPESA_ValidationUrl');
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -69,13 +69,12 @@ class MpesaController extends Controller
 
     // Simulate C2B Paybill Transaction
     public function C2B_Simulate($amount_paid, $invoice_no){
-        // dd("Success! Amount:" .$amount_paid." Invoice No:".$invoice_no);
         $url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate';
         
         $access_token = $this->access_token();
-        $shortCode = '601383';
+        $shortCode = env('MPESA_SHORTCODE');
         $amount = $amount_paid;
-        $msisdn = '254708374149';
+        $msisdn = '254789652333';
         $billRef = $invoice_no; //This is anything that helps identify the specific transaction. Can be a clients ID, Account Number, Invoice amount, cart no.. etc
         
         $curl = curl_init();
@@ -102,6 +101,16 @@ class MpesaController extends Controller
         // print_r($curl_response);
 
         $jsonMpesaResponse = json_decode($curl_response, true);
+        dd($jsonMpesaResponse);
+
+        // example Error response
+        // array(
+        //     "requestId" => "19684-5515046-1",
+        //     "errorCode" => "500.003.1001",
+        //     "errorMessage" => "System internal error."
+        // );
+
+
         $response = $jsonMpesaResponse['ResponseDescription'];
 
         if($response == "Accept the service request successfully."){
@@ -111,6 +120,4 @@ class MpesaController extends Controller
             return redirect('user/payments')->with('flash_message_error', 'The Payment was Unsuccessful! Try again in a few minutes');
         }
     }
-
-
 }

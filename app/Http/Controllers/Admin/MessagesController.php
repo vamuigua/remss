@@ -69,8 +69,9 @@ class MessagesController extends Controller
                     array_push($recepients, $row[0]);
                 }
                 $recepients_str = implode(", ",$recepients);
-            } else {
-                dd(SimpleXLSX::parseError());
+            } 
+            else {
+                return redirect('admin/messages/create')->with('flash_message_error', SimpleXLSX::parseError());
             }
         }
         // option for all_tenants

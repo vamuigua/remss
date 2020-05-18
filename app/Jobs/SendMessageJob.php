@@ -41,8 +41,8 @@ class SendMessageJob implements ShouldQueue
     // function to send messages through AT API
     public function sendSMS($message){
         // Set your app credentials
-        $username   = "sandbox";
-        $apiKey     = "d4ae8a06372c53410112a3045f896f7fb05ac192d23033c7c8e1fff1210211e8";
+        $username   = env('AFRICASTALKING_USERNAME');
+        $apiKey     = env('AFRICASTALKING_API_KEY');
         
         // Set your shortCode or senderId
         $from = "REMSS";
@@ -66,10 +66,10 @@ class SendMessageJob implements ShouldQueue
                 ]);
                 
                 // log the response
-                $logFile = "BulkSMSResponse.txt";
+                $logFile = "BulkSMSResponse.json";
                 
                 // convert result array to string
-                $str_json = json_encode($result);
+                $str_json = json_encode($result, JSON_PRETTY_PRINT);
 
                 // write to file
                 $log = fopen($logFile, "a");
@@ -80,7 +80,7 @@ class SendMessageJob implements ShouldQueue
                 $json = json_decode($str_json, true);
                 
                 // Check for errors
-                // print_r($json['data']['SMSMessageData']['Recipients'][0]['statusCode']);
+                // print_r($json['data']['SMSMessageData']['Recipients'][0]['statusCode']); // statusCode '101' means successful
                 
             } catch (Exception $e) {
                 // log the response
