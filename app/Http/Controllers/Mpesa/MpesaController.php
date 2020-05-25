@@ -39,9 +39,9 @@ class MpesaController extends Controller
         $url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl';
         
         $access_token = $this->access_token();
-        $shortCode = env('MPESA_SHORTCODE');
-        $confirmationUrl = env('MPESA_ConfirmationUrl');  // remember to make urls https and use ngrok
-        $validationUrl = env('MPESA_ValidationUrl');
+        $shortCode = '600610';
+        $confirmationUrl = 'https://fe9114c1.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
+        $validationUrl = 'https://fe9114c1.ngrok.io/remss/validation_url.php';
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -50,7 +50,7 @@ class MpesaController extends Controller
         $curl_post_data = array(
             //Fill in the request parameters with valid values
             'ShortCode' => $shortCode,
-            'ResponseType' => 'Confirmed',
+            'ResponseType' => 'Completed',
             'ConfirmationURL' => $confirmationUrl,
             'ValidationURL' => $validationUrl
         );
@@ -62,9 +62,14 @@ class MpesaController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
         
         $curl_response = curl_exec($curl);
-        print_r($curl_response);
-        
-        echo $curl_response;
+
+        $jsonResponse = json_decode($curl_response, true);
+
+        if($jsonResponse != null && $jsonResponse["ResponseDescription"] = "success"){
+            return redirect('user/dashboard')->with('flash_message', 'Validation and Confirmation URLs Successfully registered!');
+        }else{
+            return redirect('user/dashboard')->with('flash_message_error', 'Failed to Register the Validation and Confirmation URLs!');
+        }
     }
 
     // Simulate C2B Paybill Transaction
@@ -72,9 +77,9 @@ class MpesaController extends Controller
         $url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate';
         
         $access_token = $this->access_token();
-        $shortCode = env('MPESA_SHORTCODE');
+        $shortCode = '600610';
         $amount = $amount_paid;
-        $msisdn = '254789652333';
+        $msisdn = '254708374149';
         $billRef = $invoice_no; //This is anything that helps identify the specific transaction. Can be a clients ID, Account Number, Invoice amount, cart no.. etc
         
         $curl = curl_init();
@@ -98,23 +103,11 @@ class MpesaController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
     
         $curl_response = curl_exec($curl);
-        // print_r($curl_response);
 
         $jsonMpesaResponse = json_decode($curl_response, true);
-        dd($jsonMpesaResponse);
 
-        // example Error response
-        // array(
-        //     "requestId" => "19684-5515046-1",
-        //     "errorCode" => "500.003.1001",
-        //     "errorMessage" => "System internal error."
-        // );
-
-
-        $response = $jsonMpesaResponse['ResponseDescription'];
-
-        if($response == "Accept the service request successfully."){
-            return redirect('user/payments')->with('flash_message', 'Payment Made! You will receive a Payment Notification shortly');
+        if($jsonMpesaResponse != null && $jsonMpesaResponse["ResponseDescription"] !== null){
+            return redirect('user/payments')->with('flash_message', 'Payment Made! You will receive a Payment Notification for your Invoice shortly');
             // app('App\Http\Controllers\User\UsersController')->paymentsStore();
         }else{
             return redirect('user/payments')->with('flash_message_error', 'The Payment was Unsuccessful! Try again in a few minutes');

@@ -11,6 +11,6 @@ class ExpenditureTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Expenditure::class, 20)->create();
+        factory(App\Expenditure::class, 10)->create();
     }
 }

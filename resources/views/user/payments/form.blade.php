@@ -14,6 +14,7 @@
 <div class="form-group {{ $errors->has('invoice_id') ? 'has-error' : ''}}">
     <label for="invoice_id" class="control-label">{{ 'Invoice No.' }}</label>
     <select name="invoice_id" class="form-control selectpicker" data-live-search="true" id="invoice_id" onchange="updateDetails()">
+        <option selected="selected">Choose an Invoice</option>
         @foreach ($user->tenant->invoices as $invoice)
             <option value="{{ $invoice->id }}" {{ (isset($invoice->id))  && $payment->invoice_id == $invoice->id && $payment->status ? 'selected' : old('invoice_id')}}>{{ $invoice->invoice_no }}</option>
         @endforeach

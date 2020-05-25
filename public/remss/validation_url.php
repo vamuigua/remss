@@ -1,7 +1,8 @@
 <?php
     header("Content-Type: application/json");
 
-    $response = '{ "ResultCode": 0, "ResultDesc": "Confirmation Received Successfully" }';
+    $accept_response = '{ "ResultCode": 0, "ResultDesc": "Validation Accepted" }';
+    $reject_response = '{ "ResultCode": 1, "ResultDesc": "Validation Rejected" }';
 
     // Save the M-PESA input stream. 
     $mpesaResponse = file_get_contents('php://input');
@@ -23,7 +24,7 @@
     fwrite($log, $mpesaResponse);
     fclose($log);
 
-    echo $response;
+    echo $accept_response;
 
 ?>
 

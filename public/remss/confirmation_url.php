@@ -2,7 +2,7 @@
     require 'config.php';
     header("Content-Type: application/json");
 
-    $response = '{ "ResultCode": 0, "ResultDesc": "Confirmation Received Successfully" }';
+    $confirmation_response = '{"C2BPaymentConfirmationResult": "Success"}';
 
     // Response from M-PESA Stream
     $mpesaResponse = file_get_contents('php://input');
@@ -38,5 +38,5 @@
     // save response to DB
     insert_response($transaction);
     
-    echo $response;
+    echo $confirmation_response;
 ?>
