@@ -62,7 +62,7 @@
 </div>
 
 <div class="form-group {{ $errors->has('mpesa_confirmation') ? 'has-error' : ''}}">
-    <input class="form-control" name="mpesa_confirmation" type="text" id="mpesa_confirmation" value="false" hidden>
+    <input class="form-control" name="mpesa_confirmation" type="text" id="mpesa_confirmation" value="0" hidden>
 </div>
 
 <div class="form-group">

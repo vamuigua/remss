@@ -247,6 +247,11 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
         'as' => 'user.paymentsStore'
     ]);
 
+    Route::get('/user/complete_payment/{payment}', [
+        'uses' => 'User\\PaymentsController@completePayment',
+        'as' => 'user.completePayment'
+    ]);
+
     // Print Receipt
     Route::get('/user/payments/print_receipt/{payment}',[
         'uses' => 'User\\PaymentsController@print_receipt',
@@ -313,7 +318,7 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     ]);
 
     // Simulate C2B Transaction
-    Route::get('/user/C2B_simulate/{amount_paid}/{invoice_no}', [
+    Route::get('/user/C2B_simulate/{amount_paid}/{invoice_no}/{payment_id}', [
         'uses' => 'Mpesa\\MpesaController@C2B_simulate',
         'as' => 'user.C2B_simulate'
     ]);

@@ -24,6 +24,7 @@ class CreatePaymentsTable extends Migration
             $table->decimal('amount_paid')->nullable();
             $table->decimal('balance')->nullable();
             $table->string('comments')->nullable();
+            $table->integer('mpesa_confirmation')->nullable();
             });
     }
 

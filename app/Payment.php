@@ -25,7 +25,7 @@ class Payment extends Model
      *
      * @var array
      */
-    protected $fillable = ['tenant_id', 'invoice_id', 'payment_type', 'payment_date', 'payment_no', 'prev_balance', 'amount_paid', 'balance', 'comments'];
+    protected $fillable = ['tenant_id', 'invoice_id', 'payment_type', 'payment_date', 'payment_no', 'prev_balance', 'amount_paid', 'balance', 'comments', 'mpesa_confirmation'];
 
     public function paymentTypeOptions(){
         return [

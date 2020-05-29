@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mpesa;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Payment;
 
 class MpesaController extends Controller
 {  
@@ -40,8 +41,8 @@ class MpesaController extends Controller
         
         $access_token = $this->access_token();
         $shortCode = '600610';
-        $confirmationUrl = 'https://fe9114c1.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
-        $validationUrl = 'https://fe9114c1.ngrok.io/remss/validation_url.php';
+        $confirmationUrl = 'https://40242efd25b7.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
+        $validationUrl = 'https://40242efd25b7.ngrok.io/remss/validation_url.php';
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -73,7 +74,7 @@ class MpesaController extends Controller
     }
 
     // Simulate C2B Paybill Transaction
-    public function C2B_Simulate($amount_paid, $invoice_no){
+    public function C2B_Simulate($amount_paid, $invoice_no, $payment_id){
         $url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate';
         
         $access_token = $this->access_token();
@@ -106,10 +107,15 @@ class MpesaController extends Controller
 
         $jsonMpesaResponse = json_decode($curl_response, true);
 
-        if($jsonMpesaResponse != null && $jsonMpesaResponse["ResponseDescription"] !== null){
-            return redirect('user/payments')->with('flash_message', 'Payment Made! You will receive a Payment Notification for your Invoice shortly');
-            // app('App\Http\Controllers\User\UsersController')->paymentsStore();
+        if($jsonMpesaResponse != null && $jsonMpesaResponse["ResponseDescription"] != null){
+            // finish the Payment process since payment to mpesa paybill was a success
+            return redirect()->action(
+                'User\\PaymentsController@completePayment',
+                [$payment_id]
+            );
         }else{
+            // mpesa paybill payment failed, remove payment from DB
+            Payment::destroy($payment_id);
             return redirect('user/payments')->with('flash_message_error', 'The Payment was Unsuccessful! Try again in a few minutes');
         }
     }

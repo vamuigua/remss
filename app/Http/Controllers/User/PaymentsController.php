@@ -17,25 +17,13 @@ class PaymentsController extends Controller
 
     public function payments(Request $request)
     {
-        $keyword = $request->get('search');
         $perPage = 25;
 
         $user = Auth::user();
         $tenant_id = $user->tenant->id;
 
-        if (!empty($keyword)) {
-            $payments = Payment::where('payment_type', 'LIKE', "%$keyword%")
-                ->orWhere('payment_date', 'LIKE', "%$keyword%")
-                ->orWhere('payment_no', 'LIKE', "%$keyword%")
-                ->orWhere('prev_balance', 'LIKE', "%$keyword%")
-                ->orWhere('amount_paid', 'LIKE', "%$keyword%")
-                ->orWhere('balance', 'LIKE', "%$keyword%")
-                ->orWhere('comments', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $payments = Payment::where('tenant_id', 'LIKE', $tenant_id)
-                ->latest()->paginate($perPage);
-        }
+        $payments = Payment::where('tenant_id', 'LIKE', $tenant_id)
+            ->latest()->paginate($perPage);
 
         return view('user.payments.index', compact('payments'));
     }
@@ -60,21 +48,43 @@ class PaymentsController extends Controller
         $amount_paid = $this->validatedData['amount_paid'];
         $payment_type = $this->validatedData['payment_type'];
 
-        $balance = $this->validatedData['balance'];
-
         // Create a new payment with the validated data
         $payment = Payment::create($this->validatedData);
+        $payment_id = $payment->id;
+
+        // check the method of payment
+        if ($payment_type == "mpesa") {
+            return redirect()->action(
+                'Mpesa\\MpesaController@C2B_simulate',
+                [$amount_paid, $invoice_no, $payment_id]
+            );
+        } elseif ($payment_type == "paypal") {
+            dd($payment_type);
+        }
+    }
+
+    // Complete and Finalize a Payment
+    public function completePayment($payment_id){
+        // find the Payment made
+        $payment = Payment::findOrFail($payment_id);
+
+        // confirm to the payment that the mpesa transaction was successful
+        $payment->mpesa_confirmation = "1";
+        $payment->save();
+
+        // find the balance of the payment
+        $balance = $payment->balance;
 
         // checks if the final balance of the invoice_id was paid thus setting the status of the invoice_id to closed
         if ($balance == '0') {
-            $id = $this->validatedData['invoice_id'];
+            $id = $payment->invoice_id;
             $invoice = Invoice::findOrFail($id);
             $invoice->status = 'closed';
             $invoice->save();
         }
 
         // Send InvoicePaid Noticifaction to Tenant
-        $tenant_id = $this->validatedData['tenant_id'];
+        $tenant_id = $payment->tenant_id;
         $user = User::findOrFail($tenant_id);
         $when = Carbon::now()->addSeconds(5);
         $user->notify((new InvoicePaidNotification($payment, 'user'))->delay($when));
@@ -85,16 +95,6 @@ class PaymentsController extends Controller
             if ($user->hasRole('admin')) {
                 $user->notify((new InvoicePaidNotification($payment, 'admin'))->delay($when));
             }
-        }
-
-        // check the method of payment
-        if ($payment_type == "mpesa") {
-            return redirect()->action(
-                'Mpesa\\MpesaController@C2B_simulate',
-                [$amount_paid, $invoice_no]
-            );
-        } elseif ($payment_type == "paypal") {
-            dd($payment_type);
         }
 
         return redirect('user/payments')->with('flash_message', 'Payment Made! You will receive a Payment Notification shortly');
@@ -118,10 +118,7 @@ class PaymentsController extends Controller
 
     public function paymentsShow($id)
     {
-        $user = Auth::user();
-        $payments = $user->tenant->payments;
-        $payment = $payments->find($id);
-
+        $payment = Payment::findOrFail($id);
         return view('user.payments.show', compact('payment'));
     }
 
