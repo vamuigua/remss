@@ -112,6 +112,21 @@
                             </a>
                         </div>
                     </div>
+                    {{-- Pending Payments --}}
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-purple">
+                            <div class="inner">
+                            <h3>{{$pending_payments->count()}}</h3>
+                                <p>Pending Payments</p>
+                            </div>
+                            <div class="icon">
+                                <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                            </div>
+                            <a href="/admin/pending-payments" class="small-box-footer">
+                                More info <i class="fas fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             {{-- EXPENDIRURES CHART --}}

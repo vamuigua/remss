@@ -176,12 +176,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Invoices</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/admin/payments" class="nav-link">
-                  <i class="nav-icon fas fa-dollar-sign"></i>
-                  <p>Payments</p>
-                </a>
-              </li>
+              {{-- PAYMENTS --}}
+              <li class="nav-item has-treeview">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-money-bill-wave-alt"></i>
+                <p>
+                  Payments
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/admin/payments" class="nav-link">
+                    <i class="nav-icon fas fa-dollar-sign"></i>
+                    <p>All Payments</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/admin/pending-payments" class="nav-link">
+                    <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                    <p>Pending Payments</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
               <li class="nav-item">
                 <a href="/admin/expenditures" class="nav-link">
                   <i class="fas fa-money-bill-alt nav-icon"></i>

@@ -21,9 +21,10 @@ class AdminController extends Controller
         $notices = Notice::all();
         $expenditures = Expenditure::all();
         $water_readings = WaterReading::all();
+        $pending_payments = Invoice::where('status', 'active');
 
         $months = Expenditure::monthsOfTheYear();
         
-        return view ('admin.dashboard', compact('tenants', 'houses', 'invoices', 'payments', 'notices', 'expenditures','water_readings','months'));   
+        return view ('admin.dashboard', compact('tenants', 'houses', 'invoices', 'payments', 'notices', 'expenditures','water_readings','months','pending_payments'));   
     }
 }

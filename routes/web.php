@@ -179,6 +179,11 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'admin.expenditureMonths'
     ]);
 
+    Route::get('/admin/pending-payments', [
+        'uses' => 'Admin\\PendingPaymentsController@index',
+        'as' => 'admin.pendingpayments.index'
+    ]);
+
     Route::resource('admin/houses', 'Admin\\HousesController');
     Route::resource('admin/tenants', 'Admin\\TenantsController');
     Route::resource('admin/invoices', 'Admin\\InvoicesController');

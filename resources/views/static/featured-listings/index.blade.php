@@ -73,7 +73,7 @@
 			</div> --}}
 			@else
 				<h3>Sorry!</h3>
-				<h4>There are currently {{$houseadverts->count()}} Featured Listings at the moment! Come back later</h4>
+				<h4>There are currently no featured listings at he moment. Come back later!</h4>
 			@endif
 		</div>
 	</section>

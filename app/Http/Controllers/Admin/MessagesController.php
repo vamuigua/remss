@@ -76,10 +76,10 @@ class MessagesController extends Controller
         }
         // option for all_tenants
         else if($requestData['send_to'] == "all_tenants"){
-            $tenants = Tenant::all();
+            $tenant_phone_numbers = Tenant::all()->pluck('phone_no');
             
-            foreach ($tenants as $tenant){
-                array_push($recepients, $tenant->phone_no);
+            foreach ($tenant_phone_numbers as $phone_no){
+                array_push($recepients, $phone_no);
             }
             $recepients_str = implode(", ",$recepients);
         }
