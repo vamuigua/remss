@@ -41,8 +41,8 @@ class MpesaController extends Controller
         
         $access_token = $this->access_token();
         $shortCode = '600610';
-        $confirmationUrl = 'https://40242efd25b7.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
-        $validationUrl = 'https://40242efd25b7.ngrok.io/remss/validation_url.php';
+        $confirmationUrl = 'https://d1363d7ad325.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
+        $validationUrl = 'https://d1363d7ad325.ngrok.io/remss/validation_url.php';
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -67,9 +67,9 @@ class MpesaController extends Controller
         $jsonResponse = json_decode($curl_response, true);
 
         if($jsonResponse != null && $jsonResponse["ResponseDescription"] = "success"){
-            return redirect('user/dashboard')->with('flash_message', 'Validation and Confirmation URLs Successfully registered!');
+            return redirect('tenant/dashboard')->with('flash_message', 'Validation and Confirmation URLs Successfully registered!');
         }else{
-            return redirect('user/dashboard')->with('flash_message_error', 'Failed to Register the Validation and Confirmation URLs!');
+            return redirect('tenant/dashboard')->with('flash_message_error', 'Failed to Register the Validation and Confirmation URLs!');
         }
     }
 
@@ -110,13 +110,13 @@ class MpesaController extends Controller
         if($jsonMpesaResponse != null && $jsonMpesaResponse["ResponseDescription"] != null){
             // finish the Payment process since payment to mpesa paybill was a success
             return redirect()->action(
-                'User\\PaymentsController@completePayment',
+                'Tenant\\PaymentsController@completePayment',
                 [$payment_id]
             );
         }else{
             // mpesa paybill payment failed, remove payment from DB
             Payment::destroy($payment_id);
-            return redirect('user/payments')->with('flash_message_error', 'The Payment was Unsuccessful! Try again in a few minutes');
+            return redirect('tenants/payments')->with('flash_message_error', 'The Payment was Unsuccessful! Try again in a few minutes');
         }
     }
 }

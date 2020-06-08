@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Tenant;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +13,7 @@ class SettingsController extends Controller
     // Profile Settings View
     public function profile($id){
         $user = Auth::user($id);
-        return view ('user.settings.profile', compact('user'));     
+        return view ('tenant.settings.profile', compact('user'));     
     }
 
     // Update Profile Picture

@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.tenant')
 
 @section('content')
     <div class="container">
@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header"><h2>Payments</h2></div>
                     <div class="col-md-3">
-                        <a href="{{route('user.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                        <a href="{{route('tenant.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
                             <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
                         </a>
                     </div>
@@ -35,7 +35,7 @@
                                         <td>{{ $item->payment_type }}</td>
                                         <td>{{ $item->created_at->diffForHumans() }}</td>
                                         <td>
-                                            <a href="{{ url('/user/payments/' . $item->id) }}" title="View Payment"><button class="btn btn-success btn-sm">View</button></a>
+                                            <a href="{{ url('/tenant/payments/' . $item->id) }}" title="View Payment"><button class="btn btn-success btn-sm">View</button></a>
                                         </td>
                                     </tr>
                                 @endforeach

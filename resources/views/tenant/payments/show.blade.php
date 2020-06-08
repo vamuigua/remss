@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.tenant')
 
 @section('content')
     <div class="container">
@@ -7,9 +7,9 @@
                 <div class="card">
                     <div class="card-header">Payment No. {{ $payment->payment_no }}</div>
                     <div class="card-body">
-                        <a href="{{ url('/user/payments') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/tenant/payments') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <div class="float-right">
-                            <a href="{{route('user.payments.print_receipt', $payment)}}" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print Receipt</a>
+                            <a href="{{route('tenant.payments.print_receipt', $payment)}}" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print Receipt</a>
                         </div>
                         
                         <br/>
@@ -23,7 +23,7 @@
                                         <td>{{ $payment->tenant->surname }} {{ $payment->tenant->other_names }}</td>
                                     </tr>
                                     <tr><th> Invoice No. </th>
-                                        <td> <a href="{{ url('/user/invoices/' . $payment->invoice->id) }}">{{ $payment->invoice->invoice_no  }}</a> </td>
+                                        <td> <a href="{{ url('/tenant/invoices/' . $payment->invoice->id) }}">{{ $payment->invoice->invoice_no  }}</a> </td>
                                     </tr>
                                     <tr><th> Payment Type </th><td> {{ $payment->payment_type }} </td></tr>
                                     <tr><th> Payment Date </th><td> {{ $payment->payment_date }} </td></tr>

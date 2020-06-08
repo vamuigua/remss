@@ -1,11 +1,11 @@
-@extends('layouts.user')
+@extends('layouts.tenant')
 
 @section('content')
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="clearfix my-2">
                 <span class="panel-title"><h2>Invoices</h2></span>
-                <a href="{{route('user.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                <a href="{{route('tenant.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
                     <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
                 </a>
             </div>
@@ -36,7 +36,7 @@
                             <td>{{$invoice->due_date}}</td>
                             <td>{{$invoice->created_at->diffForHumans()}}</td>
                             <td>
-                                <a href="{{route('user.invoices.show', $invoice)}}" class="btn btn-success btn-sm">View</a>
+                                <a href="{{route('tenant.invoices.show', $invoice)}}" class="btn btn-success btn-sm">View</a>
                             </td>
                         </tr>
                     @endforeach

@@ -79,7 +79,7 @@ Route::middleware(['auth','web'])->group(function () {
 // ADMIN ROUTES
 Route::middleware(['roles:Admin', 'auth'])->group(function () {
     Route::get('/admin/dashboard', [
-        'uses' => 'AdminController@index',
+        'uses' => 'Admin\\AdminDashboardController@index',
         'as' => 'admin.dashboard'
     ]);
 
@@ -199,144 +199,144 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
 // USER ROUTES
 Route::middleware(['roles:User', 'auth'])->group(function () {
     // Dashnoard
-    Route::get('/user/dashboard', [
-        'uses' => 'User\\UsersController@index',
-        'as' => 'user.dashboard'
+    Route::get('/tenant/dashboard', [
+        'uses' => 'Tenant\\TenantController@index',
+        'as' => 'tenant.dashboard'
     ]);
 
     // House
-    Route::get('/user/house', [
-        'uses' => 'User\\UsersController@house',
-        'as' => 'user.house'
+    Route::get('/tenant/house', [
+        'uses' => 'Tenant\\TenantController@house',
+        'as' => 'tenant.house'
     ]);
 
     // Invoices
-    Route::get('/user/invoices', [
-        'uses' => 'User\\InvoicesController@invoices',
-        'as' => 'user.invoices.index'
+    Route::get('/tenant/invoices', [
+        'uses' => 'Tenant\\InvoicesController@invoices',
+        'as' => 'tenant.invoices.index'
     ]);
 
-    Route::get('/user/invoices/{invoice}', [
-        'uses' => 'User\\InvoicesController@invoicesShow',
-        'as' => 'user.invoices.show'
+    Route::get('/tenant/invoices/{invoice}', [
+        'uses' => 'Tenant\\InvoicesController@invoicesShow',
+        'as' => 'tenant.invoices.show'
     ]);
 
-    Route::get('/user/invoices/print_invoice/{invoice}',[
-        'uses' => 'User\\InvoicesController@print_invoice',
-        'as' => 'user.invoices.print_invoice'
+    Route::get('/tenant/invoices/print_invoice/{invoice}',[
+        'uses' => 'Tenant\\InvoicesController@print_invoice',
+        'as' => 'tenant.invoices.print_invoice'
     ]);
 
-    Route::get('/user/invoices/pdf_invoice/{invoice}',[
-        'uses' => 'User\\InvoicesController@pdf_invoice',
-        'as' => 'user.invoices.pdf_invoice'
+    Route::get('/tenant/invoices/pdf_invoice/{invoice}',[
+        'uses' => 'Tenant\\InvoicesController@pdf_invoice',
+        'as' => 'tenant.invoices.pdf_invoice'
     ]);
 
     // Payments
-    Route::get('/user/payments', [
-        'uses' => 'User\\PaymentsController@payments',
-        'as' => 'user.payments.index'
+    Route::get('/tenant/payments', [
+        'uses' => 'Tenant\\PaymentsController@payments',
+        'as' => 'tenant.payments.index'
     ]);
 
-    Route::get('/user/payments/create', [
-        'uses' => 'User\\PaymentsController@paymentsCreate',
-        'as' => 'user.payments.create'
+    Route::get('/tenant/payments/create', [
+        'uses' => 'Tenant\\PaymentsController@paymentsCreate',
+        'as' => 'tenant.payments.create'
     ]);
 
-    Route::get('/user/payments/{payment}', [
-        'uses' => 'User\\PaymentsController@paymentsShow',
-        'as' => 'user.payments.show'
+    Route::get('/tenant/payments/{payment}', [
+        'uses' => 'Tenant\\PaymentsController@paymentsShow',
+        'as' => 'tenant.payments.show'
     ]);
 
-    Route::post('/user/payments', [
-        'uses' => 'User\\PaymentsController@paymentsStore',
-        'as' => 'user.paymentsStore'
+    Route::post('/tenant/payments', [
+        'uses' => 'Tenant\\PaymentsController@paymentsStore',
+        'as' => 'tenant.paymentsStore'
     ]);
 
-    Route::get('/user/complete_payment/{payment}', [
-        'uses' => 'User\\PaymentsController@completePayment',
-        'as' => 'user.completePayment'
+    Route::get('/tenant/complete_payment/{payment}', [
+        'uses' => 'Tenant\\PaymentsController@completePayment',
+        'as' => 'tenant.completePayment'
     ]);
 
     // Print Receipt
-    Route::get('/user/payments/print_receipt/{payment}',[
-        'uses' => 'User\\PaymentsController@print_receipt',
-        'as' => 'user.payments.print_receipt'
+    Route::get('/tenant/payments/print_receipt/{payment}',[
+        'uses' => 'Tenant\\PaymentsController@print_receipt',
+        'as' => 'tenant.payments.print_receipt'
     ]);
 
     // Notices
-    Route::get('/user/notices', [
-        'uses' => 'User\\NoticesController@notices',
-        'as' => 'user.notices.index'
+    Route::get('/tenant/notices', [
+        'uses' => 'Tenant\\NoticesController@notices',
+        'as' => 'tenant.notices.index'
     ]);
 
-    Route::get('/user/notices/{notice}', [
-        'uses' => 'User\\NoticesController@noticesShow',
-        'as' => 'user.notices.show'
+    Route::get('/tenant/notices/{notice}', [
+        'uses' => 'Tenant\\NoticesController@noticesShow',
+        'as' => 'tenant.notices.show'
     ]);
 
     // Notifications
-    Route::get('/user/notifications', [
-        'uses' => 'User\\NotificationsController@index',
-        'as' => 'user.notifications.index'
+    Route::get('/tenant/notifications', [
+        'uses' => 'Tenant\\NotificationsController@index',
+        'as' => 'tenant.notifications.index'
     ]);
 
     // Mark Notification as Read
-    Route::get('/user/notifications/{notification}/notificationRead', [
-        'uses' => 'User\\NotificationsController@notificationRead',
-        'as' => 'user.notifications.notificationRead'
+    Route::get('/tenant/notifications/{notification}/notificationRead', [
+        'uses' => 'Tenant\\NotificationsController@notificationRead',
+        'as' => 'tenant.notifications.notificationRead'
     ]);
 
     // Mark All Notifications as Read
-    Route::get('/user/notifications/markNotificationsAsRead', [
-        'uses' => 'User\\NotificationsController@markNotificationsAsRead',
-        'as' => 'user.notifications.markNotificationsAsRead'
+    Route::get('/tenant/notifications/markNotificationsAsRead', [
+        'uses' => 'Tenant\\NotificationsController@markNotificationsAsRead',
+        'as' => 'tenant.notifications.markNotificationsAsRead'
     ]);
     
     //Settings
-    Route::post('/user/settings/updateProfilePic', [
-        'uses' => 'User\\SettingsController@updateProfilePic',
-        'as' => 'user.settings.updateProfilePic'
+    Route::post('/tenant/settings/updateProfilePic', [
+        'uses' => 'Tenant\\SettingsController@updateProfilePic',
+        'as' => 'tenant.settings.updateProfilePic'
     ]);
 
-    Route::get('/user/settings/profile/{user}', [
-        'uses' => 'User\\SettingsController@profile',
-        'as' => 'user.settings.profile'
+    Route::get('/tenant/settings/profile/{user}', [
+        'uses' => 'Tenant\\SettingsController@profile',
+        'as' => 'tenant.settings.profile'
     ]);
 
     // Update Password
-    Route::post('/user/settings/updatePassword', [
-        'uses' => 'User\\SettingsController@updatePassword',
-        'as' => 'user.settings.updatePassword'
+    Route::post('/tenant/settings/updatePassword', [
+        'uses' => 'Tenant\\SettingsController@updatePassword',
+        'as' => 'tenant.settings.updatePassword'
     ]);
 
-    // Mpesa
+    // Mpesa Routes
     // Access-Token
-    Route::get('/user/access_token', [
+    Route::get('/tenant/access_token', [
         'uses' => 'Mpesa\\MpesaController@access_token',
-        'as' => 'user.access_token'
+        'as' => 'tenant.access_token'
     ]);
 
     // Register URLs
-    Route::get('/user/register_url', [
+    Route::get('/tenant/register_url', [
         'uses' => 'Mpesa\\MpesaController@register_url',
-        'as' => 'user.register_url'
+        'as' => 'tenant.register_url'
     ]);
 
     // Simulate C2B Transaction
-    Route::get('/user/C2B_simulate/{amount_paid}/{invoice_no}/{payment_id}', [
+    Route::get('/tenant/C2B_simulate/{amount_paid}/{invoice_no}/{payment_id}', [
         'uses' => 'Mpesa\\MpesaController@C2B_simulate',
-        'as' => 'user.C2B_simulate'
+        'as' => 'tenant.C2B_simulate'
     ]);
 
     // Feedback / Questions
-    Route::get('/user/questions',[
-        'uses' =>'User\\QuestionsController@index',
-        'as' => 'user.questions'
+    Route::get('/tenant/questions',[
+        'uses' =>'Tenant\\QuestionsController@index',
+        'as' => 'tenant.questions'
     ]);
 
-    Route::post('/user/questions',[
-        'uses' =>'User\\QuestionsController@store',
-        'as' => 'user.questions'
+    Route::post('/tenant/questions',[
+        'uses' =>'Tenant\\QuestionsController@store',
+        'as' => 'tenant.questions'
     ]);
 
 });

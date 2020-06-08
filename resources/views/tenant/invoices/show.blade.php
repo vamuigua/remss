@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.tenant')
 
 @section('content')
     <div class="panel panel-default">
@@ -6,11 +6,11 @@
             <div class="clearfix">
                 <span class="panel-title"><h2>Invoice</h2></span>
                 <div class="float-left my-3">
-                    <a href="{{route('user.invoices.index')}}" class="btn btn-warning mx-2"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    <a href="{{route('tenant.invoices.index')}}" class="btn btn-warning mx-2"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                 </div>
                 <div class="float-right">
-                    <a href="{{route('user.invoices.pdf_invoice', $invoice)}}" target="_blank" class="btn btn-danger"><i class="fas fa-file-pdf"></i> PDF</a>
-                    <a href="{{route('user.invoices.print_invoice', $invoice)}}" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                    <a href="{{route('tenant.invoices.pdf_invoice', $invoice)}}" target="_blank" class="btn btn-danger"><i class="fas fa-file-pdf"></i> PDF</a>
+                    <a href="{{route('tenant.invoices.print_invoice', $invoice)}}" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
                 </div>
             </div>
         </div>
@@ -114,17 +114,17 @@
                                 <td>{{ $payment->tenant->surname }}</td>
                                 <td>{{ $payment->payment_date }}</td>
                                 <td>{{ $payment->payment_type }}</td>
-                                <td><a href="{{ url('/user/payments/' . $payment->id) }}" title="View Payment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a></td>
+                                <td><a href="{{ url('/tenant/payments/' . $payment->id) }}" title="View Payment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a></td>
                             </tr>
                         @endforeach
-                        <a href="{{route('user.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                        <a href="{{route('tenant.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
                             <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
                         </a>
                     @else
                         <div class="my-3">
                             <b>NO PAYMENTS FOR THIS INVOICE!</b>
                             <br>
-                            <a href="{{route('user.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
+                            <a href="{{route('tenant.payments.create')}}" class="btn btn-success btn-sm my-3 p-3" title="Add New Payment">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Make New Payment
                             </a>
                         </div>

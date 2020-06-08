@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Tenant;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -22,12 +22,12 @@ class NoticesController extends Controller
             $notices = Notice::latest()->paginate($perPage);
         }
 
-        return view ('user.notices.index', compact('notices'));   
+        return view ('tenant.notices.index', compact('notices'));   
     }
 
     // Notices Show 
     public function noticesShow($id){
         $notice = Notice::findOrFail($id);
-        return view ('user.notices.show', compact('notice'));   
+        return view ('tenant.notices.show', compact('notice'));   
     }
 }

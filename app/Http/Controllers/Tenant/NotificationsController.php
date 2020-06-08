@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Tenant;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class NotificationsController extends Controller
 
         $notifications = $user->notifications;
 
-        return view ('user.notifications.index', compact('notifications'));   
+        return view ('tenant.notifications.index', compact('notifications'));   
     }   
 
     // Mark all Notifications as Read

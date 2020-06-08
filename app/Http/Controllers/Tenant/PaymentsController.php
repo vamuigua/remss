@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Tenant;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -25,7 +25,7 @@ class PaymentsController extends Controller
         $payments = Payment::where('tenant_id', 'LIKE', $tenant_id)
             ->latest()->paginate($perPage);
 
-        return view('user.payments.index', compact('payments'));
+        return view('tenant.payments.index', compact('payments'));
     }
 
     public function paymentsCreate()
@@ -33,7 +33,7 @@ class PaymentsController extends Controller
         $user = Auth::user();
         $payment = new Payment();
 
-        return view('user.payments.create', compact('payment', 'user'));
+        return view('tenant.payments.create', compact('payment', 'user'));
     }
 
     public function paymentsStore(Request $request)
@@ -97,7 +97,7 @@ class PaymentsController extends Controller
             }
         }
 
-        return redirect('user/payments')->with('flash_message', 'Payment Made! You will receive a Payment Notification shortly');
+        return redirect('/tenant/payments/'. $payment->id)->with('flash_message', 'Payment Made! You will receive a Payment Notification shortly');
     }
 
     public function validatePaymentsRequest(Request $request)
@@ -119,7 +119,7 @@ class PaymentsController extends Controller
     public function paymentsShow($id)
     {
         $payment = Payment::findOrFail($id);
-        return view('user.payments.show', compact('payment'));
+        return view('tenant.payments.show', compact('payment'));
     }
 
     //print receipt for payment

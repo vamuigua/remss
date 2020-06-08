@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.tenant')
 
 @section('content')
     <div class="container">
@@ -55,7 +55,7 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ route('user.settings.updatePassword') }}" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('tenant.settings.updatePassword') }}" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="old_password" class="col-form-label">Old Password</label>
@@ -93,7 +93,7 @@
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="profilePic">
-                      <form method="POST" action="{{ route('user.settings.updateProfilePic') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                      <form method="POST" action="{{ route('tenant.settings.updateProfilePic') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-group {{ $errors->has('image') ? 'has-error' : ''}}">
                             <label for="image" class="control-label">{{ 'Change Profile Picture' }}</label>

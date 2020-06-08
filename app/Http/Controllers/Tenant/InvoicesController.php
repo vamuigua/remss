@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Tenant;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -31,7 +31,7 @@ class InvoicesController extends Controller
                     ->latest()->paginate($perPage);
         }
 
-        return view ('user.invoices.index', compact('invoices'));   
+        return view ('tenant.invoices.index', compact('invoices'));   
     }
 
     public function invoicesShow($id){
@@ -39,7 +39,7 @@ class InvoicesController extends Controller
         $invoices = $user->tenant->invoices;
         $invoice = $invoices->find($id);
 
-        return view ('user.invoices.show', compact('invoice'));   
+        return view ('tenant.invoices.show', compact('invoice'));   
     }
 
     public function print_invoice($id)

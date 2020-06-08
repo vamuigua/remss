@@ -64,14 +64,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="d-flex justify-content-center">
                   <p class="dropdown-item dropdown-header bg-warning"><b>{{Auth::user()->unreadNotifications->count()}} Notifications</b></p>
                   <div class="dropdown-divider"></div>
-                    <a class="dropdown-item dropdown-header" href="{{route('user.notifications.markNotificationsAsRead')}}" style="color:#007bff">Mark All as Read</a>
+                    <a class="dropdown-item dropdown-header" href="{{route('tenant.notifications.markNotificationsAsRead')}}" style="color:#007bff">Mark All as Read</a>
                   <div class="dropdown-divider"></div>
                 </div>
               @else
                 <div class="d-flex justify-content-center">
                   <p class="dropdown-item dropdown-header bg-warning"><b>{{Auth::user()->unreadNotifications->count()}} Notification</b></p>
                   <div class="dropdown-divider"></div>
-                    <a class="dropdown-item dropdown-header" href="{{route('user.notifications.markNotificationsAsRead')}}" style="color:#007bff">Mark All as Read</a>
+                    <a class="dropdown-item dropdown-header" href="{{route('tenant.notifications.markNotificationsAsRead')}}" style="color:#007bff">Mark All as Read</a>
                   <div class="dropdown-divider"></div>
                 </div>
               @endif
@@ -84,20 +84,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
             {{-- UNREAD NOTIFICATIONS --}}
             @foreach(Auth::user()->unreadNotifications as $notification)
               @if ($notification->data['notification_type'] == 'notice')
-                <a class="dropdown-item bg-light" href="/user/notices/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
+                <a class="dropdown-item bg-light" href="/tenant/notices/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
                 <div class="dropdown-divider"></div>
               @endif
               @if ($notification->data['notification_type'] == 'invoice paid')
-                <a class="dropdown-item bg-light" href="/user/payments/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
+                <a class="dropdown-item bg-light" href="/tenant/payments/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
                 <div class="dropdown-divider"></div>
               @endif
               @if ($notification->data['notification_type'] == 'invoice sent')
-                <a class="dropdown-item bg-light" href="/user/invoices/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
+                <a class="dropdown-item bg-light" href="/tenant/invoices/{{$notification->data['id']}}"><i class="fas fa-bell nav-icon"></i> {{$notification->data['subject']}}</a>
                 <div class="dropdown-divider"></div>
               @endif
             @endforeach
 
-            <a href="{{route('user.notifications.index')}}" class="dropdown-item dropdown-footer">See All Notifications</a>
+            <a href="{{route('tenant.notifications.index')}}" class="dropdown-item dropdown-footer">See All Notifications</a>
           </div>
           </div>
         </div>
@@ -110,7 +110,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="/user/dashboard" class="brand-link">
+    <a href="/tenant/dashboard" class="brand-link">
       <img src="/img/AdminLTELogo.png" alt="REMSS Admin Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">{{ config('app.name') }} ACCOUNT</span>
@@ -124,7 +124,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="{{Auth::user()->tenant->tenantImage()}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="/user/dashboard" class="d-block">{{ Auth::user()->tenant->surname }} {{ Auth::user()->tenant->other_names }}</a>
+          <a href="/tenant/dashboard" class="d-block">{{ Auth::user()->tenant->surname }} {{ Auth::user()->tenant->other_names }}</a>
         </div>
       </div>
 
@@ -134,7 +134,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="/user/dashboard" class="nav-link">
+            <a href="/tenant/dashboard" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
@@ -151,31 +151,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/user/house" class="nav-link">
+                <a href="/tenant/house" class="nav-link">
                   <i class="fas fa-home nav-icon"></i>
                   <p>My House</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('user.notifications.index')}}" class="nav-link">
+                <a href="{{route('tenant.notifications.index')}}" class="nav-link">
                   <i class="fas fa-bell nav-icon"></i>
                   <p>Notifications</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('user.invoices.index')}}" class="nav-link">
+                <a href="{{route('tenant.invoices.index')}}" class="nav-link">
                   <i class="fas fa-file-invoice nav-icon"></i>
                   <p>Invoices</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/user/payments" class="nav-link">
+                <a href="/tenant/payments" class="nav-link">
                   <i class="fas fas fa-dollar-sign nav-icon"></i>
                   <p>Payments</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('user.notices.index')}}" class="nav-link">
+                <a href="{{route('tenant.notices.index')}}" class="nav-link">
                   <i class="fas fa-bullhorn nav-icon"></i>
                   <p>Notices</p>
                 </a>
@@ -192,7 +192,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-              <a href="/user/settings/profile/{{ Auth::user()->id }}" class="nav-link">
+              <a href="/tenant/settings/profile/{{ Auth::user()->id }}" class="nav-link">
                   <i class="fas fa-user-edit nav-icon"></i>
                   <p>
                     Profile
@@ -202,7 +202,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/user/questions" class="nav-link">
+            <a href="/tenant/questions" class="nav-link">
               <i class="nav-icon fas fa-question-circle"></i>
               <p>
                 Feedback / Questions

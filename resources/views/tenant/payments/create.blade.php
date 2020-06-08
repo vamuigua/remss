@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.tenant')
 
 @section('content')
     <div class="container">
@@ -6,9 +6,9 @@
 
             <div class="col-md-12">
                 <div class="card">
-                <div class="card-header">Questions / Feedback?</div>
+                <div class="card-header">Create New Payment</div>
                     <div class="card-body">
-                        <a href="{{ url('/user/dashboard') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/tenant/payments') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -19,14 +19,11 @@
                                 @endforeach
                             </ul>
                         @endif
-						<div class="my-3">
-							<h3>Do you have any Questions/Feedback? Send us a message!</h3>
-						</div>
-						
-                        <form method="POST" action="{{ route('user.questions') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+
+                        <form method="POST" action="{{ route('tenant.paymentsStore') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
-                            @include ('user.questions.form')
+                            @include ('tenant.payments.form')
 
                         </form>
 

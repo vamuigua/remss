@@ -44,6 +44,6 @@ class LoginController extends Controller
             return redirect('/admin/dashboard');
         }
 
-        return redirect('/user/dashboard');
+        return redirect('/tenant/dashboard');
     }
 }
