@@ -13,26 +13,26 @@ class TenantTableSeeder extends Seeder
      */
     public function run()
     {
-        $user1 = User::where('name', 'User')->first();
-        $user2 = User::where('name', 'User2')->first();
+        $user1 = User::where('name', 'Toyo Moto')->first();
+        $user2 = User::where('name', 'Kim Poi')->first();
 
         $tenant = new Tenant();
-        $tenant->surname = 'Toyo';
-        $tenant->other_names = 'Moto';
+        $tenant->surname = 'Moto';
+        $tenant->other_names = 'Toyo';
         $tenant->gender = 'male';
         $tenant->national_id = '3456258595';
         $tenant->phone_no = '254789652366';
-        $tenant->email = 'toyo@gmail.com';
+        $tenant->email = 'user@gmail.com';
         $tenant->user_id = $user1->id;
         $tenant->save();
 
         $tenant = new Tenant();
-        $tenant->surname = 'Kim';
-        $tenant->other_names = 'Poi';
+        $tenant->surname = 'Poi';
+        $tenant->other_names = 'Kim';
         $tenant->gender = 'female';
         $tenant->national_id = '3456258533';
         $tenant->phone_no = '254789652333';
-        $tenant->email = 'kim@gmail.com';
+        $tenant->email = 'user2@gmail.com';
         $tenant->user_id = $user2->id;
         $tenant->save();
     }

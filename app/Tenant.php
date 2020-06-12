@@ -57,6 +57,6 @@ class Tenant extends Model
     }
 
     public function user(){
-        return $this->belongsTo('\App\Tenant');
+        return $this->belongsTo('\App\User');
     }
 }

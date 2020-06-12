@@ -23,20 +23,8 @@ class TenantsController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
         $perPage = 25;
-
-        if (!empty($keyword)) {
-            $tenants = Tenant::where('surname', 'LIKE', "%$keyword%")
-                ->orWhere('other_names', 'LIKE', "%$keyword%")
-                ->orWhere('gender', 'LIKE', "%$keyword%")
-                ->orWhere('national_id', 'LIKE', "%$keyword%")
-                ->orWhere('phone_no', 'LIKE', "%$keyword%")
-                ->orWhere('email', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $tenants = Tenant::latest()->paginate($perPage);
-        }
+        $tenants = Tenant::latest()->paginate($perPage);
 
         return view('admin.tenants.index', compact('tenants'));
     }

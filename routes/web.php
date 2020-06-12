@@ -184,6 +184,7 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'admin.pendingpayments.index'
     ]);
 
+    Route::resource('admin/admins', 'Admin\\AdminsController');
     Route::resource('admin/houses', 'Admin\\HousesController');
     Route::resource('admin/tenants', 'Admin\\TenantsController');
     Route::resource('admin/invoices', 'Admin\\InvoicesController');
@@ -340,4 +341,3 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     ]);
 
 });
-

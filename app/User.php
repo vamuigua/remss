@@ -46,6 +46,10 @@ class User extends Authenticatable
         return $this->hasOne('\App\Tenant');
     }
 
+    public function admin(){
+        return $this->hasOne('\App\Admin');
+    }
+
     //checks the Roles ($roles) needed for one to access the resource
     public function hasAnyRole($roles)
     {
