@@ -10,8 +10,8 @@
               <div class="card-body box-profile">
                 <div class="text-center">
                     <img class="profile-user-img img-fluid img-circle"
-                       src="/img/avatar.png"
-                       alt="Admin profile picture">
+                        src="{{ $user->admin->adminImage() }}"
+                        alt="Admin profile picture">
                 </div>
 
                 <h3 class="profile-username text-center">{{ $user->name }}</h3>
@@ -72,37 +72,12 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                    </label>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-10">
                                 <button type="submit" class="btn btn-danger">Submit</button>
                                 </div>
                             </div>
                         </form>
                   </div>
                   <!-- /.tab-pane -->
-                  {{-- <div class="tab-pane" id="profilePic">
-                      <form method="POST" action="{{ route('user.settings.updateProfilePic') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="form-group {{ $errors->has('image') ? 'has-error' : ''}}">
-                            <label for="image" class="control-label">{{ 'Change Profile Picture' }}</label>
-                            <input class="form-control" name="image" type="file" id="image" value="{{ isset($user->tenant->image) ? $user->tenant->image : ''}}" >
-                            <div class="form-group">
-                                <input class="btn btn-success my-3" type="submit" value="Update Photo">
-                                {!! $errors->first('image', '<p class="alert alert-danger help-block">:message</p>') !!}
-                            </div>
-                            <div class="mt-2">
-                                <p><b>Current Tenant Photo:</b></p><img src="{{$user->tenant->tenantImage()}}" alt="tenantImage">
-                            </div>
-                        </div>
-                      </form>
-                  </div> --}}
                 </div>
                 <!-- /.tab-content -->
               </div><!-- /.card-body -->

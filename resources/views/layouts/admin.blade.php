@@ -113,7 +113,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+        <img src="{{ Auth::user()->admin->adminImage() }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="/admin/dashboard" class="d-block">{{ Auth::user()->name }}</a>
@@ -216,6 +216,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="/admin/house-adverts" class="nav-link">
                   <i class="fas fa-home nav-icon"></i>
                   <p>House Adverts</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/admins" class="nav-link">
+                  <i class="fas fa-user-secret nav-icon"></i>
+                  <p>Admins</p>
                 </a>
               </li>
             </ul>

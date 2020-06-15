@@ -47,20 +47,27 @@ class AdminsController extends Controller
         $validatedData = $this->validateRequest($request);
 
         if ($request->hasFile('image')) {
-            $img_filePath = $request->file('image')
-            ->store('uploads/admins_img', 'public');
-
-            //resize uploaded admin image
-            $image = Image::make(public_path("storage/{$img_filePath}"))->fit(200, 200);
-            $image->save();
+            $img_filePath = $this->store_image($request);
+            Admin::create(array_merge(
+                    $validatedData,
+                    ['image' => $img_filePath]
+                ));
+        }else{
+            Admin::create($validatedData);
         }
 
-        Admin::create(array_merge(
-                $validatedData,
-                ['image' => $img_filePath]
-            ));
-
         return redirect('admin/admins')->with('flash_message', 'Admin added!');
+    }
+
+    // stores admin's image
+    public function store_image(Request $request){
+        $img_filePath = $request->file('image')->store('uploads/tenants_img', 'public');
+
+        //resize uploaded tenant image
+        $image = Image::make(public_path("storage/{$img_filePath}"))->fit(200, 200);
+        $image->save();
+
+        return $img_filePath;
     }
 
     /**
@@ -101,17 +108,20 @@ class AdminsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $requestData = $request->all();
-                if ($request->hasFile('image')) {
-            $requestData['image'] = $request->file('image')
-                ->store('uploads', 'public');
+        $validatedData = $this->validateRequest($request);
+        $admin = Admin::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            $img_filePath = $this->store_image($request);
+            $admin->update(array_merge(
+                $validatedData,
+                ['image' => $img_filePath]
+            ));
+        }else{
+            $admin->update($validatedData);
         }
 
-        $admin = Admin::findOrFail($id);
-        $admin->update($requestData);
-
-        return redirect('admin/admins')->with('flash_message', 'Admin updated!');
+        return redirect('admin/admins/'.$id)->with('flash_message', 'Admin updated!');
     }
 
     /**
@@ -134,7 +144,7 @@ class AdminsController extends Controller
             'surname' => 'required',
             'other_names' => 'required',
             'gender' => 'required',
-            'national_id' => 'required',
+            'national_id' => 'required|min:8',
             'phone_no' => 'required|max:12',
             'email' => 'required|email',
             'image' => 'image|mimes:jpeg,png,jpg|max:1999',
