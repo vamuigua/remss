@@ -88,9 +88,6 @@
                                     @endauth
                                 </div>
                             @endif
-
-							{{-- <a href=""><i class="fas fa-user-circle"></i> Register</a>
-							<a href=""><i class="fas fa-sign-in-alt"></i> Login</a> --}}
 						</div>
 					</div>
 				</div>

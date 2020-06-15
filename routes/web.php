@@ -51,7 +51,7 @@ Route::post('/contact', [
     'as' => 'contact.store'
 ]);
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [
     'uses' => 'HomeController@index',
@@ -184,6 +184,7 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'admin.pendingpayments.index'
     ]);
 
+    Route::resource('admin/users', 'Admin\\UserAccountController');
     Route::resource('admin/admins', 'Admin\\AdminsController');
     Route::resource('admin/houses', 'Admin\\HousesController');
     Route::resource('admin/tenants', 'Admin\\TenantsController');
