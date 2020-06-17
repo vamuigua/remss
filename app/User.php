@@ -75,4 +75,12 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    // roles available for users
+    public function roleOptions(){
+        return [
+            'admin' => 'Admin',
+            'user' => 'User',
+        ];
+    }
 }

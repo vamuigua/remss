@@ -42,6 +42,17 @@ class UserAccountController extends Controller
     {
         $validatedData = $this->validateRequest($request);
 
+        // check which user_account_for was selected
+        if ($validatedData['user_account_for'] == 'new_admin') {
+    
+        }else if($validatedData['user_account_for'] == 'new_tenant'){
+            
+        }else if($validatedData['user_account_for'] == 'existing_admin'){
+            
+        }else if($validatedData['user_account_for'] == 'existing_tenant'){
+            
+        }
+
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
@@ -51,7 +62,7 @@ class UserAccountController extends Controller
 
         $user->roles()->attach($validatedData['role']);
 
-        return redirect('admin/users/'.$user->id)->with('flash_message', 'New User Account created!');
+        return redirect('admin/users/'.$user->id)->with('flash_message', 'User Account created successfully!');
     }
 
     /**
@@ -62,7 +73,8 @@ class UserAccountController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -73,7 +85,8 @@ class UserAccountController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -85,7 +98,9 @@ class UserAccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // add updating of notification preference
+        // database, mail
+        
     }
 
     /**
@@ -96,12 +111,13 @@ class UserAccountController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // need to deactivate a user account NOT delete a user  
     }
 
     // validation of request details
     public function validateRequest(Request $request){
          return $request->validate([
+            'user_account_for' => 'required',
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8',
