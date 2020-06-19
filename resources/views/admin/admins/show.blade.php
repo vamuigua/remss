@@ -23,7 +23,6 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
-                                    <tr><th>ID</th><td>{{ $admin->id }}</td></tr>
                                     <tr><th> Surname </th><td> {{ $admin->surname }} </td></tr>
                                     <tr><th> Other Names </th><td> {{ $admin->other_names }} </td></tr>
                                     <tr><th> Gender </th><td> {{ $admin->gender }} </td></tr>

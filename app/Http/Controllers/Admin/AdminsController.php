@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Admin;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use App\Http\Traits\AdminActions;
+use App\Admin;
 
 class AdminsController extends Controller
 {
+    use AdminActions;
+
     /**
      * Display a listing of the resource.
      *
@@ -44,30 +46,8 @@ class AdminsController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $this->validateRequest($request);
-
-        if ($request->hasFile('image')) {
-            $img_filePath = $this->store_image($request);
-            Admin::create(array_merge(
-                    $validatedData,
-                    ['image' => $img_filePath]
-                ));
-        }else{
-            Admin::create($validatedData);
-        }
-
-        return redirect('admin/admins')->with('flash_message', 'Admin added!');
-    }
-
-    // stores admin's image
-    public function store_image(Request $request){
-        $img_filePath = $request->file('image')->store('uploads/tenants_img', 'public');
-
-        //resize uploaded tenant image
-        $image = Image::make(public_path("storage/{$img_filePath}"))->fit(200, 200);
-        $image->save();
-
-        return $img_filePath;
+        $admin = $this->createAdmin($request);
+        return redirect('admin/admins/'.$admin)->with('flash_message', 'Admin added!');
     }
 
     /**
@@ -108,7 +88,7 @@ class AdminsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $this->validateRequest($request);
+        $validatedData = $this->validateAdminsRequest($request);
         $admin = Admin::findOrFail($id);
 
         if ($request->hasFile('image')) {
@@ -136,18 +116,5 @@ class AdminsController extends Controller
         Admin::destroy($id);
 
         return redirect('admin/admins')->with('flash_message', 'Admin deleted!');
-    }
-
-    // Validates Admin Request Details
-    public function validateRequest(Request $request){
-        return $request->validate([
-            'surname' => 'required',
-            'other_names' => 'required',
-            'gender' => 'required',
-            'national_id' => 'required|min:8',
-            'phone_no' => 'required|max:12',
-            'email' => 'required|email',
-            'image' => 'image|mimes:jpeg,png,jpg|max:1999',
-        ]);
     }
 }

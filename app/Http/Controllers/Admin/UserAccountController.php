@@ -3,11 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\AdminActions;
 use App\User;
+use App\Admin;
+use App\Role;
 
 class UserAccountController extends Controller
 {
+    use AdminActions;
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +36,8 @@ class UserAccountController extends Controller
     public function create()
     {
         $user = new User();
-        return view('admin.users.create', compact('user'));
+        $admin = new Admin();
+        return view('admin.users.create', compact('user', 'admin'));
     }
 
     /**
@@ -39,28 +47,51 @@ class UserAccountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $validatedData = $this->validateRequest($request);
+    {        
+        $role_user = Role::where('name', 'User')->first();
+        $role_admin = Role::where('name', 'Admin')->first();
 
         // check which user_account_for was selected
-        if ($validatedData['user_account_for'] == 'new_admin') {
-    
-        }else if($validatedData['user_account_for'] == 'new_tenant'){
+        if ($request['user_account_for'] == 'new_admin') {
+            // validate admin request details
+            $validatedData = $this->validateAdminsRequest($request);
+                
+            // create new user
+            $user = User::create([
+                'name' => $validatedData['other_names'] .' '. $validatedData['surname'],
+                'email' => $validatedData['email'],
+                'password' => Hash::make($validatedData['national_id']) // default password is national_id
+                ]
+            );
+
+            // attach role admin to new user
+            $user->roles()->attach($role_admin);
+
+            // create a new admin
+            $admin = $this->createAdmin($request);
             
-        }else if($validatedData['user_account_for'] == 'existing_admin'){
+            // attach the user->id to admin->user_id
+            $admin->user_id = $user->id;
+            $admin->save();
+
+        }else if($request['user_account_for'] == 'new_tenant'){
+            // create new user
+            // attach role tenant to user
+            // create new tenant
+            // attach user->id to tenant->user_id
+            // save tenant
             
-        }else if($validatedData['user_account_for'] == 'existing_tenant'){
-            
+        }else if($request['user_account_for'] == 'existing_admin'){
+            // create new user
+            // attach role admin to user
+            // attach user->id to admin->user_id
+            // save admin
+        }else if($request['user_account_for'] == 'existing_tenant'){
+            // create new user
+            // attach role tenant to user
+            // attach user->id to admin->user_id
+            // save tenant
         }
-
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password'])
-            ]
-        );
-
-        $user->roles()->attach($validatedData['role']);
 
         return redirect('admin/users/'.$user->id)->with('flash_message', 'User Account created successfully!');
     }
@@ -112,16 +143,5 @@ class UserAccountController extends Controller
     public function destroy($id)
     {
         // need to deactivate a user account NOT delete a user  
-    }
-
-    // validation of request details
-    public function validateRequest(Request $request){
-         return $request->validate([
-            'user_account_for' => 'required',
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8',
-            'role' => 'required'
-        ]);
     }
 }
