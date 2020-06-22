@@ -59,12 +59,12 @@ Route::get('/home', [
 ]);
 
 // Routes Shared by Both Authenticated Users (Admin & Normal User)
-Route::middleware(['auth','web'])->group(function () {
+Route::middleware(['roles:Admin, User', 'auth', 'web'])->group(function () {
     Route::post('/admin/payments/getInvoiceBalance', [
         'uses' => 'Admin\\PaymentsController@getInvoiceBalance',
         'as' => 'payments.getInvoiceBalance'
     ]);
-    
+
     Route::get('admin/tenants/download_doc/{tenant}', [
         'uses' => 'Admin\\TenantsController@download_doc',
         'as' => 'tenants.download_doc'
@@ -115,7 +115,7 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
 
     Route::get('/admin/roles/assign', [
         'uses' => 'Admin\\RolesController@assign',
-        'as' => 'roles.assign'  
+        'as' => 'roles.assign'
     ]);
 
     Route::post('/admin/roles/assign-roles', [
@@ -123,17 +123,17 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'roles.assignRoles'
     ]);
 
-    Route::get('/admin/payments/print_receipt/{payment}',[
+    Route::get('/admin/payments/print_receipt/{payment}', [
         'uses' => 'Admin\\PaymentsController@print_receipt',
         'as' => 'payments.print_receipt'
     ]);
 
-    Route::get('/admin/invoices/print_invoice/{invoice}',[
+    Route::get('/admin/invoices/print_invoice/{invoice}', [
         'uses' => 'Admin\\InvoicesController@print_invoice',
         'as' => 'invoices.print_invoice'
     ]);
 
-    Route::get('/admin/invoices/pdf_invoice/{invoice}',[
+    Route::get('/admin/invoices/pdf_invoice/{invoice}', [
         'uses' => 'Admin\\InvoicesController@pdf_invoice',
         'as' => 'invoices.pdf_invoice'
     ]);
@@ -200,7 +200,7 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
 
 // USER ROUTES
 Route::middleware(['roles:User', 'auth'])->group(function () {
-    // Dashnoard
+    // Dashboard
     Route::get('/tenant/dashboard', [
         'uses' => 'Tenant\\TenantController@index',
         'as' => 'tenant.dashboard'
@@ -223,12 +223,12 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
         'as' => 'tenant.invoices.show'
     ]);
 
-    Route::get('/tenant/invoices/print_invoice/{invoice}',[
+    Route::get('/tenant/invoices/print_invoice/{invoice}', [
         'uses' => 'Tenant\\InvoicesController@print_invoice',
         'as' => 'tenant.invoices.print_invoice'
     ]);
 
-    Route::get('/tenant/invoices/pdf_invoice/{invoice}',[
+    Route::get('/tenant/invoices/pdf_invoice/{invoice}', [
         'uses' => 'Tenant\\InvoicesController@pdf_invoice',
         'as' => 'tenant.invoices.pdf_invoice'
     ]);
@@ -260,7 +260,7 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     ]);
 
     // Print Receipt
-    Route::get('/tenant/payments/print_receipt/{payment}',[
+    Route::get('/tenant/payments/print_receipt/{payment}', [
         'uses' => 'Tenant\\PaymentsController@print_receipt',
         'as' => 'tenant.payments.print_receipt'
     ]);
@@ -293,7 +293,7 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
         'uses' => 'Tenant\\NotificationsController@markNotificationsAsRead',
         'as' => 'tenant.notifications.markNotificationsAsRead'
     ]);
-    
+
     //Settings
     Route::post('/tenant/settings/updateProfilePic', [
         'uses' => 'Tenant\\SettingsController@updateProfilePic',
@@ -331,14 +331,13 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     ]);
 
     // Feedback / Questions
-    Route::get('/tenant/questions',[
-        'uses' =>'Tenant\\QuestionsController@index',
+    Route::get('/tenant/questions', [
+        'uses' => 'Tenant\\QuestionsController@index',
         'as' => 'tenant.questions'
     ]);
 
-    Route::post('/tenant/questions',[
-        'uses' =>'Tenant\\QuestionsController@store',
+    Route::post('/tenant/questions', [
+        'uses' => 'Tenant\\QuestionsController@store',
         'as' => 'tenant.questions'
     ]);
-
 });

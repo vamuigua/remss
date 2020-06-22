@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\AdminActions;
+use App\Http\Traits\TenantActions;
 use App\User;
 use App\Admin;
 use App\Role;
@@ -14,6 +14,7 @@ use App\Role;
 class UserAccountController extends Controller
 {
     use AdminActions;
+    use TenantActions;
 
     /**
      * Display a listing of the resource.
@@ -35,9 +36,7 @@ class UserAccountController extends Controller
      */
     public function create()
     {
-        $user = new User();
-        $admin = new Admin();
-        return view('admin.users.create', compact('user', 'admin'));
+        return view('admin.users.create');
     }
 
     /**
@@ -47,7 +46,7 @@ class UserAccountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {
         $role_user = Role::where('name', 'User')->first();
         $role_admin = Role::where('name', 'Admin')->first();
 
@@ -55,45 +54,51 @@ class UserAccountController extends Controller
         if ($request['user_account_for'] == 'new_admin') {
             // validate admin request details
             $validatedData = $this->validateAdminsRequest($request);
-                
             // create new user
-            $user = User::create([
-                'name' => $validatedData['other_names'] .' '. $validatedData['surname'],
-                'email' => $validatedData['email'],
-                'password' => Hash::make($validatedData['national_id']) // default password is national_id
-                ]
-            );
-
+            $user = $this->createUser($validatedData);
             // attach role admin to new user
             $user->roles()->attach($role_admin);
-
             // create a new admin
             $admin = $this->createAdmin($request);
-            
-            // attach the user->id to admin->user_id
-            $admin->user_id = $user->id;
-            $admin->save();
-
-        }else if($request['user_account_for'] == 'new_tenant'){
+            // assign the user->id to admin->user_id & save
+            $user->admin()->save($admin);
+        } else if ($request['user_account_for'] == 'new_tenant') {
+            // validate tenant details
+            $validatedData = $this->validateTenantsRequest($request);
             // create new user
+            $user = $this->createUser($validatedData);
             // attach role tenant to user
+            $user->roles()->attach($role_user);
             // create new tenant
-            // attach user->id to tenant->user_id
-            // save tenant
-            
-        }else if($request['user_account_for'] == 'existing_admin'){
+            $tenant = $this->createTenant($request);
+            // assign user->id to tenant->user_id & save
+            $user->tenant()->save($tenant);
+        } else if ($request['user_account_for'] == 'existing_admin') {
             // create new user
             // attach role admin to user
             // attach user->id to admin->user_id
             // save admin
-        }else if($request['user_account_for'] == 'existing_tenant'){
+        } else if ($request['user_account_for'] == 'existing_tenant') {
             // create new user
             // attach role tenant to user
             // attach user->id to admin->user_id
             // save tenant
         }
 
-        return redirect('admin/users/'.$user->id)->with('flash_message', 'User Account created successfully!');
+        return redirect('admin/users/' . $user->id)->with('flash_message', 'User Account created successfully!');
+    }
+
+    // creates a new user
+    public function createUser($validatedData)
+    {
+        $user = User::create(
+            [
+                'name' => $validatedData['other_names'] . ' ' . $validatedData['surname'],
+                'email' => $validatedData['email'],
+                'password' => Hash::make($validatedData['national_id']) // default password is national_id
+            ]
+        );
+        return $user;
     }
 
     /**
@@ -131,7 +136,7 @@ class UserAccountController extends Controller
     {
         // add updating of notification preference
         // database, mail
-        
+
     }
 
     /**

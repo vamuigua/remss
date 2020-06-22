@@ -14,10 +14,10 @@ class Tenant extends Model
     protected $table = 'tenants';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -27,15 +27,17 @@ class Tenant extends Model
      */
     protected $fillable = ['surname', 'other_names', 'gender', 'national_id', 'phone_no', 'email', 'image', 'file'];
 
-    public function genderOptions(){
+    public function genderOptions()
+    {
         return [
             'male' => 'Male',
             'female' => 'Female',
         ];
     }
 
-    public function tenantImage(){
-        return ($this->image) ? '/storage/' . $this->image : '/img/no-image-available.png'; 
+    public function tenantImage()
+    {
+        return ($this->image) ? '/storage/' . $this->image : '/img/no-image-available.png';
     }
 
     /**
@@ -56,7 +58,8 @@ class Tenant extends Model
         return $this->hasMany(Payment::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo('\App\User');
     }
 }

@@ -18,13 +18,8 @@
                                 @endforeach
                             </ul>
                         @endif
-
-                        <form method="POST" action="{{ url('/admin/users') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-
-                            @include ('admin.users.form')
-
-                        </form>
+                        
+                        @include ('admin.users.form')
 
                     </div>
                 </div>

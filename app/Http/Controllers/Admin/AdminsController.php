@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
 use App\Http\Traits\AdminActions;
 use App\Admin;
 
@@ -47,7 +45,7 @@ class AdminsController extends Controller
     public function store(Request $request)
     {
         $admin = $this->createAdmin($request);
-        return redirect('admin/admins/'.$admin)->with('flash_message', 'Admin added!');
+        return redirect('admin/admins/' . $admin->id)->with('flash_message', 'Admin added!');
     }
 
     /**
@@ -92,16 +90,16 @@ class AdminsController extends Controller
         $admin = Admin::findOrFail($id);
 
         if ($request->hasFile('image')) {
-            $img_filePath = $this->store_image($request);
+            $img_filePath = $this->storeAdminImage($request);
             $admin->update(array_merge(
                 $validatedData,
                 ['image' => $img_filePath]
             ));
-        }else{
+        } else {
             $admin->update($validatedData);
         }
 
-        return redirect('admin/admins/'.$id)->with('flash_message', 'Admin updated!');
+        return redirect('admin/admins/' . $id)->with('flash_message', 'Admin updated!');
     }
 
     /**
