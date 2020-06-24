@@ -18,13 +18,13 @@
     </div>
     <div class="w-100"></div>
     <div class="d-flex justify-content-center col p-5 bg-danger">
-        <button type="button" class="btn btn-danger">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#existingAdmin">
             <div><i class="fas fa-user-secret fa-lg mt-2"></i></div>
             AN EXISTING ADMIN
         </button>
     </div>
     <div class="d-flex justify-content-center col p-5 bg-success">
-        <button type="button" class="btn btn-success">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#existingTenant">
             <div><i class="fas fa-user fa-lg mt-2"></i></div>
             AN EXISTING TENANT
         </button>
@@ -42,7 +42,13 @@
     @include('admin.users.modals.newTenant')
 </form>
 {{-- AN EXISTING ADMIN --}}
-<div id="existing_admin"></div>
+<form method="POST" action="{{ url('/admin/users') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+{{ csrf_field() }}
+    @include('admin.users.modals.existingAdmin')
+</form>
 {{-- AN EXISTING TENANT --}}
-<div id="existing_tenant"></div>
+<form method="POST" action="{{ url('/admin/users') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+{{ csrf_field() }}
+    @include('admin.users.modals.existingTenant')
+</form>
 

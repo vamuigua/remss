@@ -86,7 +86,7 @@ class AdminsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $this->validateAdminsRequest($request);
+        $validatedData = $this->validateUpdatedAdminsRequest($request);
         $admin = Admin::findOrFail($id);
 
         if ($request->hasFile('image')) {

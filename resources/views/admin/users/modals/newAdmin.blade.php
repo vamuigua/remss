@@ -70,7 +70,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Create New Admin User Account</button>
+                            <button type="submit" class="btn btn-primary">Create User Account for New Admin</button>
                         </div>
                 </div>
             </div>

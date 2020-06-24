@@ -10,6 +10,7 @@ use App\Http\Traits\TenantActions;
 use App\User;
 use App\Admin;
 use App\Role;
+use App\Tenant;
 
 class UserAccountController extends Controller
 {
@@ -36,7 +37,9 @@ class UserAccountController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $admins = Admin::all()->where('user_id', null);
+        $tenants = Tenant::all()->where('user_id', null);
+        return view('admin.users.create', compact('admins', 'tenants'));
     }
 
     /**
@@ -74,21 +77,39 @@ class UserAccountController extends Controller
             // assign user->id to tenant->user_id & save
             $user->tenant()->save($tenant);
         } else if ($request['user_account_for'] == 'existing_admin') {
+            // get the admin
+            $admin = Admin::findOrFail($request['admin_id']);
             // create new user
+            $user = User::create([
+                'name' => $admin->other_names . ' ' . $admin->surname,
+                'email' => $admin->email,
+                'password' => $admin->national_id,
+            ]);
             // attach role admin to user
-            // attach user->id to admin->user_id
-            // save admin
+            $user->roles()->attach($role_admin);
+            // attach user->id to admin->user_id & save admin
+            $user->admin()->save($admin);
         } else if ($request['user_account_for'] == 'existing_tenant') {
+            // get the tenant
+            $tenant = Tenant::findOrFail($request['tenant_id']);
             // create new user
+            $user = User::create([
+                'name' => $tenant->other_names . ' ' . $tenant->surname,
+                'email' => $tenant->email,
+                'password' => $tenant->national_id,
+            ]);
             // attach role tenant to user
-            // attach user->id to admin->user_id
-            // save tenant
+            $user->roles()->attach($role_user);
+            // attach user->id to admin->user_id & save tenant
+            $user->tenant()->save($tenant);
+        } else {
+            return redirect('admin/users/')->with('flash_message_error', 'User Account For Tenant / Admin Not Selected!');
         }
 
         return redirect('admin/users/' . $user->id)->with('flash_message', 'User Account created successfully!');
     }
 
-    // creates a new user
+    // creates a new user for new tenants & new admins
     public function createUser($validatedData)
     {
         $user = User::create(

@@ -69,4 +69,24 @@ trait AdminActions
             'image' => 'image|mimes:jpeg,png,jpg|max:1999',
         ]);
     }
+
+    /**
+     * Validates Updated Admin details
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return array      
+     */
+    public function validateUpdatedAdminsRequest(Request $request)
+    {
+        return $request->validate([
+            'surname' => 'required',
+            'other_names' => 'required',
+            'gender' => 'required',
+            'national_id' => 'required|min:8',
+            'phone_no' => 'required|max:12',
+            'email' => 'required|email',
+            'image' => 'image|mimes:jpeg,png,jpg|max:1999',
+        ]);
+    }
 }

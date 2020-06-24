@@ -107,4 +107,25 @@ trait TenantActions
             'file' => 'file|nullable|max:1999',
         ]);
     }
+
+    /**
+     *  Validates Updated Tenant Request Details
+     *
+     * @param \Illuminate\Http\Request $request
+     * 
+     * @return array
+     */
+    public function validateUpdatedTenantsRequest(Request $request)
+    {
+        return $request->validate([
+            'surname' => 'required',
+            'other_names' => 'required',
+            'gender' => 'required',
+            'national_id' => 'required',
+            'phone_no' => 'required|max:12',
+            'email' => 'required|email',
+            'image' => 'image|mimes:jpeg,png,jpg|max:1999',
+            'file' => 'file|nullable|max:1999',
+        ]);
+    }
 }

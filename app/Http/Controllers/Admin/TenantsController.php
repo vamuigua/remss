@@ -97,7 +97,7 @@ class TenantsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $this->validateTenantsRequest($request);
+        $validatedData = $this->validateUpdatedTenantsRequest($request);
         $tenant = Tenant::findOrFail($id);
 
         // Conditions to check if image or file was passed or even both
