@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Notice;
 use App\User;
-use App\Notifications\NoticeSentNotification;
-use Illuminate\Notifications\Notifiable;
+use App\Notice;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Carbon;
+use App\Notifications\NoticeSentNotification;
 
 class NoticesController extends Controller
 {
@@ -24,17 +23,8 @@ class NoticesController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
         $perPage = 25;
-
-        if (!empty($keyword)) {
-            $notices = Notice::where('subject', 'LIKE', "%$keyword%")
-                ->orWhere('message', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $notices = Notice::latest()->paginate($perPage);
-        }
-
+        $notices = Notice::latest()->paginate($perPage);
         return view('admin.notices.index', compact('notices'));
     }
 
@@ -59,18 +49,16 @@ class NoticesController extends Controller
     public function store(Request $request)
     {
         $requestData = $this->validateRequest($request);
-        
+
         $notice = Notice::create($requestData);
 
-        $users = User::all();
+        // Grab all Tenants only, remove Admins from the query
+        $users = User::all()->reject(function ($user) {
+            return $user->hasRole('User') === false;
+        });
 
-        //Send Notice Notification to Tenant
-        foreach ($users as $user) {
-            if($user->hasRole('user')){
-                $when = Carbon::now()->addSeconds(5);
-                $user->notify((new NoticeSentNotification($notice))->delay($when));
-            }
-        }
+        //Send Notice Notification to Tenants
+        Notification::send($users, new NoticeSentNotification($notice));
 
         return redirect('admin/notices')->with('flash_message', 'Notice added! Tenants will receive a Notice Notification shortly!');
     }
@@ -113,9 +101,9 @@ class NoticesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $this->validateRequest($request);
-        
+
         $notice = Notice::findOrFail($id);
         $notice->update($requestData);
 
@@ -136,7 +124,8 @@ class NoticesController extends Controller
         return redirect('admin/notices')->with('flash_message', 'Notice deleted!');
     }
 
-    public function validateRequest(Request $request){
+    public function validateRequest(Request $request)
+    {
         return $request->validate([
             'subject' => 'required',
             'message' => 'required|min:5',

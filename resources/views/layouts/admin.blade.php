@@ -56,7 +56,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             @endif
           </a>
 
-          <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="dropdownMenuLink">
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
             
             {{-- Show Unread Notification Count --}}
             @if (Auth::user()->unreadNotifications->count())

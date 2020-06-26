@@ -3,10 +3,12 @@
 namespace App\Notifications;
 
 use App\Notice;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Log;
 
 class NoticeSentNotification extends Notification implements ShouldQueue
 {
@@ -32,7 +34,7 @@ class NoticeSentNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return explode(', ', $notifiable->notification_preference); 
+        return explode(', ', $notifiable->notification_preference);
     }
 
     /**
@@ -44,12 +46,12 @@ class NoticeSentNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('New Notice from REMSS')
-                    ->line('You have a New Notice!.')
-                    ->line($this->notice->subject)
-                    ->line($this->notice->message)
-                    ->action('Check Notice', url('/user/notices/' . $this->notice->id))
-                    ->line('Thank you for using our application!');
+            ->subject('New Notice from REMSS')
+            ->line('You have a New Notice! ' . $notifiable->name)
+            ->line($this->notice->subject)
+            ->line($this->notice->message)
+            ->action('Check Notice', url('/user/notices/' . $this->notice->id))
+            ->line('Thank you for using our application!');
     }
 
     public function toDatabase()
@@ -61,6 +63,32 @@ class NoticeSentNotification extends Notification implements ShouldQueue
             'notification_type' => 'notice',
         ];
     }
+
+    /**
+     * Determine which queues should be used for each notification channel.
+     *
+     * @return array
+     */
+    public function viaQueues()
+    {
+        return [
+            'mail' => 'mail-queue',
+            'database' => 'database-queue',
+        ];
+    }
+
+    /**
+     * Handle a notification failure.
+     *
+     * @param  \Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        // Send user notification of failure, etc...
+        Log::debug('Notification Failed: ' . $exception->getMessage());
+    }
+
     /**
      * Get the array representation of the notification.
      *

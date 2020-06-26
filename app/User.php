@@ -38,15 +38,18 @@ class User extends Authenticatable
     ];
 
     //A User can have One/Many roles
-    public function roles(){
+    public function roles()
+    {
         return $this->belongsToMany('\App\Role', 'user_role', 'user_id', 'role_id');
     }
 
-    public function tenant(){
+    public function tenant()
+    {
         return $this->hasOne('\App\Tenant');
     }
 
-    public function admin(){
+    public function admin()
+    {
         return $this->hasOne('\App\Admin');
     }
 
@@ -66,7 +69,7 @@ class User extends Authenticatable
         }
         return false;
     }
-    
+
     //checks if the user has a specified Role ($role) to access the resource
     public function hasRole($role)
     {
@@ -77,7 +80,8 @@ class User extends Authenticatable
     }
 
     // roles available for users
-    public function roleOptions(){
+    public function roleOptions()
+    {
         return [
             'admin' => 'Admin',
             'user' => 'User',

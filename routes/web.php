@@ -59,20 +59,23 @@ Route::get('/home', [
 ]);
 
 // Routes Shared by Both Authenticated Users (Admin & Normal User)
-Route::middleware(['roles:Admin, User', 'auth', 'web'])->group(function () {
+Route::middleware(['auth', 'web'])->group(function () {
     Route::post('/admin/payments/getInvoiceBalance', [
         'uses' => 'Admin\\PaymentsController@getInvoiceBalance',
-        'as' => 'payments.getInvoiceBalance'
+        'as' => 'payments.getInvoiceBalance',
+        'roles' => ['Admin', 'User']
     ]);
 
     Route::get('admin/tenants/download_doc/{tenant}', [
         'uses' => 'Admin\\TenantsController@download_doc',
-        'as' => 'tenants.download_doc'
+        'as' => 'tenants.download_doc',
+        'roles' => ['Admin', 'User']
     ]);
 
     Route::get('admin/tenants/view_doc/{tenant}', [
         'uses' => 'Admin\\TenantsController@view_doc',
-        'as' => 'tenants.view_doc'
+        'as' => 'tenants.view_doc',
+        'roles' => ['Admin', 'User']
     ]);
 });
 
