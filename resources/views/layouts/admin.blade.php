@@ -136,6 +136,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="{{route('admin.notifications.index')}}" class="nav-link">
+              <i class="fas fa-bell nav-icon"></i>
+              <p>Notifications</p>
+            </a>
+          </li>
+
           {{-- MANAGEMENT --}}
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link active">
@@ -159,47 +166,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('admin.notifications.index')}}" class="nav-link">
-                  <i class="fas fa-bell nav-icon"></i>
-                  <p>Notifications</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/notices" class="nav-link">
-                  <i class="fas fa-bullhorn nav-icon"></i>
-                  <p>Notices</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="/admin/invoices" class="nav-link">
                   <i class="fas fa-file-invoice nav-icon"></i>
                   <p>Invoices</p>
                 </a>
               </li>
-              {{-- PAYMENTS --}}
-              <li class="nav-item has-treeview">
-              <a href="#" class="nav-link active">
-                <i class="nav-icon fas fa-money-bill-wave-alt"></i>
-                <p>
-                  Payments
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/admin/payments" class="nav-link">
-                    <i class="nav-icon fas fa-dollar-sign"></i>
-                    <p>All Payments</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/admin/pending-payments" class="nav-link">
-                    <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                    <p>Pending Payments</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
               <li class="nav-item">
                 <a href="/admin/expenditures" class="nav-link">
                   <i class="fas fa-money-bill-alt nav-icon"></i>
@@ -224,7 +195,44 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Admins</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/admin/users" class="nav-link">
+                  <i class="fas fa-users nav-icon"></i>
+                  <p>User Accounts</p>
+                </a>
+              </li>
             </ul>
+          </li>
+
+          {{-- PAYMENTS  --}}
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-money-bill-wave-alt"></i>
+              <p>
+                Payments
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/admin/payments" class="nav-link">
+                    <i class="nav-icon fas fa-dollar-sign"></i>
+                    <p>All Payments</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/admin/pending-payments" class="nav-link">
+                    <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                    <p>Pending Payments</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/admin/mobile-payments" class="nav-link">
+                    <i class="nav-icon fas fa-mobile"></i>
+                    <p>Mpesa Paybill Payments</p>
+                  </a>
+                </li>
+              </ul>
           </li>
 
           {{-- SERVICES --}}
@@ -241,6 +249,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="/admin/messages" class="nav-link">
                   <i class="fas fa-mail-bulk nav-icon"></i>
                   <p>BulkSMS</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/notices" class="nav-link">
+                  <i class="fas fa-bullhorn nav-icon"></i>
+                  <p>Notices</p>
                 </a>
               </li>
             </ul>
@@ -276,7 +290,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="/admin/settings/profile/{{ Auth::user()->id }}" class="nav-link">
                   <i class="fas fa-user-edit nav-icon"></i>
                   <p>
-                    Profile
+                    My Profile
                   </p>
                 </a>
               </li>

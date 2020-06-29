@@ -41,14 +41,15 @@ class SendMessageJob implements ShouldQueue
     }
 
     // function to send messages through AT API
-    public function sendSMS($message){
+    public function sendSMS($message)
+    {
         // Set your app credentials
         $username   = env('AFRICASTALKING_USERNAME');
         $apiKey     = env('AFRICASTALKING_API_KEY');
-        
+
         // Set your shortCode or senderId
         $from = "REMSS";
-        
+
         // Initialize the SDK
         $AT = new AfricasTalking($username, $apiKey);
 
@@ -56,7 +57,7 @@ class SendMessageJob implements ShouldQueue
         $sms = $AT->sms();
 
         // Set the numbers you want to send to in international format
-        $recipients_array = explode(", ",$message->recepients);  
+        $recipients_array = explode(", ", $message->recepients);
 
         foreach ($recipients_array as $recipient) {
             // Thats it, hit send and we'll take care of the rest
@@ -65,10 +66,10 @@ class SendMessageJob implements ShouldQueue
                 'message' => $message->message,
                 'from'    => $from
             ]);
-            
+
             // log the response
             $logFile = public_path("/remss/Bulksms/BulkSMSResponse.json");
-            
+
             // convert result array to string
             $str_json = json_encode($result, JSON_PRETTY_PRINT);
 
@@ -79,7 +80,7 @@ class SendMessageJob implements ShouldQueue
 
             // decode the bulksms response
             $json = json_decode($str_json, true);
-            
+
             // Check for errors
             // print_r($json['data']['SMSMessageData']['Recipients'][0]['statusCode']); // statusCode '101' means successful
         }
@@ -91,11 +92,11 @@ class SendMessageJob implements ShouldQueue
      * @param  Exception  $exception
      * @return void
      */
-    public function failed(Exception $exception)
+    public function failed(\Exception $exception)
     {
         // log the error response
         $logFile = public_path("/remss/Bulksms/BulkSMSResponse_Error.txt");
-        
+
         // convert result array to string
         $error_msg = $exception->getMessage();
 

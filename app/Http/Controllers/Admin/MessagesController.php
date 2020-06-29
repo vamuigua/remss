@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Jobs\SendMessageJob;
-
-use App\Message;
-use App\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Maatwebsite\Excel\Facades\Excel;
 use SimpleXLSX;
+use App\Message;
+use App\Tenant;
+use App\Jobs\SendMessageJob;
 
 class MessagesController extends Controller
 {
@@ -60,30 +57,29 @@ class MessagesController extends Controller
 
         // check option of send_to
         // option for excel
-        if($requestData['send_to'] == "excel"){
+        if ($requestData['send_to'] == "excel") {
             $request->validate(['import_file' => 'required|file|mimes:xlsx']);
-            
+
             // Open Excel File and store phone numbers 
-            if ( $xlsx = SimpleXLSX::parse($request->file('import_file')) ) {
+            if ($xlsx = SimpleXLSX::parse($request->file('import_file'))) {
                 foreach ($xlsx->rows() as $row) {
                     array_push($recepients, $row[0]);
                 }
-                $recepients_str = implode(", ",$recepients);
-            } 
-            else {
+                $recepients_str = implode(", ", $recepients);
+            } else {
                 return redirect('admin/messages/create')->with('flash_message_error', SimpleXLSX::parseError());
             }
         }
         // option for all_tenants
-        else if($requestData['send_to'] == "all_tenants"){
+        else if ($requestData['send_to'] == "all_tenants") {
             $tenant_phone_numbers = Tenant::all()->pluck('phone_no');
-            
-            foreach ($tenant_phone_numbers as $phone_no){
+
+            foreach ($tenant_phone_numbers as $phone_no) {
                 array_push($recepients, $phone_no);
             }
-            $recepients_str = implode(", ",$recepients);
+            $recepients_str = implode(", ", $recepients);
         }
-        
+
         // create a new message entry
         $message = Message::create(array_merge(
             $requestData,
@@ -135,9 +131,9 @@ class MessagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
         $message = Message::findOrFail($id);
         $message->update($requestData);
 
@@ -159,7 +155,8 @@ class MessagesController extends Controller
     }
 
     // Validates Tenant Request Details
-    public function validateRequest(Request $request){
+    public function validateRequest(Request $request)
+    {
         return $request->validate([
             'message' => 'required',
             'send_to' => 'required',

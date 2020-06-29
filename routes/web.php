@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -185,6 +188,17 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
     Route::get('/admin/pending-payments', [
         'uses' => 'Admin\\PendingPaymentsController@index',
         'as' => 'admin.pendingpayments.index'
+    ]);
+
+    // Mobile (Mpesa Paybill) Payments
+    Route::get('/admin/mobile-payments/{id}', [
+        'uses' => 'Admin\\MobilePaymentsController@show',
+        'as' => 'admin.mobilepayments.show'
+    ]);
+
+    Route::get('/admin/mobile-payments', [
+        'uses' => 'Admin\\MobilePaymentsController@index',
+        'as' => 'admin.mobilepayments.index'
     ]);
 
     Route::resource('admin/users', 'Admin\\UserAccountController');

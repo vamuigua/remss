@@ -103,7 +103,7 @@ class UserAccountController extends Controller
             // attach user->id to admin->user_id & save tenant
             $user->tenant()->save($tenant);
         } else {
-            return redirect('admin/users/')->with('flash_message_error', 'User Account For Tenant / Admin Not Selected!');
+            return redirect('admin/users/')->with('flash_message_error', 'User Account Not Selected!');
         }
 
         return redirect('admin/users/' . $user->id)->with('flash_message', 'User Account created successfully!');
