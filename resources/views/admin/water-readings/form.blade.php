@@ -1,7 +1,7 @@
 <div class="form-group {{ $errors->has('house_id') ? 'has-error' : ''}}">
     <label for="house_id" class="control-label">{{ 'House No' }}</label>
-    <select name="house_id" class="form-control selectpicker" data-live-search="true" id="house_id" onchange="updateWaterReading()">
-        <option value="" disabled selected>Choose an Option</option>
+    <select name="house_id" class="form-control selectpicker selected_house_id" data-live-search="true" id="house_id">
+        <option disabled selected>Choose an House</option>
         @foreach ($houses as $house)
             <option value="{{ $house->id }}" {{ (isset($waterreading->id)) && $house->id == $waterreading->house_id ? 'selected' : old('house_id')}}>{{ $house->house_no }}</option>
         @endforeach
@@ -20,7 +20,7 @@
 </div>
 <div class="form-group {{ $errors->has('current_reading') ? 'has-error' : ''}}">
     <label for="current_reading" class="control-label">{{ 'Current Reading' }}</label>
-    <input class="form-control" name="current_reading" type="number" id="current_reading" value="{{ isset($waterreading->current_reading) ? $waterreading->current_reading : old('current_reading')}}" oninput="updateWaterReading()">
+    <input class="form-control current_water_reading" name="current_reading" type="number" id="current_reading" value="{{ isset($waterreading->current_reading) ? $waterreading->current_reading : old('current_reading')}}">
     {!! $errors->first('current_reading', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('units_used') ? 'has-error' : ''}}">
@@ -30,7 +30,7 @@
 </div>
 <div class="form-group {{ $errors->has('cost_per_unit') ? 'has-error' : ''}}">
     <label for="cost_per_unit" class="control-label">{{ 'Cost Per Unit' }}</label>
-    <input class="form-control" name="cost_per_unit" type="number" step="0.01" min="0" max="10" id="cost_per_unit" value="{{ isset($waterreading->cost_per_unit) ? $waterreading->cost_per_unit : old('cost_per_unit')}}" oninput="updateWaterReading()">
+    <input class="form-control water_cost_per_unit" name="cost_per_unit" type="number" step="0.01" min="0" max="10" id="cost_per_unit" value="{{ isset($waterreading->cost_per_unit) ? $waterreading->cost_per_unit : old('cost_per_unit')}}">
     {!! $errors->first('cost_per_unit', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('total_charges') ? 'has-error' : ''}}">
@@ -47,5 +47,3 @@
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>
-
-<script src="{{ asset('js/fetch.js') }}" type="text/javascript"></script>

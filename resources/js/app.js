@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 require("./bootstrap");
+require("./fetch.js");
+require("./mychart");
 require("bootstrap-select");
 require("summernote");
 require("datatables.net");
@@ -13,7 +15,7 @@ require("chart.js");
 require("bootstrap-datepicker");
 require("vue");
 
-$(document).ready(function() {
+$(document).ready(function () {
     // summernote
     $("#summernote").summernote({
         height: 150,
@@ -49,21 +51,25 @@ const app = new Vue({
         form: {},
         errors: {}
     },
-    created: function() {
+    created: function () {
         Vue.set(this.$data, "form", _form);
     },
     methods: {
-        addLine: function() {
-            this.form.products.push({ name: "", price: 0, qty: 1 });
+        addLine: function () {
+            this.form.products.push({
+                name: "",
+                price: 0,
+                qty: 1
+            });
         },
-        remove: function(product) {
+        remove: function (product) {
             this.form.products.$remove(product);
         },
-        create: function() {
+        create: function () {
             this.isProcessing = true;
             this.$http
                 .post("/admin/invoices", this.form)
-                .then(function(response) {
+                .then(function (response) {
                     data = response.data;
                     new_data = JSON.parse(data);
                     if (new_data.created) {
@@ -72,7 +78,7 @@ const app = new Vue({
                         this.isProcessing = false;
                     }
                 })
-                .catch(function(response) {
+                .catch(function (response) {
                     data = response.data; //string
                     new_data = JSON.parse(data);
 
@@ -80,11 +86,11 @@ const app = new Vue({
                     Vue.set(this.$data, "errors", new_data.errors);
                 });
         },
-        update: function() {
+        update: function () {
             this.isProcessing = true;
             this.$http
                 .put("/admin/invoices/" + this.form.id, this.form)
-                .then(function(response) {
+                .then(function (response) {
                     data = response.data;
                     new_data = JSON.parse(data);
                     if (new_data.updated) {
@@ -93,7 +99,7 @@ const app = new Vue({
                         this.isProcessing = false;
                     }
                 })
-                .catch(function(response) {
+                .catch(function (response) {
                     data = response.data; //string
                     new_data = JSON.parse(data);
 
@@ -103,14 +109,14 @@ const app = new Vue({
         }
     },
     computed: {
-        subTotal: function() {
-            return this.form.products.reduce(function(carry, product) {
+        subTotal: function () {
+            return this.form.products.reduce(function (carry, product) {
                 return (
                     carry + parseFloat(product.qty) * parseFloat(product.price)
                 );
             }, 0);
         },
-        grandTotal: function() {
+        grandTotal: function () {
             return this.subTotal - parseFloat(this.form.discount);
         }
     }

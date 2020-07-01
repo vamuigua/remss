@@ -46,12 +46,12 @@ class InvoicePaidNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Invoice Paid from REMSS')
-                    ->line('Invoice No' . $this->payment->invoice->invoice_no)
-                    ->line('Payment No' . $this->payment->payment_no)
-                    ->line('Amount Paid' . $this->payment->amount_paid)
-                    ->action('Check Payment', url('/'.$this->user_route.'/payments/' . $this->payment->id))
-                    ->line('Thank you for using REMSS Payment platform!');
+            ->subject('Invoice Paid from REMSS')
+            ->line('Invoice No' . $this->payment->invoice->invoice_no)
+            ->line('Payment No' . $this->payment->payment_no)
+            ->line('Amount Paid' . $this->payment->amount_paid)
+            ->action('Check Payment', url('/' . $this->user_route . '/payments/' . $this->payment->id))
+            ->line('Thank you for using REMSS Payment platform!');
     }
 
     public function toDatabase()

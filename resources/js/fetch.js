@@ -1,3 +1,24 @@
+$(document).ready(function () {
+    // Water Readings
+    $(".selected_house_id").change(function () {
+        updateWaterReading();
+    });
+    $(".current_water_reading").on("input", function () {
+        updateWaterReading();
+    });
+    $(".water_cost_per_unit").on("input", function () {
+        updateWaterReading();
+    });
+
+    // Payments
+    $(".tenant_invoice_id").change(function () {
+        updateDetails();
+    });
+    $(".payment_amount_paid").on("input", function () {
+        updateDetails();
+    });
+});
+
 // Updates the values in the Payment Form through Ajax
 function updateDetails() {
     //get Invoice Balance
@@ -7,8 +28,11 @@ function updateDetails() {
     $.ajax({
         url: "/admin/payments/getInvoiceBalance",
         method: "POST",
-        data: { invoice_id: invoice_id, _token: _token },
-        success: function(data) {
+        data: {
+            invoice_id: invoice_id,
+            _token: _token
+        },
+        success: function (data) {
             $("#prev_balance").val(data.balance);
         }
     });
@@ -29,8 +53,11 @@ function updateWaterReading() {
     $.ajax({
         url: "/admin/water-readings/getPrevWaterReading",
         method: "POST",
-        data: { house_id: house_id, _token: _token },
-        success: function(data) {
+        data: {
+            house_id: house_id,
+            _token: _token
+        },
+        success: function (data) {
             $("#prev_reading").val(data.prev_reading);
 
             // checks if the tenant data is available

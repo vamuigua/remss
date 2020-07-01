@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\User; 
+use Illuminate\Http\Request;
+use App\Notifications\InvoicePaidNotification;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use App\User;
 use App\Payment;
 use App\Tenant;
 use App\Invoice;
-use App\Notifications\InvoicePaidNotification;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class PaymentsController extends Controller
 {
@@ -26,22 +24,8 @@ class PaymentsController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $payments = Payment::where('tenant_id', 'LIKE', "%$keyword%")
-                ->orWhere('invoice_id', 'LIKE', "%$keyword%")
-                ->orWhere('payment_type', 'LIKE', "%$keyword%")
-                ->orWhere('payment_date', 'LIKE', "%$keyword%")
-                ->orWhere('payment_no', 'LIKE', "%$keyword%")
-                ->orWhere('amount_paid', 'LIKE', "%$keyword%")
-                ->orWhere('balance', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $payments = Payment::latest()->paginate($perPage);
-        }
-
+        $perPage = Payment::count();
+        $payments = Payment::latest()->paginate($perPage);
         return view('admin.payments.index', compact('payments'));
     }
 
@@ -55,7 +39,7 @@ class PaymentsController extends Controller
         $tenants = Tenant::all();
         $invoices = Invoice::all();
         $payment = new Payment();
-        return view('admin.payments.create', compact('tenants','invoices', 'payment'));
+        return view('admin.payments.create', compact('tenants', 'invoices', 'payment'));
     }
 
     /**
@@ -68,13 +52,11 @@ class PaymentsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $this->validateRequest($request);
-
         $balance = $validatedData['balance'];
-
         $payment = Payment::create($validatedData);
 
         // checks if the final balance of the invoice_id was paid thus setting the status of the invoice_id to closed
-        if($balance == '0'){
+        if ($balance == '0') {
             $id = $validatedData['invoice_id'];
             $invoice = Invoice::findOrFail($id);
             $invoice->status = 'closed';
@@ -84,18 +66,17 @@ class PaymentsController extends Controller
         // Send InvoicePaid Noticifaction to Tenant 
         $tenant_id = $validatedData['tenant_id'];
         $user = User::findOrFail($tenant_id);
-        $when = Carbon::now()->addSeconds(5);
-        $user->notify((new InvoicePaidNotification($payment))->delay($when));
+        $user->notify((new InvoicePaidNotification($payment, 'tenant')));
+
+        // Grab all Admins only, remove Tenants from the query
+        $users = User::all()->reject(function ($user) {
+            return $user->hasRole('Admin') === false;
+        });
 
         // Send InvoicePaid Noticifaction to Admin
-        $users = User::all();
-        foreach ($users as $user) {
-            if($user->hasRole('admin')){
-                $user->notify((new InvoicePaidNotification($payment))->delay($when));
-            }
-        }
+        Notification::send($users, new InvoicePaidNotification($payment, 'admin'));
 
-        return redirect('admin/payments')->with('flash_message', 'Payment added!');
+        return redirect('admin/payments/' . $payment->id)->with('flash_message', 'Payment added! You will receive a Payment Notification shortly.');
     }
 
     /**
@@ -108,7 +89,6 @@ class PaymentsController extends Controller
     public function show($id)
     {
         $payment = Payment::findOrFail($id);
-
         return view('admin.payments.show', compact('payment'));
     }
 
@@ -124,8 +104,7 @@ class PaymentsController extends Controller
         $tenants = Tenant::all();
         $invoices = Invoice::all();
         $payment = Payment::findOrFail($id);
-
-        return view('admin.payments.edit', compact('payment' , 'tenants', 'invoices'));
+        return view('admin.payments.edit', compact('payment', 'tenants', 'invoices'));
     }
 
     /**
@@ -139,11 +118,9 @@ class PaymentsController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $this->validateRequest($request);
-        
         $payment = Payment::findOrFail($id);
         $payment->update($validatedData);
-
-        return redirect('admin/payments')->with('flash_message', 'Payment updated!');
+        return redirect('admin/payments/' . $payment->id)->with('flash_message', 'Payment information updated!');
     }
 
     /**
@@ -156,12 +133,12 @@ class PaymentsController extends Controller
     public function destroy($id)
     {
         Payment::destroy($id);
-
         return redirect('admin/payments')->with('flash_message', 'Payment deleted!');
     }
 
     // Validates Payment Request Details
-    public function validateRequest(Request $request){
+    public function validateRequest(Request $request)
+    {
         return $request->validate([
             'tenant_id' => 'required',
             'invoice_id' => 'required',
@@ -176,35 +153,31 @@ class PaymentsController extends Controller
     }
 
     // Gets the balance of the last payment for the requested invoice_id
-    public function getInvoiceBalance(Request $request){
+    public function getInvoiceBalance(Request $request)
+    {
         $invoice_id = $request->get('invoice_id');
-        
+
         $last_payment_balance = DB::select('select `balance` from payments where invoice_id = :invoice_id ORDER BY `id` DESC LIMIT 1', ['invoice_id' => $invoice_id]);
         $invoice_status = DB::select('select `status` from invoices where id = :invoice_id ORDER BY `id` DESC LIMIT 1', ['invoice_id' => $invoice_id]);
 
         // checks if the invoice has any balance
-        if($last_payment_balance == null && $invoice_status[0]->status == 'active')
-        {
+        if ($last_payment_balance == null && $invoice_status[0]->status == 'active') {
             $invoice_grand_total = DB::select('select `grand_total` from invoices where id = :invoice_id ORDER BY `id` DESC LIMIT 1', ['invoice_id' => $invoice_id]);
             $balance = $invoice_grand_total[0]->grand_total;
-        }
-        else
-        {
-            if($last_payment_balance[0]->balance == "0.00" && $invoice_status[0]->status == 'closed')
-            {
+        } else {
+            if ($last_payment_balance[0]->balance == "0.00" && $invoice_status[0]->status == 'closed') {
                 $balance = '0.00';
-            }
-            else if($last_payment_balance[0]->balance != null && $invoice_status[0]->status == 'active')
-            {
+            } else if ($last_payment_balance[0]->balance != null && $invoice_status[0]->status == 'active') {
                 $balance = $last_payment_balance[0]->balance;
             }
         }
-        
-        return response()->json(array('balance'=> $balance), 200);
+
+        return response()->json(array('balance' => $balance), 200);
     }
 
     //print receipt for payment
-    public function print_receipt($id){
+    public function print_receipt($id)
+    {
         $payment = Payment::findOrFail($id);
         return view('admin.payments.print_receipt', compact('payment'));
     }
