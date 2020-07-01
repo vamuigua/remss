@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Tenant;
 use App\House;
@@ -14,18 +13,19 @@ use App\WaterReading;
 
 class AdminDashboardController extends Controller
 {
-    public function index(){
-        $houses = House::all();
-        $tenants = Tenant::all();
-        $invoices = Invoice::all();
-        $payments = Payment::all();
-        $notices = Notice::all();
-        $expenditures = Expenditure::all();
-        $water_readings = WaterReading::all();
-        $pending_payments = Invoice::where('status', 'active');
+    public function index()
+    {
+        $houses = House::count();
+        $tenants = Tenant::count();
+        $invoices = Invoice::count();
+        $payments = Payment::count();
+        $notices = Notice::count();
+        $expenditures = Expenditure::count();
+        $water_readings = WaterReading::count();
+        $pending_payments = Invoice::where('status', 'active')->count();
 
         $months = Expenditure::monthsOfTheYear();
-        
-        return view ('admin.dashboard', compact('tenants', 'houses', 'invoices', 'payments', 'notices', 'expenditures','water_readings','months','pending_payments'));   
+
+        return view('admin.dashboard', compact('tenants', 'houses', 'invoices', 'payments', 'notices', 'expenditures', 'water_readings', 'months', 'pending_payments'));
     }
 }

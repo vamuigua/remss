@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\House;
 use App\Imports\HousesImport;
 use App\Exports\HousesExport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
-
-use App\House;
-use Illuminate\Http\Request;
 
 class HousesController extends Controller
 {
@@ -20,21 +19,7 @@ class HousesController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $houses = House::where('house_no', 'LIKE', "%$keyword%")
-                ->orWhere('features', 'LIKE', "%$keyword%")
-                ->orWhere('rent', 'LIKE', "%$keyword%")
-                ->orWhere('status', 'LIKE', "%$keyword%")
-                ->orWhere('water_meter_no', 'LIKE', "%$keyword%")
-                ->orWhere('electricity_meter_no', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $houses = House::latest()->paginate($perPage);
-        }
-
+        $houses = DB::table('houses')->latest()->get();
         return view('admin.houses.index', compact('houses'));
     }
 
@@ -58,12 +43,9 @@ class HousesController extends Controller
      */
     public function store(Request $request)
     {
-        
         $requestData = $this->validateRequest($request);
-        
-        House::create($requestData);
-
-        return redirect('admin/houses')->with('flash_message', 'House added!');
+        $house = House::create($requestData);
+        return redirect('admin/houses/' . $house->id)->with('flash_message', 'House added!');
     }
 
     /**
@@ -76,7 +58,6 @@ class HousesController extends Controller
     public function show($id)
     {
         $house = House::findOrFail($id);
-
         return view('admin.houses.show', compact('house'));
     }
 
@@ -90,7 +71,6 @@ class HousesController extends Controller
     public function edit($id)
     {
         $house = House::findOrFail($id);
-
         return view('admin.houses.edit', compact('house'));
     }
 
@@ -104,13 +84,10 @@ class HousesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $requestData = $this->validateRequest($request);
-        
         $house = House::findOrFail($id);
         $house->update($requestData);
-
-        return redirect('admin/houses')->with('flash_message', 'House updated!');
+        return redirect('admin/houses/' . $house->id)->with('flash_message', 'House updated!');
     }
 
     /**
@@ -123,11 +100,11 @@ class HousesController extends Controller
     public function destroy($id)
     {
         House::destroy($id);
-
         return redirect('admin/houses')->with('flash_message', 'House deleted!');
     }
 
-    public function validateRequest(Request $request){
+    public function validateRequest(Request $request)
+    {
         return $request->validate([
             'house_no' => 'required',
             'features' => 'required',
@@ -139,24 +116,24 @@ class HousesController extends Controller
     }
 
     // Validates & Imports House Excel Files
-    public function importHousesData(Request $request) 
+    public function importHousesData(Request $request)
     {
         $request->validate([
             'import_file' => 'required|mimes:xlsx, xls, csv'
         ]);
-        
+
         $extension = $request->file('import_file')->getClientOriginalExtension();
 
-        if($extension === "xlsx" || $extension === "xls" || $extension === "csv"){
+        if ($extension === "xlsx" || $extension === "xls" || $extension === "csv") {
             Excel::import(new HousesImport, $request->file('import_file'));
             return redirect('admin/houses')->with('flash_message', 'Houses Imported...All good!');
-        }else {
+        } else {
             return redirect('admin/houses')->with('flash_message_error', 'Failed to Import upload file!');
         }
     }
 
-     // Exports all House Details from the Database
-    public function exportHousesData(Request $request) 
+    // Exports all House Details from the Database
+    public function exportHousesData(Request $request)
     {
         $format = $request['excel_format'];
         return Excel::download(new HousesExport, 'Houses.' . $format);

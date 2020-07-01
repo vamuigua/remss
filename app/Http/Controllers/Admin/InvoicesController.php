@@ -4,17 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use PDF;
 use App\User;
 use App\Tenant;
 use App\Invoice;
 use App\InvoiceProduct;
-use App\Http\Requests;
 use App\Notifications\InvoiceSentNotification;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class InvoicesController extends Controller
 {
@@ -22,9 +20,9 @@ class InvoicesController extends Controller
 
     public function index()
     {
+        $perPage = Invoice::count();
         $invoices = Invoice::orderBy('created_at', 'desc')
-            ->paginate(10);
-
+            ->paginate($perPage);
         return view('admin.invoices.index', compact('invoices'));
     }
 
@@ -32,7 +30,7 @@ class InvoicesController extends Controller
     {
         $tenants = Tenant::all();
         $invoice = new Invoice();
-        return view('admin.invoices.create', compact('tenants','invoice'));
+        return view('admin.invoices.create', compact('tenants', 'invoice'));
     }
 
     public function store(Request $request)
@@ -53,17 +51,17 @@ class InvoicesController extends Controller
         ]);
 
         // collect all the products from the request
-        $products = collect($request->products)->transform(function($product) {
+        $products = collect($request->products)->transform(function ($product) {
             $product['total'] = $product['qty'] * $product['price'];
             return new InvoiceProduct($product);
         });
 
         // check if the products from the request is empty
-        if($products->isEmpty()) {
+        if ($products->isEmpty()) {
             return response()
-            ->json([
-                'products_empty' => ['One or more Product is required.']
-            ], 422);
+                ->json([
+                    'products_empty' => ['One or more Product is required.']
+                ], 422);
         }
 
         $data = $request->except('products');
@@ -105,7 +103,7 @@ class InvoicesController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'invoice_no' => 'required|alpha_dash|unique:invoices,invoice_no,'.$id.',id',
+            'invoice_no' => 'required|alpha_dash|unique:invoices,invoice_no,' . $id . ',id',
             'tenant_id' => 'required|max:255',
             'client_address' => 'required|max:255',
             'invoice_date' => 'required|date_format:Y-m-d',
@@ -119,16 +117,16 @@ class InvoicesController extends Controller
 
         $invoice = Invoice::findOrFail($id);
 
-        $products = collect($request->products)->transform(function($product) {
+        $products = collect($request->products)->transform(function ($product) {
             $product['total'] = $product['qty'] * $product['price'];
             return new InvoiceProduct($product);
         });
 
-        if($products->isEmpty()) {
+        if ($products->isEmpty()) {
             return response()
-            ->json([
-                'products_empty' => ['One or more Product is required.']
-            ], 422);
+                ->json([
+                    'products_empty' => ['One or more Product is required.']
+                ], 422);
         }
 
         $data = $request->except('products');

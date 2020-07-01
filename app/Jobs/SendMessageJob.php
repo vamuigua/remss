@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Exception;
 use App\Message;
 use AfricasTalking\SDK\AfricasTalking;
 
@@ -79,7 +80,7 @@ class SendMessageJob implements ShouldQueue
             fclose($log);
 
             // decode the bulksms response
-            $json = json_decode($str_json, true);
+            // $json = json_decode($str_json, true);
 
             // Check for errors
             // print_r($json['data']['SMSMessageData']['Recipients'][0]['statusCode']); // statusCode '101' means successful
@@ -92,7 +93,7 @@ class SendMessageJob implements ShouldQueue
      * @param  Exception  $exception
      * @return void
      */
-    public function failed(\Exception $exception)
+    public function failed(Exception $exception)
     {
         // log the error response
         $logFile = public_path("/remss/Bulksms/BulkSMSResponse_Error.txt");

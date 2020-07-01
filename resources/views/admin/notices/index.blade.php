@@ -9,7 +9,7 @@
                     <div class="card-header">Notices</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/notices/create') }}" class="btn btn-success btn-sm" title="Add New Notice">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add New Notice
                         </a>
 
                         <br/>
@@ -40,9 +40,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $notices->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -50,7 +50,6 @@
                     @endforeach
                 </tbody>
             </table>
-            {!! $invoices->render() !!}
             @else
                 <div class="invoice-empty">
                     <p class="invoice-empty-title">

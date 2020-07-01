@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Imports\TenantsImport;
 use App\Exports\TenantsExport;
-use Maatwebsite\Excel\Facades\Excel;
-
+use App\Http\Traits\TenantActions;
 use App\Tenant;
 use App\House;
-use App\Http\Traits\TenantActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+
 
 class TenantsController extends Controller
 {
@@ -27,9 +27,8 @@ class TenantsController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 25;
+        $perPage = Tenant::count();
         $tenants = Tenant::latest()->paginate($perPage);
-
         return view('admin.tenants.index', compact('tenants'));
     }
 
@@ -69,7 +68,6 @@ class TenantsController extends Controller
         $tenant = Tenant::findOrFail($id);
         $has_house = $tenant->house;
         $houses = House::all();
-
         return view('admin.tenants.show', compact('tenant', 'houses', 'has_house'));
     }
 
@@ -83,7 +81,6 @@ class TenantsController extends Controller
     public function edit($id)
     {
         $tenant = Tenant::findOrFail($id);
-
         return view('admin.tenants.edit', compact('tenant'));
     }
 
@@ -124,7 +121,7 @@ class TenantsController extends Controller
             $tenant->update($validatedData);
         }
 
-        return redirect('admin/tenants')->with('flash_message', 'Tenant updated!');
+        return redirect('admin/tenants/' . $tenant->id)->with('flash_message', 'Tenant updated!');
     }
 
     /**

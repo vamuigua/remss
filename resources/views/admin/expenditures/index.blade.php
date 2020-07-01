@@ -9,7 +9,7 @@
                     <div class="card-header">Expenditures</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/expenditures/create') }}" class="btn btn-success btn-sm" title="Add New Expenditure">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add New Expenditure
                         </a>
                         <br/>
                         <br/>
@@ -39,9 +39,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $expenditures->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
-
                     </div>
                 </div>
             </div>

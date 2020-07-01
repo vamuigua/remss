@@ -3,7 +3,6 @@
 @section('content')
     <div class="container">
         <div class="row">
-            {{-- @include('admin.sidebar') --}}
 
             <div class="col-md-12">
                 <div class="row">
@@ -11,7 +10,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>{{$tenants->count()}}</h3>
+                                <h3>{{$tenants}}</h3>
                                 <p>Tenants</p>
                             </div>
                             <div class="icon">
@@ -26,7 +25,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-gradient-success">
                             <div class="inner">
-                                <h3>{{$houses->count()}}</h3>
+                                <h3>{{$houses}}</h3>
                                 <p>Houses</p>
                             </div>
                             <div class="icon">
@@ -41,7 +40,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-cyan">
                             <div class="inner">
-                                <h3>{{$invoices->count()}}</h3>
+                                <h3>{{$invoices}}</h3>
                                 <p>Invoices</p>
                             </div>
                             <div class="icon">
@@ -56,7 +55,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-maroon">
                             <div class="inner">
-                                <h3>{{$payments->count()}}</h3>
+                                <h3>{{$payments}}</h3>
                                 <p>Payments</p>
                             </div>
                             <div class="icon">
@@ -71,7 +70,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-gradient-warning">
                             <div class="inner">
-                                <h3>{{$notices->count()}}</h3>
+                                <h3>{{$notices}}</h3>
                                 <p>Notices</p>
                             </div>
                             <div class="icon">
@@ -86,7 +85,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-gradient-danger">
                             <div class="inner">
-                                <h3>{{$expenditures->count()}}</h3>
+                                <h3>{{$expenditures}}</h3>
                                 <p>Expenditures</p>
                             </div>
                             <div class="icon">
@@ -101,7 +100,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-gradient-primary">
                             <div class="inner">
-                                <h3>{{$water_readings->count()}}</h3>
+                                <h3>{{$water_readings}}</h3>
                                 <p>Water Readings</p>
                             </div>
                             <div class="icon">
@@ -116,7 +115,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-purple">
                             <div class="inner">
-                            <h3>{{$pending_payments->count()}}</h3>
+                            <h3>{{$pending_payments}}</h3>
                                 <p>Pending Payments</p>
                             </div>
                             <div class="icon">
@@ -144,12 +143,6 @@
                             <span class="text-bold text-lg" id="expenditure_total">KSH.0</span>
                             <span>Total Expenditure for Selected Months</span>
                         </p>
-                        {{-- <p class="ml-auto d-flex flex-column text-right">
-                            <span class="text-success">
-                            <i class="fas fa-arrow-up"></i> 33.1%
-                            </span>
-                            <span class="text-muted">Since last month</span>
-                        </p> --}}
                         </div>
                         <!-- /.d-flex -->
 
@@ -161,10 +154,6 @@
                             <span class="mr-2" id="blue_bar_year">
                                 <i class="fas fa-square text-primary"></i> This year
                             </span>
-
-                            {{-- <span>
-                                <i class="fas fa-square text-gray"></i> Last year
-                            </span> --}}
                         </div>
 
                         {{-- Expenditures Chart Form --}}

@@ -7,6 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class InvoiceSentNotification extends Notification implements ShouldQueue
 {
@@ -44,10 +46,10 @@ class InvoiceSentNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('New Invoice from REMSS')
-                    ->line('You have a New Invoice!.')
-                    ->action('Check Invoice', url('/admin/invoices/' . $this->invoice->id))
-                    ->line('Thank you for using our application!');
+            ->subject('New Invoice from REMSS')
+            ->line('You have a New Invoice!.')
+            ->action('Check Invoice', url('/admin/invoices/' . $this->invoice->id))
+            ->line('Thank you for using our application!');
     }
 
     public function toDatabase()
@@ -60,15 +62,14 @@ class InvoiceSentNotification extends Notification implements ShouldQueue
     }
 
     /**
-     * Get the array representation of the notification.
+     * Handle a notification failure.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @param  \Exception  $exception
+     * @return void
      */
-    public function toArray($notifiable)
+    public function failed(Exception $exception)
     {
-        return [
-            //
-        ];
+        // Send user notification of failure, etc...
+        Log::debug('InvoiceSentNotification Failed: ' . $exception->getMessage());
     }
 }

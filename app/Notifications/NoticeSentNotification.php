@@ -86,19 +86,6 @@ class NoticeSentNotification extends Notification implements ShouldQueue
     public function failed(Exception $exception)
     {
         // Send user notification of failure, etc...
-        Log::debug('Notification Failed: ' . $exception->getMessage());
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
+        Log::debug('NoticeSentNotification Failed: ' . $exception->getMessage());
     }
 }

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\Expenditure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,19 +16,7 @@ class ExpendituresController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 10;
-
-        if (!empty($keyword)) {
-            $expenditures = Expenditure::where('outgoings', 'LIKE', "%$keyword%")
-                ->orWhere('amount', 'LIKE', "%$keyword%")
-                ->orWhere('particulars', 'LIKE', "%$keyword%")
-                ->orWhere('expenditure_date', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $expenditures = Expenditure::latest()->paginate($perPage);
-        }
-
+        $expenditures = DB::table('expenditures')->latest()->get();
         return view('admin.expenditures.index', compact('expenditures'));
     }
 
@@ -54,12 +40,9 @@ class ExpendituresController extends Controller
      */
     public function store(Request $request)
     {
-        
         $requestData = $this->validateRequest($request);
-        
-        Expenditure::create($requestData);
-
-        return redirect('admin/expenditures')->with('flash_message', 'Expenditure added!');
+        $expenditure = Expenditure::create($requestData);
+        return redirect('admin/expenditures/' . $expenditure->id)->with('flash_message', 'Expenditure added!');
     }
 
     /**
@@ -72,7 +55,6 @@ class ExpendituresController extends Controller
     public function show($id)
     {
         $expenditure = Expenditure::findOrFail($id);
-
         return view('admin.expenditures.show', compact('expenditure'));
     }
 
@@ -86,7 +68,6 @@ class ExpendituresController extends Controller
     public function edit($id)
     {
         $expenditure = Expenditure::findOrFail($id);
-
         return view('admin.expenditures.edit', compact('expenditure'));
     }
 
@@ -100,13 +81,10 @@ class ExpendituresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $requestData = $this->validateRequest($request);
-        
         $expenditure = Expenditure::findOrFail($id);
         $expenditure->update($requestData);
-
-        return redirect('admin/expenditures')->with('flash_message', 'Expenditure updated!');
+        return redirect('admin/expenditures/' . $expenditure->id)->with('flash_message', 'Expenditure updated!');
     }
 
     /**
@@ -119,11 +97,11 @@ class ExpendituresController extends Controller
     public function destroy($id)
     {
         Expenditure::destroy($id);
-
         return redirect('admin/expenditures')->with('flash_message', 'Expenditure deleted!');
     }
 
-    public function validateRequest(Request $request){
+    public function validateRequest(Request $request)
+    {
         return $request->validate([
             'outgoings' => 'required',
             'amount' => 'required|numeric',
@@ -132,8 +110,9 @@ class ExpendituresController extends Controller
         ]);
     }
 
-    // calculates the Expenditures for selected months of a specific year to display on the expenditure-chart
-    public function expenditureMonths(Request $request){
+    // calculates the Expenditures for selected months of a specific year & displays the results on the expenditure-chart
+    public function expenditureMonths(Request $request)
+    {
         $amount_data = array();
         $month_labels = array();
         $total_amount_for_month = 0;
@@ -146,9 +125,11 @@ class ExpendituresController extends Controller
         // for each month in year selected, fetch the expenditure
         foreach ($months as $month) {
             // array of amounts of $month
-            $amount = DB::select('select `amount` from expenditures where YEAR(expenditure_date) = :year AND MONTH(expenditure_date) = :month ORDER BY `id`',
-                                ['year' => $year, 'month' => $month]);
-            
+            $amount = DB::select(
+                'select `amount` from expenditures where YEAR(expenditure_date) = :year AND MONTH(expenditure_date) = :month ORDER BY `id`',
+                ['year' => $year, 'month' => $month]
+            );
+
             // sum all the expenditures for the selected month
             foreach ($amount as $value) {
                 // store total amount for a month
@@ -163,14 +144,15 @@ class ExpendituresController extends Controller
             $total_amount_for_month = 0;
 
             // add the calculated month expenditure into a year array
-            $current_month = date('F', mktime(0,0,0,$month, 1, date('Y')));
+            $current_month = date('F', mktime(0, 0, 0, $month, 1, date('Y')));
             array_push($month_labels, $current_month);
         }
-        
+
         // return results in json  
         return response()->json(array(
-            'amount_data'=> $amount_data,
-            'month_labels'=> $month_labels,
-            'total_expenditure_months_selected' => $total_expenditure_months_selected), 200);
+            'amount_data' => $amount_data,
+            'month_labels' => $month_labels,
+            'total_expenditure_months_selected' => $total_expenditure_months_selected
+        ), 200);
     }
 }

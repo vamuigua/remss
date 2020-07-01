@@ -10,7 +10,7 @@
                     <div class="card-body">
                     <div class="my-2">
                         <a href="{{ url('/admin/houses/create') }}" class="btn btn-success btn-sm" title="Add New House">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add New House
                         </a>
                         <!-- Import & Export Houses Excel Button trigger modal -->
                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#import_export_modal">
@@ -96,9 +96,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $houses->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
-
                     </div>
                 </div>
             </div>

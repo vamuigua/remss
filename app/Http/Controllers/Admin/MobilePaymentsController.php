@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\MobilePayment;
+use Illuminate\Support\Facades\DB;
 
 class MobilePaymentsController extends Controller
 {
@@ -14,8 +15,7 @@ class MobilePaymentsController extends Controller
      */
     public function index()
     {
-        $perPage = 100;
-        $mobilePayments = MobilePayment::latest()->paginate($perPage);
+        $mobilePayments = DB::table('mobile_payments')->latest()->get();
         return view('admin.mobile-payments.index', compact('mobilePayments'));
     }
 

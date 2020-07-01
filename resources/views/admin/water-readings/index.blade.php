@@ -9,7 +9,7 @@
                     <div class="card-header">Water Readings</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/water-readings/create') }}" class="btn btn-success btn-sm" title="Add New WaterReading">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New Water Readings
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
                         <br/>
                         <br/>
@@ -43,9 +43,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $waterreadings->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
-
                     </div>
                 </div>
             </div>

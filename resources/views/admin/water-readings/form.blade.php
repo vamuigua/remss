@@ -1,6 +1,7 @@
 <div class="form-group {{ $errors->has('house_id') ? 'has-error' : ''}}">
     <label for="house_id" class="control-label">{{ 'House No' }}</label>
     <select name="house_id" class="form-control selectpicker" data-live-search="true" id="house_id" onchange="updateWaterReading()">
+        <option value="" disabled selected>Choose an Option</option>
         @foreach ($houses as $house)
             <option value="{{ $house->id }}" {{ (isset($waterreading->id)) && $house->id == $waterreading->house_id ? 'selected' : old('house_id')}}>{{ $house->house_no }}</option>
         @endforeach

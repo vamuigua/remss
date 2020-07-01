@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Http\Request;
 use App\User;
 use App\Notice;
-use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\NoticeSentNotification;
+use Illuminate\Support\Facades\DB;
 
 class NoticesController extends Controller
 {
@@ -23,8 +22,7 @@ class NoticesController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 25;
-        $notices = Notice::latest()->paginate($perPage);
+        $notices = DB::table('notices')->latest()->get();
         return view('admin.notices.index', compact('notices'));
     }
 
@@ -73,7 +71,6 @@ class NoticesController extends Controller
     public function show($id)
     {
         $notice = Notice::findOrFail($id);
-
         return view('admin.notices.show', compact('notice'));
     }
 
@@ -87,7 +84,6 @@ class NoticesController extends Controller
     public function edit($id)
     {
         $notice = Notice::findOrFail($id);
-
         return view('admin.notices.edit', compact('notice'));
     }
 
@@ -101,13 +97,10 @@ class NoticesController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $requestData = $this->validateRequest($request);
-
         $notice = Notice::findOrFail($id);
         $notice->update($requestData);
-
-        return redirect('admin/notices')->with('flash_message', 'Notice updated!');
+        return redirect('admin/notices/' . $notice->id)->with('flash_message', 'Notice updated!');
     }
 
     /**
@@ -120,10 +113,10 @@ class NoticesController extends Controller
     public function destroy($id)
     {
         Notice::destroy($id);
-
         return redirect('admin/notices')->with('flash_message', 'Notice deleted!');
     }
 
+    // validate notice data
     public function validateRequest(Request $request)
     {
         return $request->validate([

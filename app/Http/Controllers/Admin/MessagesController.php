@@ -9,6 +9,7 @@ use SimpleXLSX;
 use App\Message;
 use App\Tenant;
 use App\Jobs\SendMessageJob;
+use Illuminate\Support\Facades\DB;
 
 class MessagesController extends Controller
 {
@@ -19,16 +20,7 @@ class MessagesController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $messages = Message::where('message', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $messages = Message::latest()->paginate($perPage);
-        }
-
+        $messages = DB::table('messages')->latest()->get();
         return view('admin.messages.index', compact('messages'));
     }
 
@@ -103,7 +95,6 @@ class MessagesController extends Controller
     public function show($id)
     {
         $message = Message::findOrFail($id);
-
         return view('admin.messages.show', compact('message'));
     }
 
@@ -117,7 +108,6 @@ class MessagesController extends Controller
     public function edit($id)
     {
         $message = Message::findOrFail($id);
-
         return view('admin.messages.edit', compact('message'));
     }
 
@@ -131,12 +121,9 @@ class MessagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $requestData = $request->all();
-
         $message = Message::findOrFail($id);
         $message->update($requestData);
-
         return redirect('admin/messages')->with('flash_message', 'Message updated!');
     }
 
@@ -150,7 +137,6 @@ class MessagesController extends Controller
     public function destroy($id)
     {
         Message::destroy($id);
-
         return redirect('admin/messages')->with('flash_message', 'Message deleted!');
     }
 
