@@ -13,7 +13,7 @@
 
 <div class="form-group {{ $errors->has('invoice_id') ? 'has-error' : ''}}">
     <label for="invoice_id" class="control-label">{{ 'Invoice No.' }}</label>
-    <select name="invoice_id" class="form-control selectpicker" data-live-search="true" id="invoice_id" onchange="updateDetails()">
+    <select name="invoice_id" class="form-control selectpicker tenant_invoice_id" data-live-search="true" id="invoice_id">
         <option selected="selected">Choose an Invoice</option>
         @foreach ($user->tenant->invoices as $invoice)
             <option value="{{ $invoice->id }}" {{ (isset($invoice->id))  && $payment->invoice_id == $invoice->id && $payment->status ? 'selected' : old('invoice_id')}}>{{ $invoice->invoice_no }}</option>
@@ -39,7 +39,7 @@
 
 <div class="form-group {{ $errors->has('amount_paid') ? 'has-error' : ''}}">
     <label for="amount_paid" class="control-label">{{ 'Amount Paid' }}</label>
-    <input class="form-control" name="amount_paid" type="number" id="amount_paid" value="{{ isset($payment->amount_paid) ? $payment->amount_paid : old('amount_paid')}}" oninput="updateDetails()">
+    <input class="form-control payment_amount_paid" name="amount_paid" type="number" id="amount_paid" value="{{ isset($payment->amount_paid) ? $payment->amount_paid : old('amount_paid')}}">
     {!! $errors->first('amount_paid', '<p class="help-block">:message</p>') !!}
 </div>
 
@@ -68,7 +68,4 @@
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="Make Payment">
 </div>
-
-<script src="{{ asset('js/fetch.js') }}" type="text/javascript"></script>
-
 

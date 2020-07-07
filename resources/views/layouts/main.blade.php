@@ -64,7 +64,7 @@
                                         @if (Auth::user()->hasRole('Admin'))
                                             <a href="{{ route('admin.dashboard') }}"><i class="fa fa-th"></i> Dashboard</a>
                                         @elseif(Auth::user()->hasRole('User'))
-                                            <a href="{{ route('user.dashboard') }}"><i class="fa fa-th"></i> Dashboard</a>
+                                            <a href="{{ route('tenant.dashboard') }}"><i class="fa fa-th"></i> Dashboard</a>
                                         @endif
 
                                         {{-- LOGOUT --}}

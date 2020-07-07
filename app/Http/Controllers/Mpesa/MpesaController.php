@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Mpesa;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Payment;
 
@@ -43,8 +42,8 @@ class MpesaController extends Controller
 
         $access_token = $this->access_token();
         $shortCode = '600610';
-        $confirmationUrl = 'https://6569402233c2.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
-        $validationUrl = 'https://6569402233c2.ngrok.io/remss/validation_url.php';
+        $confirmationUrl = 'https://8353d2bbd848.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
+        $validationUrl = 'https://8353d2bbd848.ngrok.io/remss/validation_url.php';
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
