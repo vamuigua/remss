@@ -42,8 +42,8 @@ class MpesaController extends Controller
 
         $access_token = $this->access_token();
         $shortCode = '600610';
-        $confirmationUrl = 'https://8353d2bbd848.ngrok.io/remss/confirmation_url.php';  // remember to make urls https and use ngrok
-        $validationUrl = 'https://8353d2bbd848.ngrok.io/remss/validation_url.php';
+        $confirmationUrl = 'https://8353d2bbd848.ngrok.io/api/confirm';  // remember to make urls https and use ngrok
+        $validationUrl = 'https://8353d2bbd848.ngrok.io/api/validate';
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -109,7 +109,7 @@ class MpesaController extends Controller
 
         $jsonMpesaResponse = json_decode($curl_response, true);
 
-        if ($jsonMpesaResponse != null && $jsonMpesaResponse["ResponseDescription"] != null) {
+        if ($jsonMpesaResponse != null && $jsonMpesaResponse["ResponseDescription"] != null && $jsonMpesaResponse["ResponseDescription"] == "success") {
             // finish the Payment process since payment to mpesa paybill was a success
             return redirect()->action(
                 'Tenant\\PaymentsController@completePayment',
