@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\InvoicePaidNotification;
 use App\User;
 use App\Invoice;
@@ -64,7 +65,8 @@ class PaymentsController extends Controller
     }
 
     // Complete and Finalize a Payment
-    public function completePayment($payment_id){
+    public function completePayment($payment_id)
+    {
         // find the Payment made
         $payment = Payment::findOrFail($payment_id);
 
@@ -89,15 +91,16 @@ class PaymentsController extends Controller
         $when = Carbon::now()->addSeconds(5);
         $user->notify((new InvoicePaidNotification($payment, 'user'))->delay($when));
 
-        // Send InvoicePaid Noticifaction to Admin
-        $users = User::all();
-        foreach ($users as $user) {
-            if ($user->hasRole('admin')) {
-                $user->notify((new InvoicePaidNotification($payment, 'admin'))->delay($when));
-            }
-        }
 
-        return redirect('/tenant/payments/'. $payment->id)->with('flash_message', 'Payment Made! You will receive a Payment Notification shortly');
+        // Grab all Admins only, remove Tenants from the query
+        $users = User::all()->reject(function ($user) {
+            return $user->hasRole('Admin') === false;
+        });
+
+        // Send InvoicePaid Noticifaction to Admin
+        Notification::send($users, new InvoicePaidNotification($payment, 'admin'));
+
+        return redirect('/tenant/payments/' . $payment->id)->with('flash_message', 'Payment Made! You will receive a Payment Notification shortly');
     }
 
     public function validatePaymentsRequest(Request $request)

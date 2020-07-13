@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mpesa;
 
 use App\Http\Controllers\Controller;
 use App\Payment;
+use Illuminate\Http\Request;
 
 class MpesaController extends Controller
 {
@@ -41,9 +42,10 @@ class MpesaController extends Controller
         $url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl';
 
         $access_token = $this->access_token();
+        // 600610
         $shortCode = '600610';
-        $confirmationUrl = 'https://8353d2bbd848.ngrok.io/api/confirm';  // remember to make urls https and use ngrok
-        $validationUrl = 'https://8353d2bbd848.ngrok.io/api/validate';
+        $confirmationUrl = 'https://353bd4c61783.ngrok.io/api/confirm';  // remember to make urls https and use ngrok
+        $validationUrl = 'https://353bd4c61783.ngrok.io/api/validate';
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -109,7 +111,7 @@ class MpesaController extends Controller
 
         $jsonMpesaResponse = json_decode($curl_response, true);
 
-        if ($jsonMpesaResponse != null && $jsonMpesaResponse["ResponseDescription"] != null && $jsonMpesaResponse["ResponseDescription"] == "success") {
+        if ($jsonMpesaResponse != null && $jsonMpesaResponse["ResponseDescription"] != null) {
             // finish the Payment process since payment to mpesa paybill was a success
             return redirect()->action(
                 'Tenant\\PaymentsController@completePayment',
@@ -118,7 +120,7 @@ class MpesaController extends Controller
         } else {
             // mpesa paybill payment failed, remove payment from DB
             Payment::destroy($payment_id);
-            return redirect('tenants/payments')->with('flash_message_error', 'The Payment was Unsuccessful! Try again in a few minutes');
+            return redirect('tenant/payments')->with('flash_message_error', 'The Payment was Unsuccessful! Try again in a few minutes');
         }
     }
 }
