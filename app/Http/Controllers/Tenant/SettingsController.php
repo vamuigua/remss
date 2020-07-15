@@ -7,17 +7,22 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
+use App\Http\Traits\SettingsActions;
 
 class SettingsController extends Controller
-{   
+{
+    use SettingsActions;
+
     // Profile Settings View
-    public function profile($id){
+    public function profile($id)
+    {
         $user = Auth::user($id);
-        return view ('tenant.settings.profile', compact('user'));     
+        return view('tenant.settings.profile', compact('user'));
     }
 
     // Update Profile Picture
-    public function updateProfilePic(Request $request){
+    public function updateProfilePic(Request $request)
+    {
         $request->validate(['image' => 'image']);
 
         if ($request->hasFile('image')) {
@@ -35,7 +40,8 @@ class SettingsController extends Controller
     }
 
     // Password Update
-    public function updatePassword(Request $request){
+    public function updatePassword(Request $request)
+    {
         $validatedData = $request->validate([
             'old_password' => 'required',
             'password' => 'required|string|min:8|confirmed',
@@ -46,18 +52,18 @@ class SettingsController extends Controller
         // Conditions to check for Changing Password
         if (!(Hash::check($request->get('old_password'), Auth::user()->password))) {
             // The passwords not matches
-            return redirect()->back()->with("flash_message_error","Your current password does not matches with the password you provided. Please try again.");
+            return redirect()->back()->with("flash_message_error", "Your current password does not matches with the password you provided. Please try again.");
             // return response()->json(['errors' => ['current'=> ['Current password does not match']]], 422);
         }
 
-        if(strcmp($request->get('old_password'), $request->get('password')) == 0){
+        if (strcmp($request->get('old_password'), $request->get('password')) == 0) {
             //Current password and new password are same
-            return redirect()->back()->with("flash_message_error","New Password cannot be same as your current password. Please choose a different password.");
+            return redirect()->back()->with("flash_message_error", "New Password cannot be same as your current password. Please choose a different password.");
             // return response()->json(['errors' => ['current'=> ['New Password cannot be same as your current password']]], 422);
         }
 
-        if(strcmp($request->get('password'), $request->get('password_confirmation')) != 0){
-            return redirect()->back()->with("flash_message_error","New Password does not match your Re-typed Password.");
+        if (strcmp($request->get('password'), $request->get('password_confirmation')) != 0) {
+            return redirect()->back()->with("flash_message_error", "New Password does not match your Re-typed Password.");
         }
 
         //Change Password

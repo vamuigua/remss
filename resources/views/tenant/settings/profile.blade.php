@@ -41,10 +41,12 @@
                 <ul class="nav nav-pills">
                   <li class="nav-item"><a class="nav-link active" href="#password" data-toggle="tab">Password</a></li>
                   <li class="nav-item"><a class="nav-link" href="#profilePic" data-toggle="tab">Profile Picture</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#notification_preference" data-toggle="tab">Notification Preference</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
+                    {{-- Password Settings --}}
                     <div class="active tab-pane" id="password">
                         
                         @if ($errors->any())
@@ -91,7 +93,7 @@
                             </div>
                         </form>
                   </div>
-                  <!-- /.tab-pane -->
+                  {{-- Profile Picture --}}
                   <div class="tab-pane" id="profilePic">
                       <form method="POST" action="{{ route('tenant.settings.updateProfilePic') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                         {{ csrf_field() }}
@@ -104,6 +106,24 @@
                             </div>
                             <div class="mt-2">
                                 <p><b>Current Tenant Photo:</b></p><img src="{{$user->tenant->tenantImage()}}" alt="tenantImage">
+                            </div>
+                        </div>
+                      </form>
+                  </div>
+                  {{-- Notification Preference --}}
+                  <div class="tab-pane" id="notification_preference">
+                      <form method="POST" action="{{ route('tenant.settings.updateNotificationPreference') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group {{ $errors->has('notification_preference') ? 'has-error' : ''}}">
+                            <label for="notification_preference" class="control-label">{{ 'Change Notification Preference' }}</label>
+                            <select name="notification_preference" class="form-control"id="notification_preference">
+                                <option value="mail">Mail Only</option>
+                                <option value="database">System Only</option>
+                                <option value="both">Both Mail and System</option>
+                            </select>
+                            <div class="form-group">
+                                <input class="btn btn-success my-3" type="submit" value="Update">
+                                {!! $errors->first('notification_preference', '<p class="alert alert-danger help-block">:message</p>') !!}
                             </div>
                         </div>
                       </form>

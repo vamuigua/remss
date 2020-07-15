@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Faker\Factory;
 use App\Invoice;
 use App\InvoiceProduct;
-use App\Tenant; 
+use App\Tenant;
 
 class InvoiceTableSeeder extends Seeder
 {
@@ -17,7 +17,6 @@ class InvoiceTableSeeder extends Seeder
     {
         $tenant_a = Tenant::where('id', '1')->first();
         $tenant_b = Tenant::where('id', '2')->first();
-        $array_names = array($tenant_a->surname, $tenant_b->surname);
         $array_address = array($tenant_a->email, $tenant_b->email);
 
         $faker = Factory::create();
@@ -25,9 +24,9 @@ class InvoiceTableSeeder extends Seeder
         Invoice::truncate();
         InvoiceProduct::truncate();
 
-        foreach(range(1, 2) as $i) {
+        foreach (range(1, 2) as $i) {
             $products = collect();
-            foreach(range(1, mt_rand(2, 10)) as $j) {
+            foreach (range(1, mt_rand(2, 10)) as $j) {
                 $unitPrice = $faker->numberBetween(100, 1000);
                 $qty = $faker->numberBetween(1, 20);
                 $products->push(new InvoiceProduct([
@@ -36,7 +35,6 @@ class InvoiceTableSeeder extends Seeder
                     'qty' => $qty,
                     'total' => ($qty  * $unitPrice)
                 ]));
-
             }
 
             $subTotal = $products->sum('total');

@@ -42,10 +42,9 @@ class MpesaController extends Controller
         $url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl';
 
         $access_token = $this->access_token();
-        // 600610
         $shortCode = '600610';
-        $confirmationUrl = 'https://353bd4c61783.ngrok.io/api/confirm';  // remember to make urls https and use ngrok
-        $validationUrl = 'https://353bd4c61783.ngrok.io/api/validate';
+        $confirmationUrl = 'https://684da7dab316.ngrok.io/api/confirm';  // remember to make urls https and use ngrok
+        $validationUrl = 'https://684da7dab316.ngrok.io/api/validate';
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -69,7 +68,7 @@ class MpesaController extends Controller
 
         $jsonResponse = json_decode($curl_response, true);
 
-        if ($jsonResponse != null && $jsonResponse["ResponseDescription"] = "success") {
+        if ($jsonResponse != null && $jsonResponse["ResponseDescription"] === "success") {
             return redirect('tenant/dashboard')->with('flash_message', 'Validation and Confirmation URLs Successfully registered!');
         } else {
             return redirect('tenant/dashboard')->with('flash_message_error', 'Failed to Register the Validation and Confirmation URLs!');

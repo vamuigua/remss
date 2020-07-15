@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use \App\User;
 use \App\Role;
 
@@ -29,7 +30,7 @@ class UserTableSeeder extends Seeder
         $user2->password = Hash::make('user2');
         $user2->save();
         $user2->roles()->attach($role_user);
-        
+
         $admin = new User();
         $admin->name = 'John Doe';
         $admin->email = 'admin@example.com';

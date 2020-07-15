@@ -179,6 +179,12 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'admin.settings.updatePassword'
     ]);
 
+    // Update Notification Preference
+    Route::post('/admin/settings/updateNotificationPreference', [
+        'uses' => 'Admin\\SettingsController@updateNotificationPreference',
+        'as' => 'admin.settings.updateNotificationPreference'
+    ]);
+
     // Expenditures Per Month Request
     Route::post('/admin/expenditure-months', [
         'uses' => 'Admin\\ExpendituresController@expenditureMonths',
@@ -312,11 +318,13 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     ]);
 
     //Settings
+    // Update Profile Pic
     Route::post('/tenant/settings/updateProfilePic', [
         'uses' => 'Tenant\\SettingsController@updateProfilePic',
         'as' => 'tenant.settings.updateProfilePic'
     ]);
 
+    // Route to settings
     Route::get('/tenant/settings/profile/{user}', [
         'uses' => 'Tenant\\SettingsController@profile',
         'as' => 'tenant.settings.profile'
@@ -326,6 +334,12 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
     Route::post('/tenant/settings/updatePassword', [
         'uses' => 'Tenant\\SettingsController@updatePassword',
         'as' => 'tenant.settings.updatePassword'
+    ]);
+
+    // Update Notification Preference
+    Route::post('/tenant/settings/updateNotificationPreference', [
+        'uses' => 'Tenant\\SettingsController@updateNotificationPreference',
+        'as' => 'tenant.settings.updateNotificationPreference'
     ]);
 
     // Mpesa Routes
