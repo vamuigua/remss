@@ -12,6 +12,11 @@
                         </a>
                         <br/>
                         <br/>
+                        {{-- CALENDAR SCEHDULED EVENTS --}}
+                        <div class="col-md-12 mb-5">
+                            <h1>SCHEDULED EVENTS</h1>
+                            {!!  $calendar_details->calendar() !!}
+                        </div>
                         <div class="table-responsive">
                             <table id="datatable" class="table table table-hover table-striped table-bordered">
                                 <thead>
@@ -45,3 +50,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    {!!  $calendar_details->script() !!}
+@endpush

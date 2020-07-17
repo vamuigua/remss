@@ -12,6 +12,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>Admin Panel</title>
   {{-- All CSS Compiled Assets --}}
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  {{-- Full Calendar --}}
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -383,8 +385,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-</body>
-@stack('scripts')
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+@stack('scripts')
+</body>
 </html>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 
 class EventsController extends Controller
 {
@@ -19,7 +20,26 @@ class EventsController extends Controller
     {
         $perPage = Event::count();
         $events = Event::latest()->paginate($perPage);
-        return view('admin.events.index', compact('events'));
+
+        // Calendar Events
+        $eventsCal = Event::all();
+        $event_list = array();
+
+        foreach ($eventsCal as $event) {
+            $event_list[] = Calendar::event(
+                $event->event_name, //event title
+                false, //full day event?
+                new \DateTime($event->start_date), //start time, must be a DateTime object or valid DateTime format
+                new \DateTime($event->start_date), //end time, must be a DateTime object or valid DateTime format,
+                $event->id, //optional event ID
+                [
+                    'url' => url('/admin/events/' . $event->id)
+                ]
+            );
+        }
+        $calendar_details = Calendar::addEvents($event_list);
+
+        return view('admin.events.index', compact('events', 'calendar_details'));
     }
 
     /**
@@ -43,8 +63,8 @@ class EventsController extends Controller
     {
         $requestData = $this->validateRequest($request);
         try {
-            Event::create($requestData);
-            return redirect('admin/events')->with('flash_message', 'Event added!');
+            $event = Event::create($requestData);
+            return redirect('admin/events/' . $event->id)->with('flash_message', 'Event added!');
         } catch (\Throwable $th) {
             Log::error('Failed to create event: ' . $th->getMessage());
             return redirect('admin/events')->with('flash_message_error', 'Failed to create event!');
@@ -92,7 +112,7 @@ class EventsController extends Controller
         try {
             $event = Event::findOrFail($id);
             $event->update($requestData);
-            return redirect('admin/events')->with('flash_message', 'Event updated!');
+            return redirect('admin/events/' . $event->id)->with('flash_message', 'Event updated!');
         } catch (\Throwable $th) {
             Log::error('Failed to update event: ' . $th->getMessage());
             return redirect('admin/events')->with('flash_message_error', 'Failed to update event!');
