@@ -190,6 +190,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('events.index')}}" class="nav-link">
+                  <i class="fa fa-calendar nav-icon" aria-hidden="true"></i>
+                  <p>Events</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/admin/admins" class="nav-link">
                   <i class="fas fa-user-secret nav-icon"></i>
                   <p>Admins</p>

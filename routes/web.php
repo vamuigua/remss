@@ -207,6 +207,7 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'admin.mobilepayments.index'
     ]);
 
+    Route::resource('admin/events', 'Admin\\EventsController');
     Route::resource('admin/users', 'Admin\\UserAccountController');
     Route::resource('admin/admins', 'Admin\\AdminsController');
     Route::resource('admin/houses', 'Admin\\HousesController');
