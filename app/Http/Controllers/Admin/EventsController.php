@@ -20,26 +20,30 @@ class EventsController extends Controller
     {
         $perPage = Event::count();
         $events = Event::latest()->paginate($perPage);
+        return view('admin.events.index', compact('events'));
+    }
 
-        // Calendar Events
-        $eventsCal = Event::all();
+    // Show Events Calendar
+    public function events_calender()
+    {
+        $events = Event::all();
         $event_list = array();
 
-        foreach ($eventsCal as $event) {
+        foreach ($events as $event) {
             $event_list[] = Calendar::event(
                 $event->event_name, //event title
-                false, //full day event?
-                new \DateTime($event->start_date), //start time, must be a DateTime object or valid DateTime format
-                new \DateTime($event->start_date), //end time, must be a DateTime object or valid DateTime format,
+                $event->all_day, //full day event?
+                new \DateTime($event->start_date . 'T' . $event->start_time), //start time, must be a DateTime object or valid DateTime format
+                new \DateTime($event->end_date . 'T' . $event->end_time), //end time, must be a DateTime object or valid DateTime format,
                 $event->id, //optional event ID
                 [
-                    'url' => url('/admin/events/' . $event->id)
+                    'url' => url('/admin/events/' . $event->id),
+                    'backgroundColor' => $event->bg_color
                 ]
             );
         }
         $calendar_details = Calendar::addEvents($event_list);
-
-        return view('admin.events.index', compact('events', 'calendar_details'));
+        return view('admin.events.calendar', compact('calendar_details'));
     }
 
     /**
@@ -49,7 +53,8 @@ class EventsController extends Controller
      */
     public function create()
     {
-        return view('admin.events.create');
+        $event = new Event;
+        return view('admin.events.create', compact('event'));
     }
 
     /**
@@ -142,8 +147,13 @@ class EventsController extends Controller
     {
         return $request->validate([
             'event_name' => 'required|min:8',
+            'description' => 'required|min:10',
+            'all_day' => 'required',
             'start_date' => 'required|date',
-            'end_date' => 'required|date'
+            'end_date' => 'required|date',
+            'start_time' => 'date_format:"H:i"|required',
+            'end_time' => 'date_format:"H:i"|required',
+            'bg_color' => 'required',
         ]);
     }
 }

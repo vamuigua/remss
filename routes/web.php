@@ -207,6 +207,12 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
         'as' => 'admin.mobilepayments.index'
     ]);
 
+    // Events
+    Route::get('admin/events/calendar',[
+        'uses' => 'Admin\\EventsController@events_calender',
+        'as' => 'admin.events.events_calender'
+    ]);
+
     Route::resource('admin/events', 'Admin\\EventsController');
     Route::resource('admin/users', 'Admin\\UserAccountController');
     Route::resource('admin/admins', 'Admin\\AdminsController');

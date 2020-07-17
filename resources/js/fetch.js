@@ -17,6 +17,16 @@ $(document).ready(function () {
     $(".payment_amount_paid").on("input", function () {
         updateDetails();
     });
+
+    // Messages
+    $("#send_to").change(function () {
+        toggleImport();
+    });
+
+    // Events
+    $("#all_day").change(function () {
+        toggleEventsTime();
+    });
 });
 
 // Updates the values in the Payment Form through Ajax
@@ -94,6 +104,18 @@ function toggleImport() {
 
     if (value === "excel") {
         x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
+// Toggle Events Start & End Time style display
+function toggleEventsTime() {
+    var x = document.getElementById("event_time");
+    var value = $("#all_day").val();
+
+    if (value === "false") {
+        x.style.display = "flex";
     } else {
         x.style.display = "none";
     }

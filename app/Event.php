@@ -25,5 +25,24 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = ['event_name', 'start_date', 'end_date'];
+    protected $fillable = ['event_name', 'description', 'all_day', 'start_date', 'end_date', 'start_time', 'end_time', 'bg_color'];
+
+    public function fullDayOptions()
+    {
+        return [
+            'false' => 'No',
+            'true' => 'Yes',
+        ];
+    }
+
+    public function colorOptions()
+    {
+        return [
+            '#007bff' => 'Blue',
+            '#ffc107' => 'Yellow',
+            '#28a745' => 'Green',
+            '#dc3545' => 'Red',
+            '#6c757d' => 'Grey',
+        ];
+    }
 }

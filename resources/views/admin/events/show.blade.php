@@ -22,9 +22,6 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $event->id }}</td>
-                                    </tr>
                                     <tr><th> Event Name </th><td> {{ $event->event_name }} </td></tr><tr><th> Start Date </th><td> {{ $event->start_date }} </td></tr><tr><th> End Date </th><td> {{ $event->end_date }} </td></tr>
                                 </tbody>
                             </table>

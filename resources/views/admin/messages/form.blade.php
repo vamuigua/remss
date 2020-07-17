@@ -6,7 +6,7 @@
 
 <div class="form-group {{ $errors->has('send_to') ? 'has-error' : ''}}">
     <label for="send_to" class="control-label">{{ 'Send To:' }}</label>
-    <select name="send_to" class="form-control" id="send_to" onchange="toggleImport()">
+    <select name="send_to" class="form-control" id="send_to">
         <option value="all_tenants">All Tenants</option>
         <option value="excel">From Excel</option>
     </select>
