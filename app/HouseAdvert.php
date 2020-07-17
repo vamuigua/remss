@@ -14,10 +14,10 @@ class HouseAdvert extends Model
     protected $table = 'house_adverts';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -27,12 +27,11 @@ class HouseAdvert extends Model
      */
     protected $fillable = ['house', 'location', 'images', 'details', 'description', 'rent', 'booking_status', 'file'];
 
-    public function bookingStatusOptions(){
+    public function bookingStatusOptions()
+    {
         return [
             'Not Booked' => 'Not Booked',
             'Booked' => 'Booked'
         ];
     }
-
-    
 }

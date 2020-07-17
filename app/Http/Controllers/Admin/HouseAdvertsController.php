@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\HouseAdvert;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -18,21 +16,8 @@ class HouseAdvertsController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $houseadverts = HouseAdvert::where('house', 'LIKE', "%$keyword%")
-                ->orWhere('location', 'LIKE', "%$keyword%")
-                ->orWhere('images', 'LIKE', "%$keyword%")
-                ->orWhere('details', 'LIKE', "%$keyword%")
-                ->orWhere('description', 'LIKE', "%$keyword%")
-                ->orWhere('rent', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $houseadverts = HouseAdvert::latest()->paginate($perPage);
-        }
-
+        $perPage = HouseAdvert::count();
+        $houseadverts = HouseAdvert::latest()->paginate($perPage);
         return view('admin.house-adverts.index', compact('houseadverts'));
     }
 
@@ -60,25 +45,25 @@ class HouseAdvertsController extends Controller
         $validatedData = $this->validateRequest($request);
 
         // check if the image files have been uploaded
-        if($request->hasFile('images') && !($request->hasFile('file'))){
+        if ($request->hasFile('images') && !($request->hasFile('file'))) {
             // Images only
             HouseAdvert::create(array_merge(
                 $validatedData,
                 ['images' => $this->store_imgData($request)]
             ));
-        }elseif($request->hasFile('file') && !($request->hasFile('images'))){
+        } elseif ($request->hasFile('file') && !($request->hasFile('images'))) {
             // File Only
             HouseAdvert::create(array_merge(
                 $validatedData,
                 ['file' => $this->store_file($request)]
             ));
-        }else if($request->hasFile('images') && $request->hasFile('file')){
+        } else if ($request->hasFile('images') && $request->hasFile('file')) {
             // Image and File
             HouseAdvert::create(array_merge(
                 $validatedData,
                 ['images' => $this->store_imgData($request)]
             ));
-        }else{
+        } else {
             HouseAdvert::create($validatedData);
         }
 
@@ -86,11 +71,12 @@ class HouseAdvertsController extends Controller
     }
 
     // function returns the imgData to be saved in the db
-    public function store_imgData(Request $request){
+    public function store_imgData(Request $request)
+    {
         $img_data = '';
         $data = array();
 
-        foreach($request->images as $image){
+        foreach ($request->images as $image) {
             // store image in file path
             $img_filePath = $image->store('uploads/houseAdvert_img', 'public');
 
@@ -109,7 +95,8 @@ class HouseAdvertsController extends Controller
     }
 
     // stores House Advert agreement document
-    public function store_file(Request $request){
+    public function store_file(Request $request)
+    {
         // get name of Agreement doc. file
         $fileNameWithExt = $request->file('file')->getClientOriginalName();
         // file name
@@ -117,10 +104,10 @@ class HouseAdvertsController extends Controller
         // extension of file
         $extension = $request->file('file')->getClientOriginalExtension();
         // file name to store
-        $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+        $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
         // Upload File
         $file_path = $request->file('file')->storeAs('public/uploads/agreement_docs', $fileNameToStore);
-        
+
         return $fileNameToStore;
     }
 
@@ -169,26 +156,26 @@ class HouseAdvertsController extends Controller
         $houseadvert = HouseAdvert::findOrFail($id);
 
         // check if the image files have been uploaded
-        if($request->hasFile('images') && !($request->hasFile('file'))){
+        if ($request->hasFile('images') && !($request->hasFile('file'))) {
             // Image Only
             $houseadvert->update(array_merge(
                 $validatedData,
                 ['images' => $this->store_imgData($request)]
             ));
-        }elseif($request->hasFile('file') && !($request->hasFile('images'))){
+        } elseif ($request->hasFile('file') && !($request->hasFile('images'))) {
             // File Only
             $houseadvert->update(array_merge(
                 $validatedData,
                 ['file' => $this->store_file($request)]
             ));
-        }else if($request->hasFile('images') && $request->hasFile('file')){
+        } else if ($request->hasFile('images') && $request->hasFile('file')) {
             // Image and File
             $houseadvert->update(array_merge(
                 $validatedData,
                 ['images' => $this->store_imgData($request)],
                 ['file' => $this->store_file($request)]
             ));
-        }else{
+        } else {
             $houseadvert->update($validatedData);
         }
 
@@ -210,7 +197,8 @@ class HouseAdvertsController extends Controller
     }
 
     // validate data from form
-    public function validateRequest(Request $request){
+    public function validateRequest(Request $request)
+    {
         return $request->validate([
             'house' => 'required',
             'location' => 'required',
@@ -224,22 +212,23 @@ class HouseAdvertsController extends Controller
     }
 
     // View Agreement Document in Browser
-    public function view_doc($id){
+    public function view_doc($id)
+    {
         $houseadvert = HouseAdvert::findOrFail($id);
         $filename = $houseadvert->file;
-        $pathToFile = public_path('storage\uploads\agreement_docs\\'.$filename);
+        $pathToFile = public_path('storage\uploads\agreement_docs\\' . $filename);
 
         // headers for pdf file
         $headers =  [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="'.$filename.'"',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
             'Content-Transfer-Encoding' => 'binary',
             'Accept-Ranges' => 'bytes'
         ];
 
-        if($filename != null){
+        if ($filename != null) {
             return response()->file($pathToFile, $headers);
-        }else{
+        } else {
             return "The Agreement Document does not exist in the Database. Please add one";
         }
     }
