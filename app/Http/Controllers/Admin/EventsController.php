@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EventsController extends Controller
 {
@@ -41,12 +41,14 @@ class EventsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $requestData = $request->all();
-
-        Event::create($requestData);
-
-        return redirect('admin/events')->with('flash_message', 'Event added!');
+        $requestData = $this->validateRequest($request);
+        try {
+            Event::create($requestData);
+            return redirect('admin/events')->with('flash_message', 'Event added!');
+        } catch (\Throwable $th) {
+            Log::error('Failed to create event: ' . $th->getMessage());
+            return redirect('admin/events')->with('flash_message_error', 'Failed to create event!');
+        }
     }
 
     /**
@@ -73,7 +75,6 @@ class EventsController extends Controller
     public function edit($id)
     {
         $event = Event::findOrFail($id);
-
         return view('admin.events.edit', compact('event'));
     }
 
@@ -87,13 +88,15 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $requestData = $request->all();
-
-        $event = Event::findOrFail($id);
-        $event->update($requestData);
-
-        return redirect('admin/events')->with('flash_message', 'Event updated!');
+        $requestData = $this->validateRequest($request);
+        try {
+            $event = Event::findOrFail($id);
+            $event->update($requestData);
+            return redirect('admin/events')->with('flash_message', 'Event updated!');
+        } catch (\Throwable $th) {
+            Log::error('Failed to update event: ' . $th->getMessage());
+            return redirect('admin/events')->with('flash_message_error', 'Failed to update event!');
+        }
     }
 
     /**
@@ -105,8 +108,22 @@ class EventsController extends Controller
      */
     public function destroy($id)
     {
-        Event::destroy($id);
+        try {
+            Event::destroy($id);
+            return redirect('admin/events')->with('flash_message', 'Event deleted!');
+        } catch (\Throwable $th) {
+            Log::error('Failed to delete event: ' . $th->getMessage());
+            return redirect('admin/events')->with('flash_message_error', 'Failed to delete event!');
+        }
+    }
 
-        return redirect('admin/events')->with('flash_message', 'Event deleted!');
+    // Validate event input
+    public function validateRequest(Request $request)
+    {
+        return $request->validate([
+            'event_name' => 'required|min:8',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date'
+        ]);
     }
 }

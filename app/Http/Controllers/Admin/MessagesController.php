@@ -121,7 +121,7 @@ class MessagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $requestData = $request->all();
+        $requestData = $this->validateRequest($request);
         $message = Message::findOrFail($id);
         $message->update($requestData);
         return redirect('admin/messages')->with('flash_message', 'Message updated!');
