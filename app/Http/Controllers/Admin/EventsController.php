@@ -32,7 +32,7 @@ class EventsController extends Controller
         foreach ($events as $event) {
             $event_list[] = Calendar::event(
                 $event->event_name, //event title
-                ($event->all_day == 'false') ? false : true, //full day event?
+                ($event->all_day === 'false') ? false : true, //full day event?
                 new \DateTime($event->start_date . 'T' . $event->start_time), //start time, must be a DateTime object or valid DateTime format
                 new \DateTime($event->end_date . 'T' . $event->end_time), //end time, must be a DateTime object or valid DateTime format,
                 $event->id, //optional event ID
