@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateExpendituresTable extends Migration
 {
@@ -19,7 +20,7 @@ class CreateExpendituresTable extends Migration
             $table->decimal('amount')->nullable();
             $table->text('particulars')->nullable();
             $table->date('expenditure_date')->nullable();
-            });
+        });
     }
 
     /**

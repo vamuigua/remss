@@ -11,7 +11,7 @@
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New Event
                         </a>
                         <a href="{{ url('/admin/events/calendar') }}" class="btn btn-primary btn-sm" title="Show Events Calendar">
-                            <i class="fa fa-calendar" aria-hidden="true"></i> Show Events Calendar
+                            <i class="fa fa-calendar" aria-hidden="true"></i> Show Scheduled Events
                         </a>
                         <br/>
                         <br/>

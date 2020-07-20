@@ -7,8 +7,9 @@
                 <div class="card">
                     <div class="card-header">Events Calendar</div>
                     <div class="card-body">
+                        <a href="{{ url('/admin/events') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         {{-- CALENDAR SCEHDULED EVENTS --}}
-                        <div class="col-md-12 mb-5">
+                        <div class="col-md-12 my-5">
                             <h1>SCHEDULED EVENTS</h1>
                             {!!  $calendar_details->calendar() !!}
                         </div>

@@ -21,8 +21,8 @@ class CreateEventsTable extends Migration
             $table->string('all_day');
             $table->date('start_date');
             $table->date('end_date');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->string('bg_color');
         });
     }

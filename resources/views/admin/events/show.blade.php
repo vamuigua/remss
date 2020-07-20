@@ -22,7 +22,11 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
-                                    <tr><th> Event Name </th><td> {{ $event->event_name }} </td></tr><tr><th> Start Date </th><td> {{ $event->start_date }} </td></tr><tr><th> End Date </th><td> {{ $event->end_date }} </td></tr>
+                                    <tr><th> Event Name </th><td> {{ $event->event_name }} </td></tr>
+                                    <tr><th> Event Description </th><td> {{ $event->description }} </td></tr>
+                                    <tr><th> All Day </th><td> {{ $event->all_day == 'true' ? 'Yes' : 'No' }} </td></tr>
+                                    <tr><th> Start Date - Start Time</th><td> {{ ($event->start_date) }} - {{ isset($event->start_time) ? $event->start_time : 'N/A' }} </td></tr>
+                                    <tr><th> End Date - End Time </th><td> {{ $event->end_date }} - {{ isset($event->end_time) ? $event->end_time : 'N/A' }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

@@ -32,7 +32,7 @@ class EventsController extends Controller
         foreach ($events as $event) {
             $event_list[] = Calendar::event(
                 $event->event_name, //event title
-                $event->all_day, //full day event?
+                ($event->all_day == 'false') ? false : true, //full day event?
                 new \DateTime($event->start_date . 'T' . $event->start_time), //start time, must be a DateTime object or valid DateTime format
                 new \DateTime($event->end_date . 'T' . $event->end_time), //end time, must be a DateTime object or valid DateTime format,
                 $event->id, //optional event ID
@@ -86,7 +86,6 @@ class EventsController extends Controller
     public function show($id)
     {
         $event = Event::findOrFail($id);
-
         return view('admin.events.show', compact('event'));
     }
 
@@ -142,7 +141,7 @@ class EventsController extends Controller
         }
     }
 
-    // Validate event input
+    // Validate a new event
     public function validateRequest(Request $request)
     {
         return $request->validate([
@@ -151,8 +150,8 @@ class EventsController extends Controller
             'all_day' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
-            'start_time' => 'date_format:"H:i"|required',
-            'end_time' => 'date_format:"H:i"|required',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable',
             'bg_color' => 'required',
         ]);
     }
