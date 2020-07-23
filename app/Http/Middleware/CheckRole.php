@@ -19,7 +19,7 @@ class CheckRole
         if ($request->user() === null) {
             return response("Insufficient permissions", 401);
         }
-        
+
         //get the request actions
         //$actions = $request->route()->getAction();
 
