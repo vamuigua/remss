@@ -35,7 +35,7 @@
 									<p><i class="fa fa-map-marker"></i> {{ $houseadvert->location }}</p>
 								</div>
 								<div class="room-info-warp">
-									<div class="room-info">
+									{{-- <div class="room-info">
 										<div class="rf-left">
 											<p><i class="fa fa-th-large"></i> 800 Square foot</p>
 											<p><i class="fa fa-bed"></i> 10 Bedrooms</p>
@@ -44,7 +44,7 @@
 											<p><i class="fa fa-car"></i> 2 Garages</p>
 											<p><i class="fa fa-bath"></i> 6 Bathrooms</p>
 										</div>	
-									</div>
+									</div> --}}
 									<div class="room-info">
 										<div class="rf-left">
 											<p><i class="fa fa-user"></i> Tony Holland</p>

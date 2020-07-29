@@ -79,6 +79,7 @@
 
 						<h3 class="sl-sp-title">Property Details</h3>
 						<div class="row property-details-list">
+						
 							<div class="col-md-4 col-sm-6">
 								<p><i class="fa fa-th-large"></i> 1500 Square foot</p>
 								<p><i class="fa fa-bed"></i> 16 Bedrooms</p>
@@ -98,7 +99,7 @@
 						<div class="description">
 							<p>{{ $houseadvert->description }}</p>
 						</div>
-						<h3 class="sl-sp-title">Property Details</h3>
+						<h3 class="sl-sp-title">Extra Details</h3>
 						<div class="row property-details-list">
 							<div class="col-md-4 col-sm-6">
 								<p><i class="fa fa-check-circle-o"></i> Air conditioning</p>
@@ -141,7 +142,7 @@
 
 						</form>
 					</div>
-					<div class="related-properties">
+					{{-- <div class="related-properties">
 						<h2>Related Property</h2>
 						<div class="rp-item">
 							<div class="rp-pic set-bg" data-setbg="../img/feature/1.jpg">
@@ -153,7 +154,7 @@
 							</div>
 							<a href="#" class="rp-price">$1,200,000</a>
 						</div>
-					</div>
+					</div> --}}
 
 					{{-- Book House modal --}}
 					<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

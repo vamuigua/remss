@@ -216,7 +216,7 @@ class HouseAdvertsController extends Controller
     {
         $houseadvert = HouseAdvert::findOrFail($id);
         $filename = $houseadvert->file;
-        $pathToFile = public_path('storage\uploads\agreement_docs\\' . $filename);
+        $pathToFile = public_path('/storage/uploads/agreement_docs/' . $filename);
 
         // headers for pdf file
         $headers =  [
@@ -225,6 +225,8 @@ class HouseAdvertsController extends Controller
             'Content-Transfer-Encoding' => 'binary',
             'Accept-Ranges' => 'bytes'
         ];
+
+        // return response()->file($pathToFile, $headers);
 
         if ($filename != null) {
             return response()->file($pathToFile, $headers);

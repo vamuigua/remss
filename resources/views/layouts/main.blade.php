@@ -104,7 +104,7 @@
 						</div>
 						<ul class="main-menu">
 							<li><a href="/">Home</a></li>
-							<li><a href="/featured-listings">FEATURED LISTING</a></li>
+							<li><a href="/featured-listings">FEATURED LISTINGS</a></li>
 							<li><a href="/about-us">ABOUT US</a></li>
 							<li><a href="/contact">Contact</a></li>
 						</ul>
