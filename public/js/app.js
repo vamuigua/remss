@@ -113282,6 +113282,7 @@ function updateDetails() {
     },
     success: function success(data) {
       $("#prev_balance").val(data.balance);
+      alert(data.tenant.surname);
     }
   }); //get Current Balance
 

@@ -15,7 +15,7 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('tenant_id')->nullable();
+            $table->integer('tenant_id')->nullable()->unsigned();
             $table->integer('invoice_id')->nullable()->unsigned();
             $table->string('payment_type')->nullable();
             $table->date('payment_date')->nullable();
@@ -25,7 +25,7 @@ class CreatePaymentsTable extends Migration
             $table->decimal('balance')->nullable();
             $table->string('comments')->nullable();
             $table->integer('mpesa_confirmation')->nullable();
-            });
+        });
     }
 
     /**

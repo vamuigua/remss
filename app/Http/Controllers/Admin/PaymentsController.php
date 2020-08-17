@@ -39,7 +39,12 @@ class PaymentsController extends Controller
         $tenants = Tenant::all();
         $invoices = Invoice::all();
         $payment = new Payment();
-        return view('admin.payments.create', compact('tenants', 'invoices', 'payment'));
+
+        // get the payment_no of the last payment
+        $last_payment_no = DB::table('payments')->latest('id')->pluck('payment_no')->first();
+        $new_payment_no = $last_payment_no + 1;
+
+        return view('admin.payments.create', compact('tenants', 'invoices', 'payment', 'new_payment_no'));
     }
 
     /**
@@ -51,9 +56,13 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
+        // save payment to DB
         $validatedData = $this->validateRequest($request);
         $balance = $validatedData['balance'];
-        $payment = Payment::create($validatedData);
+        $payment = Payment::create(array_merge(
+            $validatedData,
+            ['tenant_id' => Invoice::findOrFail($validatedData['invoice_id'])->tenant->id]
+        ));
 
         // checks if the final balance of the invoice_id was paid thus setting the status of the invoice_id to closed
         if ($balance == '0') {
@@ -64,8 +73,8 @@ class PaymentsController extends Controller
         }
 
         // Send InvoicePaid Noticifaction to Tenant 
-        $tenant_id = $validatedData['tenant_id'];
-        $user = User::findOrFail($tenant_id);
+        $tenant_user_id =  Invoice::findOrFail($validatedData['invoice_id'])->tenant->user_id;
+        $user = User::findOrFail($tenant_user_id);
         $user->notify((new InvoicePaidNotification($payment, 'tenant')));
 
         // Grab all Admins only, remove Tenants from the query
@@ -140,7 +149,6 @@ class PaymentsController extends Controller
     public function validateRequest(Request $request)
     {
         return $request->validate([
-            'tenant_id' => 'required',
             'invoice_id' => 'required',
             'payment_type' => 'required',
             'payment_date' => 'required|date',

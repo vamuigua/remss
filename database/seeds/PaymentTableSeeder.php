@@ -14,7 +14,7 @@ class PaymentTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {   
+    {
         $tenant_a = Tenant::where('id', '1')->first();
         $tenant_b = Tenant::where('id', '2')->first();
 
@@ -25,7 +25,7 @@ class PaymentTableSeeder extends Seeder
 
         $faker = Factory::create();
 
-        for ($i=0; $i < 2; $i++) { 
+        for ($i = 0; $i < 2; $i++) {
             $payment_a = new Payment();
             $payment_a->tenant_id = $tenant_a->id;
             $payment_a->invoice_id = $invoice_a->id;
