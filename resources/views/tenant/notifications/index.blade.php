@@ -37,9 +37,9 @@
                                                     {{$notification->data['subject']}}
                                                 </div>
                                                 <div class="timeline-footer">
-                                                    <a class="btn btn-success btn-sm" href="/user/invoices/{{$notification->data['id']}}">Read more</a>
+                                                    <a class="btn btn-success btn-sm" href="/tenant/invoices/{{$notification->data['id']}}">Read more</a>
                                                     @if ($notification->read_at == null)
-                                                        <a class="btn btn-primary btn-sm" href="/user/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
+                                                        <a class="btn btn-primary btn-sm" href="/tenant/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
                                                     @endif
                                                 </div>
                                                 </div>
@@ -59,9 +59,9 @@
                                                     {{$notification->data['subject']}}
                                                 </div>
                                                 <div class="timeline-footer">
-                                                    <a class="btn btn-success btn-sm" href="/user/payments/{{$notification->data['id']}}">Read more</a>
+                                                    <a class="btn btn-success btn-sm" href="/tenant/payments/{{$notification->data['id']}}">Read more</a>
                                                     @if ($notification->read_at == null)
-                                                        <a class="btn btn-primary btn-sm" href="/user/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
+                                                        <a class="btn btn-primary btn-sm" href="/tenant/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
                                                     @endif
                                                 </div>
                                                 </div>
@@ -81,9 +81,9 @@
                                                     {{$notification->data['subject']}}
                                                 </div>
                                                 <div class="timeline-footer">
-                                                    <a class="btn btn-success btn-sm" href="/user/notices/{{$notification->data['id']}}">Read more</a>
+                                                    <a class="btn btn-success btn-sm" href="/tenant/notices/{{$notification->data['id']}}">Read more</a>
                                                     @if ($notification->read_at == null)
-                                                        <a class="btn btn-primary btn-sm" href="/user/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
+                                                        <a class="btn btn-primary btn-sm" href="/tenant/notifications/{{$notification->id}}/notificationRead">Mark as Read</a>
                                                     @endif
                                                 </div>
                                                 </div>

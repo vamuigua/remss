@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\InvoicePaidNotification;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Invoice;
 use App\Payment;
@@ -34,7 +35,11 @@ class PaymentsController extends Controller
         $user = Auth::user();
         $payment = new Payment();
 
-        return view('tenant.payments.create', compact('payment', 'user'));
+        // get the payment_no of the last payment
+        $last_payment_no = DB::table('payments')->latest('id')->pluck('payment_no')->first();
+        $new_payment_no = $last_payment_no + 1;
+
+        return view('tenant.payments.create', compact('payment', 'user', 'new_payment_no'));
     }
 
     public function paymentsStore(Request $request)

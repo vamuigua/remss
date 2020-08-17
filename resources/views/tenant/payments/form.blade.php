@@ -1,6 +1,6 @@
 <div class="form-group {{ $errors->has('payment_no') ? 'has-error' : ''}}">
     <label for="payment_no" class="control-label">{{ 'Payment No' }}</label>
-    <input class="form-control" name="payment_no" type="text" id="payment_no" value="{{ isset($payment->payment_no) ? $payment->payment_no : old('payment_no')}}" >
+    <input class="form-control" name="payment_no" type="text" id="payment_no" value="{{ isset($payment->payment_no) ? $payment->payment_no : $new_payment_no }}" readonly>
     {!! $errors->first('payment_no', '<p class="help-block">:message</p>') !!}
 </div>
 
@@ -57,7 +57,7 @@
 
 <div class="form-group {{ $errors->has('comments') ? 'has-error' : ''}}">
     <label for="comments" class="control-label">{{ 'Comments' }}</label>
-    <textarea class="form-control" rows="5" name="comments" type="textarea" id="summernote" >{{ isset($payment->comments) ? $payment->comments : old('comments') }}</textarea>
+    <textarea class="form-control" rows="5" name="comments" type="textarea">{{ isset($payment->comments) ? $payment->comments : old('comments') }}</textarea>
     {!! $errors->first('comments', '<p class="help-block">:message</p>') !!}
 </div>
 

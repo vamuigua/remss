@@ -141,6 +141,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('tenant.notifications.index')}}" class="nav-link">
+              <i class="fas fa-bell nav-icon"></i>
+              <p>Notifications</p>
+            </a>
+          </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -154,12 +160,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="/tenant/house" class="nav-link">
                   <i class="fas fa-home nav-icon"></i>
                   <p>My House</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('tenant.notifications.index')}}" class="nav-link">
-                  <i class="fas fa-bell nav-icon"></i>
-                  <p>Notifications</p>
                 </a>
               </li>
               <li class="nav-item">
