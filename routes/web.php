@@ -208,7 +208,7 @@ Route::middleware(['roles:Admin', 'auth'])->group(function () {
     ]);
 
     // Events
-    Route::get('admin/events/calendar',[
+    Route::get('admin/events/calendar', [
         'uses' => 'Admin\\EventsController@events_calender',
         'as' => 'admin.events.events_calender'
     ]);

@@ -58,7 +58,7 @@ class PaymentsController extends Controller
         $payment = Payment::create($this->validatedData);
         $payment_id = $payment->id;
 
-        // check the method of payment
+        // check the method of payment and process it
         if ($payment_type == "mpesa") {
             return redirect()->action(
                 'Mpesa\\MpesaController@C2B_simulate',

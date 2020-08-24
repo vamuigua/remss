@@ -23,14 +23,14 @@
                                     <tr><th> TransAmount </th><td> {{ $mobilePayment->TransAmount }} </td></tr>
                                     <tr><th> BusinessShortCode </th><td> {{ $mobilePayment->BusinessShortCode }} </td></tr>
                                     <tr><th> BillRefNumber </th><td> {{ $mobilePayment->BillRefNumber }} </td></tr>
-                                    <tr><th> InvoiceNumber </th><td> {{ $mobilePayment->InvoiceNumber }} </td></tr>
+                                    <tr><th> InvoiceNumber </th><td> {{ ($mobilePayment->InvoiceNumber) == null ? "Null" : $mobilePayment->InvoiceNumber }} </td></tr>
                                     <tr><th> OrgAccountBalance </th><td> {{ $mobilePayment->OrgAccountBalance }} </td></tr>
-                                    <tr><th> ThirdPartyTransID </th><td> {{ $mobilePayment->ThirdPartyTransID }} </td></tr>
+                                    <tr><th> ThirdPartyTransID </th><td> {{ ($mobilePayment->ThirdPartyTransID) == null ? "Null" : $mobilePayment->ThirdPartyTransID }} </td></tr>
                                     <tr><th> MSISDN </th><td> {{ $mobilePayment->MSISDN }} </td></tr>
                                     <tr><th> FirstName </th><td> {{ $mobilePayment->FirstName }} </td></tr>
                                     <tr><th> MiddleName </th><td> {{ $mobilePayment->MiddleName }} </td></tr>
                                     <tr><th> LastName </th><td> {{ $mobilePayment->LastName }} </td></tr>
-                                    <tr><th> Created at </th><td> {{ $mobilePayment->created_at->diffForHumans() }} </td></tr>
+                                    <tr><th> Created at </th><td> {{ $mobilePayment->created_at }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

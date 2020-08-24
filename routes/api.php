@@ -32,7 +32,7 @@ Route::post('confirm', function (Request $request) {
 
     $confirm_array = array("C2BPaymentConfirmationResult" => "Success");
 
-    // Get response, convert to array and save transation to db
+    // Get response, convert to array and save mpesa transation to db
     $response = json_decode($request->getContent(), true);
     MobilePayment::create($response);
 
