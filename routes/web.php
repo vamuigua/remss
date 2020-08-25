@@ -263,6 +263,17 @@ Route::middleware(['roles:User', 'auth'])->group(function () {
         'as' => 'tenant.invoices.pdf_invoice'
     ]);
 
+    // Paypal
+    Route::post('/tenant/payments/postPaypalPayment', [
+        'uses' => 'Tenant\\PaymentsController@postPaypalPayment',
+        'as' => 'tenant.payments.postPaypalPayment',
+    ]);
+
+    Route::post('/tenant/payments/confirmationPayment', [
+        'uses' => 'Tenant\\PaymentsController@confirmationPayment',
+        'as' => 'tenant.payments.confirmationPayment'
+    ]);
+
     // Payments
     Route::get('/tenant/payments', [
         'uses' => 'Tenant\\PaymentsController@payments',

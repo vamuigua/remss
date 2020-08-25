@@ -12,9 +12,6 @@
                         </a>
                     </div>
                     <div class="card-body">
-
-                        <br/>
-                        <br/>
                         <div class="table-responsive">
                             <table id="datatable" class="table table table-hover table-striped table-bordered">
                                 <thead>
