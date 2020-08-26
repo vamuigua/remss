@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // datepicker to show Years only
     $("#datepicker").datepicker({
         format: " yyyy", // Notice the Extra space at the beginning
@@ -7,7 +7,7 @@ $(document).ready(function() {
     });
 
     // submit Months and Year from expenditure_chart_form for processing
-    $("#expenditure_chart_form").submit(function(event) {
+    $("#expenditure_chart_form").submit(function (event) {
         // prevent the form from reloading the page
         event.preventDefault();
 
@@ -19,8 +19,12 @@ $(document).ready(function() {
         $.ajax({
             url: "/admin/expenditure-months",
             method: "POST",
-            data: { months: months, year: year, _token: _token },
-            success: function(data) {
+            data: {
+                months: months,
+                year: year,
+                _token: _token
+            },
+            success: function (data) {
                 // remove the prevoius expenditure-chart
                 $("#expenditure-chart").remove();
                 // create a new expenditure-chart canvas and append to the parent element
@@ -58,8 +62,7 @@ function generate_expenditure_chart(labels, data) {
         data: {
             // MONTHS
             labels: labels,
-            datasets: [
-                {
+            datasets: [{
                     backgroundColor: "#007bff",
                     borderColor: "#007bff",
                     // Expenditure amount This Year
@@ -87,48 +90,43 @@ function generate_expenditure_chart(labels, data) {
                 display: false
             },
             scales: {
-                yAxes: [
-                    {
-                        // display: false,
-                        gridLines: {
-                            display: true,
-                            lineWidth: "4px",
-                            color: "rgba(0, 0, 0, .2)",
-                            zeroLineColor: "transparent"
-                        },
-                        ticks: $.extend(
-                            {
-                                beginAtZero: true,
-
-                                // Include a dollar sign in the ticks
-                                callback: function(value, index, values) {
-                                    if (value >= 1000) {
-                                        value /= 1000;
-                                        value += "k";
-                                    }
-                                    return "KSH." + value;
-                                }
-                            },
-                            ticksStyle
-                        )
-                    }
-                ],
-                xAxes: [
-                    {
+                yAxes: [{
+                    // display: false,
+                    gridLines: {
                         display: true,
-                        gridLines: {
-                            display: false
+                        lineWidth: "4px",
+                        color: "rgba(0, 0, 0, .2)",
+                        zeroLineColor: "transparent"
+                    },
+                    ticks: $.extend({
+                            beginAtZero: true,
+
+                            // Include a dollar sign in the ticks
+                            callback: function (value, index, values) {
+                                if (value >= 1000) {
+                                    value /= 1000;
+                                    value += "k";
+                                }
+                                return "KSH." + value;
+                            }
                         },
-                        ticks: ticksStyle
-                    }
-                ]
+                        ticksStyle
+                    )
+                }],
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: ticksStyle
+                }]
             }
         }
     });
 }
 
 // function to generate a pdf / print the Expenditure chart with computed results
-$("#downloadChartPDF").click(function(event) {
+$("#downloadChartPDF").click(function (event) {
     event.preventDefault();
     var year = $("#datepicker").val();
     var expenditure_total = $("#expenditure_total").html();

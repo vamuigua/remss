@@ -67,7 +67,7 @@
                                     <div class="col-sm-9">
                                         <div class="form-group">
                                             <label for="comments" class="control-label">{{ 'Comments' }}</label>
-                                            <textarea class="form-control" rows="5" name="comments" type="textarea" readonly>{{$payment_details['comments']}}</textarea>
+                                            <textarea class="form-control" rows="5" name="comments" id="comments" type="textarea" readonly>{{$payment_details['comments']}}</textarea>
                                         </div>
                                     </div>
                                 </div>

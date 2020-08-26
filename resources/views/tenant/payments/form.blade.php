@@ -15,7 +15,7 @@
     <label for="invoice_id" class="control-label">{{ 'Invoice No.' }}</label>
     <select name="invoice_id" class="form-control selectpicker tenant_invoice_id" data-live-search="true" id="invoice_id">
         <option selected="selected">Choose an Invoice</option>
-        @foreach ($user->tenant->invoices as $invoice)
+        @foreach ($invoices as $invoice)
             <option value="{{ $invoice->id }}" {{ (isset($invoice->id)) && ($payment->invoice_id == $invoice->id) ? 'selected' : old('invoice_id')}}>{{ $invoice->invoice_no }}</option>
         @endforeach
     </select>

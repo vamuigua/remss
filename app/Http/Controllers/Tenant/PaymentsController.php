@@ -36,11 +36,14 @@ class PaymentsController extends Controller
         $user = Auth::user();
         $payment = new Payment();
 
+        // get active invoices for the currently logged in tenant
+        $invoices = $user->tenant->invoices->where('status', 'active');
+
         // get the payment_no of the last payment
         $last_payment_no = DB::table('payments')->latest('id')->pluck('payment_no')->first();
         $new_payment_no = $last_payment_no + 1;
 
-        return view('tenant.payments.create', compact('payment', 'user', 'new_payment_no'));
+        return view('tenant.payments.create', compact('payment', 'user', 'new_payment_no', 'invoices'));
     }
 
     // Confirmation for Payment Page
@@ -57,6 +60,7 @@ class PaymentsController extends Controller
         return view('tenant.payments.confirmation', compact('payment_details', 'invoice_no'));
     }
 
+    // Processes payment for an Mpesa transaction
     public function paymentsStore(Request $request)
     {
         // validate the request from the form
@@ -93,6 +97,15 @@ class PaymentsController extends Controller
         $payment->mpesa_confirmation = "1";
         $payment->save();
 
+        $this->checkPayementBalance($payment);
+        $this->sendInvoicePaidNotification($payment);
+
+        return redirect('/tenant/payments/' . $payment->id)->with('flash_message', 'Payment Made through Mpesa! You will receive a Payment Notification shortly');
+    }
+
+    // checks if the last payment has a balance
+    public function checkPayementBalance(Payment $payment)
+    {
         // find the balance of the payment
         $balance = $payment->balance;
 
@@ -103,7 +116,11 @@ class PaymentsController extends Controller
             $invoice->status = 'closed';
             $invoice->save();
         }
+    }
 
+    // sends invoice paid noification to tenant and admin
+    public function sendInvoicePaidNotification(Payment $payment)
+    {
         // Send InvoicePaid Noticifaction to Tenant
         $tenant_id = $payment->tenant_id;
         $user = User::findOrFail($tenant_id);
@@ -118,11 +135,9 @@ class PaymentsController extends Controller
 
         // Send InvoicePaid Noticifaction to Admin
         Notification::send($users, new InvoicePaidNotification($payment, 'admin'));
-
-        return redirect('/tenant/payments/' . $payment->id)->with('flash_message', 'Payment Made through Mpesa! You will receive a Payment Notification shortly');
     }
 
-    //Adds payment to the system after successful approval from paypal
+    //Adds payment to the system after successful approval from PayPal
     public function postPaypalPayment(Request $request)
     {
         // get payment details
@@ -150,11 +165,13 @@ class PaymentsController extends Controller
                 'comments' => $comments
             ]);
 
+            $this->checkPayementBalance($payment);
+            $this->sendInvoicePaidNotification($payment);
+
             $payment_id = $payment->id;
             $response = "success";
 
-            return redirect('/tenant/payments/' . $payment_id)->with('flash_message', 'Payment Made through PayPal! You will receive a Payment Notification shortly');
-            // return response()->json(array('response' => $response, 'payment_id' => $payment_id), 200);
+            return response()->json(array('response' => $response, 'payment_id' => $payment_id), 200);
         } catch (\Throwable $th) {
             Log::error('Failed to create Payment: ' . $th->getMessage());
             $response = "failed";

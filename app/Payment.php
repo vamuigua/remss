@@ -14,10 +14,10 @@ class Payment extends Model
     protected $table = 'payments';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -27,7 +27,8 @@ class Payment extends Model
      */
     protected $fillable = ['tenant_id', 'invoice_id', 'payment_type', 'payment_date', 'payment_no', 'prev_balance', 'amount_paid', 'balance', 'comments', 'mpesa_confirmation'];
 
-    public function paymentTypeOptions(){
+    public function paymentTypeOptions()
+    {
         return [
             'cash' => 'Cash',
             'cheque' => 'Cheque',

@@ -9,10 +9,28 @@
     <select name="invoice_id" class="form-control selectpicker tenant_invoice_id" data-live-search="true" id="invoice_id">
         <option disabled selected>Choose an Invoice</option>
         @foreach ($invoices as $invoice)
-    <option value="{{ $invoice->id }}" {{ (isset($invoice->id))  && $payment->invoice_id == $invoice->id && $payment->status ? 'selected' : old('invoice_id')}}>{{ $invoice->invoice_no }} - {{ $invoice->tenant->surname}} {{ $invoice->tenant->other_names}}</option>
+            <option value="{{ $invoice->id }}" {{ (isset($invoice->id))  && $payment->invoice_id == $invoice->id ? 'selected' : old('invoice_id')}}>{{ $invoice->invoice_no }} - {{ $invoice->tenant->surname}} {{ $invoice->tenant->other_names}}</option>
         @endforeach
     </select>
     {!! $errors->first('invoice_id', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group {{ $errors->has('prev_balance') ? 'has-error' : ''}}">
+    <label for="prev_balance" class="control-label">{{ 'Previous Balance' }}</label>
+    <input class="form-control" name="prev_balance" type="number" id="prev_balance" value="{{ isset($payment->prev_balance) ? $payment->prev_balance : old('prev_balance')}}" readonly>
+    {!! $errors->first('prev_balance', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group {{ $errors->has('amount_paid') ? 'has-error' : ''}}">
+    <label for="amount_paid" class="control-label">{{ 'Amount Paid' }}</label>
+    <input class="form-control payment_amount_paid" name="amount_paid" type="number" id="amount_paid" value="{{ isset($payment->amount_paid) ? $payment->amount_paid : old('amount_paid')}}">
+    {!! $errors->first('amount_paid', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group {{ $errors->has('balance') ? 'has-error' : ''}}">
+    <label for="balance" class="control-label">{{ 'Current Balance' }}</label>
+    <input class="form-control" name="balance" type="number" id="balance" value="{{ isset($payment->balance) ? $payment->balance : old('balance')}}" readonly>
+    {!! $errors->first('balance', '<p class="help-block">:message</p>') !!}
 </div>
 
 <div class="form-group {{ $errors->has('payment_type') ? 'has-error' : ''}}">
@@ -31,27 +49,9 @@
     {!! $errors->first('payment_date', '<p class="help-block">:message</p>') !!}
 </div>
 
-<div class="form-group {{ $errors->has('amount_paid') ? 'has-error' : ''}}">
-    <label for="amount_paid" class="control-label">{{ 'Amount Paid' }}</label>
-    <input class="form-control payment_amount_paid" name="amount_paid" type="number" id="amount_paid" value="{{ isset($payment->amount_paid) ? $payment->amount_paid : old('amount_paid')}}">
-    {!! $errors->first('amount_paid', '<p class="help-block">:message</p>') !!}
-</div>
-
-<div class="form-group {{ $errors->has('prev_balance') ? 'has-error' : ''}}">
-    <label for="prev_balance" class="control-label">{{ 'Previous Balance' }}</label>
-    <input class="form-control" name="prev_balance" type="number" id="prev_balance" value="{{ isset($payment->prev_balance) ? $payment->prev_balance : old('prev_balance')}}" readonly>
-    {!! $errors->first('prev_balance', '<p class="help-block">:message</p>') !!}
-</div>
-
-<div class="form-group {{ $errors->has('balance') ? 'has-error' : ''}}">
-    <label for="balance" class="control-label">{{ 'Current Balance' }}</label>
-    <input class="form-control" name="balance" type="number" id="balance" value="{{ isset($payment->balance) ? $payment->balance : old('payment_date')}}" readonly>
-    {!! $errors->first('balance', '<p class="help-block">:message</p>') !!}
-</div>
-
 <div class="form-group {{ $errors->has('comments') ? 'has-error' : ''}}">
     <label for="comments" class="control-label">{{ 'Comments' }}</label>
-    <textarea class="form-control" rows="5" name="comments" type="textarea" >{{ isset($payment->comments) ? $payment->comments : old('comments') }}</textarea>
+    <textarea class="form-control" id="comments" rows="5" name="comments" type="textarea" >{{ isset($payment->comments) ? $payment->comments : old('comments') }}</textarea>
     {!! $errors->first('comments', '<p class="help-block">:message</p>') !!}
 </div>
 

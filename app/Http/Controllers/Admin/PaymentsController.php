@@ -36,15 +36,16 @@ class PaymentsController extends Controller
      */
     public function create()
     {
-        $tenants = Tenant::all();
-        $invoices = Invoice::all();
         $payment = new Payment();
+
+        // get active invoices
+        $invoices = Invoice::where('status', 'active')->get();
 
         // get the payment_no of the last payment
         $last_payment_no = DB::table('payments')->latest('id')->pluck('payment_no')->first();
         $new_payment_no = $last_payment_no + 1;
 
-        return view('admin.payments.create', compact('tenants', 'invoices', 'payment', 'new_payment_no'));
+        return view('admin.payments.create', compact('invoices', 'payment', 'new_payment_no'));
     }
 
     /**
