@@ -14,10 +14,10 @@ class Expenditure extends Model
     protected $table = 'expenditures';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -27,12 +27,15 @@ class Expenditure extends Model
      */
     protected $fillable = ['outgoings', 'amount', 'particulars', 'expenditure_date'];
 
+    public $keyType = 'string';
+
     // get all months of the year with its respective no. in the calender
-    public static function monthsOfTheYear(){
+    public static function monthsOfTheYear()
+    {
         $months = array();
 
-        for ($m=1; $m<=12; $m++) {
-            $month = date('F', mktime(0,0,0,$m, 1, date('Y')));
+        for ($m = 1; $m <= 12; $m++) {
+            $month = date('F', mktime(0, 0, 0, $m, 1, date('Y')));
             array_push($months, [$month => $m]);
         }
 
