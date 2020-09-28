@@ -61,7 +61,8 @@ class HouseAdvertsController extends Controller
             // Image and File
             HouseAdvert::create(array_merge(
                 $validatedData,
-                ['images' => $this->store_imgData($request)]
+                ['images' => $this->store_imgData($request)],
+                ['file' => $this->store_file($request)]
             ));
         } else {
             HouseAdvert::create($validatedData);
@@ -225,8 +226,6 @@ class HouseAdvertsController extends Controller
             'Content-Transfer-Encoding' => 'binary',
             'Accept-Ranges' => 'bytes'
         ];
-
-        // return response()->file($pathToFile, $headers);
 
         if ($filename != null) {
             return response()->file($pathToFile, $headers);

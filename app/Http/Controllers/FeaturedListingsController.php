@@ -10,14 +10,16 @@ use Illuminate\Support\Facades\Mail;
 
 class FeaturedListingsController extends Controller
 {
-    public function index(){
-        $perPage = 1;
+    public function index()
+    {
+        $perPage = 20;
         $houseadverts = HouseAdvert::latest()->paginate($perPage);
 
         return view('static.featured-listings.index', compact('houseadverts'));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $houseadvert = HouseAdvert::findOrFail($id);
 
         $images = $houseadvert->images;
@@ -26,8 +28,9 @@ class FeaturedListingsController extends Controller
         return view('static.featured-listings.show', compact('houseadvert', 'images'));
     }
 
-    public function sendQuestion(Request $request, $id){
-       // validate request
+    public function sendQuestion(Request $request, $id)
+    {
+        // validate request
         $data = $request->validate([
             'subject' => 'required',
             'name' => 'required',
@@ -38,11 +41,12 @@ class FeaturedListingsController extends Controller
         // Send email in a queue
         Mail::to('info.remss@gmail.com')->queue(new ContactFormMail($data));
 
-        return redirect('/featured-listings/'.$id)->with('main_flash_message', 'Thank you for your message! We will get back to you through the email you provided');
+        return redirect('/featured-listings/' . $id)->with('main_flash_message', 'Thank you for your message! We will get back to you through the email you provided');
     }
 
     // send mail to sender & admin for a house request
-    public function bookHouse(Request $request, $id){
+    public function bookHouse(Request $request, $id)
+    {
         // validate request
         $data = $request->validate([
             'subject' => 'required',
@@ -53,7 +57,7 @@ class FeaturedListingsController extends Controller
             'phone_no' => 'required|max:12',
             'agreement_checkbox' => 'required'
         ]);
-        
+
         // Send Request for Booking House to Property Manager & Sender in a queue
         Mail::to('requests.remss@gmail.com')->queue(new HouseBookingRequestMail($data));
         Mail::to($data['email'])->queue(new HouseBookingRequestMail($data));
@@ -63,6 +67,6 @@ class FeaturedListingsController extends Controller
         $houseadvert->booking_status = 'Booked';
         $houseadvert->save();
 
-        return redirect('/featured-listings/'.$id)->with('main_flash_message', 'Thank you for your request! We will get back to you through the email or phone number you provided');
+        return redirect('/featured-listings/' . $id)->with('main_flash_message', 'Thank you for your request! We will get back to you through the email or phone number you provided');
     }
 }

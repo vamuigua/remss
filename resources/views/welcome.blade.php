@@ -10,86 +10,6 @@
 	</section>
 	<!-- Hero section end -->
 
-
-	<!-- Filter form section -->
-	<div class="filter-search">
-		<div class="container">
-			<form class="filter-form">
-				<input type="text" placeholder="Enter a street name, address number or keyword">
-				<select>
-					<option value="City">City</option>
-				</select>
-				<select>
-					<option value="City">State</option>
-				</select>
-				<button class="site-btn fs-submit">SEARCH</button>
-			</form>
-		</div>
-	</div>
-	<!-- Filter form section end -->
-
-	<!-- Properties section -->
-	<section class="properties-section spad">
-		<div class="container">
-			<div class="section-title text-center">
-				<h3>RECENT PROPERTIES</h3>
-				<p>Discover how much the latest properties have been sold for</p>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="propertie-item set-bg" data-setbg="img/propertie/1.jpg">
-						<div class="sale-notic">FOR SALE</div>
-						<div class="propertie-info text-white">
-							<div class="info-warp">
-								<h5>176 Kingsberry, Dr Anderson</h5>
-								<p><i class="fa fa-map-marker"></i> Rochester, NY 14626</p>
-							</div>
-							<div class="price">$1,777,000</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="propertie-item set-bg" data-setbg="img/propertie/2.jpg">
-						<div class="rent-notic">FOR Rent</div>
-						<div class="propertie-info text-white">
-							<div class="info-warp">
-								<h5>45 Lianne Dr, Greece Street</h5>
-								<p><i class="fa fa-map-marker"></i> Tasley, VA 23441</p>
-							</div>
-							<div class="price">$1255/month</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="propertie-item set-bg" data-setbg="img/propertie/3.jpg">
-						<div class="sale-notic">FOR SALE</div>
-						<div class="propertie-info text-white">
-							<div class="info-warp">
-								<h5>6101 Aqua Ave Apt 603</h5>
-								<p><i class="fa fa-map-marker"></i> Miami Beach, FL 33141</p>
-							</div>
-							<div class="price">$150,000</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="propertie-item set-bg" data-setbg="img/propertie/4.jpg">
-						<div class="rent-notic">FOR Rent</div>
-						<div class="propertie-info text-white">
-							<div class="info-warp">
-								<h5>339 N Oakhurst Dr Apt 303</h5>
-								<p><i class="fa fa-map-marker"></i> Beverly Hills, CA 90210</p>
-							</div>
-							<div class="price">$3000/month</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Properties section end -->
-
-
 	<!-- Services section -->
 	<section class="services-section spad set-bg" data-setbg="img/service-bg.jpg">
 		<div class="container">
@@ -130,7 +50,6 @@
 		</div>
 	</section>
 	<!-- Services section end -->
-
 
 	<!-- feature section -->
 	<section class="feature-section spad">
@@ -386,48 +305,6 @@
 	</section>
 	<!-- feature category section end-->
 
-
-	<!-- Gallery section -->
-	<section class="gallery-section spad">
-		<div class="container">
-			<div class="section-title text-center">
-				<h3>Popular Places</h3>
-				<p>We understand the value and importance of place</p>
-			</div>
-			<div class="gallery">
-				<div class="grid-sizer"></div>
-				<a href="#" class="gallery-item grid-long set-bg" data-setbg="img/gallery/1.jpg">
-					<div class="gi-info">
-						<h3>New York</h3>
-						<p>118 Properties</p>
-					</div>
-				</a>
-				<a href="#" class="gallery-item grid-wide set-bg" data-setbg="img/gallery/2.jpg">
-					<div class="gi-info">
-						<h3>Florida</h3>
-						<p>112 Properties</p>
-					</div>
-				</a>
-				<a href="#" class="gallery-item set-bg" data-setbg="img/gallery/3.jpg">
-					<div class="gi-info">
-						<h3>San Jose</h3>
-						<p>72 Properties</p>
-					</div>
-				</a>
-				<a href="#" class="gallery-item set-bg" data-setbg="img/gallery/4.jpg">
-					<div class="gi-info">
-						<h3>St Louis</h3>
-						<p>50 Properties</p>
-					</div>
-				</a>
-				
-			</div>
-		</div>
-	</section>
-	<!-- Gallery section end -->
-
-
-
 	<!-- Review section -->
 	<section class="review-section set-bg" data-setbg="img/review-bg.jpg">
 		<div class="container">
@@ -475,45 +352,4 @@
 		</div>
 	</section>
 	<!-- Review section end-->
-
-
-	<!-- Blog section -->
-	<section class="blog-section spad">
-		<div class="container">
-			<div class="section-title text-center">
-				<h3>LATEST NEWS</h3>
-				<p>Real estate news headlines around the world.</p>
-			</div>
-			<div class="row">
-				<div class="col-lg-4 col-md-6 blog-item">
-					<img src="img/blog/1.jpg" alt="">
-					<h5><a href="single-blog.html">Housing confidence hits record high as prices skyrocket</a></h5>
-					<div class="blog-meta">
-						<span><i class="fa fa-user"></i>Amanda Seyfried</span>
-						<span><i class="fa fa-clock-o"></i>25 Jun 201</span>
-					</div>
-					<p>Integer luctus diam ac scerisque consectetur. Vimus dotnetact euismod lacus sit amet. Aenean interdus mid vitae maximus...</p>
-				</div>
-				<div class="col-lg-4 col-md-6 blog-item">
-					<img src="img/blog/2.jpg" alt="">
-					<h5><a href="single-blog.html">Taylor Swift is selling her $2.95 million Beverly Hills mansion</a></h5>
-					<div class="blog-meta">
-						<span><i class="fa fa-user"></i>Amanda Seyfried</span>
-						<span><i class="fa fa-clock-o"></i>25 Jun 201</span>
-					</div>
-					<p>Integer luctus diam ac scerisque consectetur. Vimus dotnetact euismod lacus sit amet. Aenean interdus mid vitae maximus...</p>
-				</div>
-				<div class="col-lg-4 col-md-6 blog-item">
-					<img src="img/blog/3.jpg" alt="">
-					<h5><a href="single-blog.html">NYC luxury housing market saturated with inventory, says celebrity realtor</a></h5>
-					<div class="blog-meta">
-						<span><i class="fa fa-user"></i>Amanda Seyfried</span>
-						<span><i class="fa fa-clock-o"></i>25 Jun 201</span>
-					</div>
-					<p>Integer luctus diam ac scerisque consectetur. Vimus dotnetact euismod lacus sit amet. Aenean interdus mid vitae maximus...</p>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Blog section end -->
 @endsection
