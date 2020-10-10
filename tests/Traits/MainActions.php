@@ -25,5 +25,6 @@ trait MainActions
         $user = User::latest()->first();
         factory(Admin::class)->create(['user_id' => $user->id]);
         $user->roles()->attach(Role::where('name', 'Admin')->first());
+        return $user;
     }
 }
