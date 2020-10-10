@@ -40,6 +40,7 @@ trait TenantActions
                 ['file' => $this->storeTenantFile($request)]
             ));
         } else {
+            // Image and File not provided
             $tenant = Tenant::create($validatedData);
         }
 
