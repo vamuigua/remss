@@ -14,7 +14,7 @@
                        alt="User profile picture">
                 </div>
 
-                <h3 class="profile-username text-center">{{ $user->surname }} {{ $user->other_names }}</h3>
+                <h3 class="profile-username text-center">{{ $user->tenant->surname }} {{ $user->tenant->other_names }}</h3>
 
                 <p class="text-muted text-center">Tenant</p>
                 <div class="table-responsive">
