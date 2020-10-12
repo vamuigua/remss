@@ -43,8 +43,8 @@ class MpesaController extends Controller
 
         $access_token = $this->access_token();
         $shortCode = '600610';
-        $confirmationUrl = 'https://74758a38eb1c.ngrok.io/api/confirm';  // remember to make urls https and use ngrok
-        $validationUrl = 'https://74758a38eb1c.ngrok.io/api/validate';
+        $confirmationUrl = 'https://60dd4b08340e.ngrok.io/api/confirm';  // remember to make urls https and use ngrok
+        $validationUrl = 'https://60dd4b08340e.ngrok.io/api/validate';
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);

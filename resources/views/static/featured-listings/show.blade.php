@@ -78,7 +78,7 @@
 							@endif
 						</div>
 
-						<h3 class="sl-sp-title">Property Details</h3>
+						{{-- <h3 class="sl-sp-title">Property Details</h3>
 						<div class="row property-details-list">
 						
 							<div class="col-md-4 col-sm-6">
@@ -95,12 +95,12 @@
 								<p><i class="fa fa-bath"></i> 8 Bathrooms</p>
 								<p><i class="fa fa-trophy"></i> 5 years age</p>
 							</div>
-						</div>
+						</div> --}}
 						<h3 class="sl-sp-title">Description</h3>
 						<div class="description">
 							<p>{{ $houseadvert->description }}</p>
 						</div>
-						<h3 class="sl-sp-title">Extra Details</h3>
+						{{-- <h3 class="sl-sp-title">Extra Details</h3>
 						<div class="row property-details-list">
 							<div class="col-md-4 col-sm-6">
 								<p><i class="fa fa-check-circle-o"></i> Air conditioning</p>
@@ -117,7 +117,7 @@
 								<p><i class="fa fa-check-circle-o"></i> Internet</p>
 								<p><i class="fa fa-check-circle-o"></i> Electric Range</p>
 							</div>
-						</div>
+						</div> --}}
 					</div>
 				</div>
 
