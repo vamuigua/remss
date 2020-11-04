@@ -27,21 +27,21 @@
 							<i class="fa fa-comments"></i>
 							<div class="service-text">
 								<h5>Consultant Service</h5>
-								<p>In Aenean purus, pretium sito amet sapien denim consectet sed urna placerat sodales magna leo.</p>
+								<p>Feel free to ask us for any enquiries on our rentals</p>
 							</div>
 						</div>
 						<div class="service-item">
 							<i class="fa fa-home"></i>
 							<div class="service-text">
 								<h5>Properties Management</h5>
-								<p>In Aenean purus, pretium sito amet sapien denim consectet sed urna placerat sodales magna leo.</p>
+								<p>We offer a powerful and elegant management system to help you check statistics and status of your property</p>
 							</div>
 						</div>
 						<div class="service-item">
 							<i class="fa fa-briefcase"></i>
 							<div class="service-text">
-								<h5>Renting and Selling</h5>
-								<p>In Aenean purus, pretium sito amet sapien denim consectet sed urna placerat sodales magna leo.</p>
+								<h5>Online Payment services</h5>
+								<p>We accept a variety of payments including Mpesa and PayPal</p>
 							</div>
 						</div>
 					</div>
@@ -51,7 +51,7 @@
 	</section>
 	<!-- Services section end -->
 
-	<!-- feature section -->
+	{{-- <!-- feature section -->
 	<section class="feature-section spad">
 		<div class="container">
 			<div class="section-title text-center">
@@ -272,7 +272,7 @@
 			</div>
 		</div>
 	</section>
-	<!-- feature section end -->
+	<!-- feature section end --> --}}
 
 
 

@@ -26,7 +26,14 @@
 					<div class="col-lg-4 col-md-6">
 						<!-- feature -->
 						<div class="feature-item">
-							<div class="feature-pic set-bg" data-setbg="img/feature/1.jpg">
+							<?php
+								$images = $houseadvert->images;
+								$images = explode(', ', $images);
+
+								$randomIndex = array_rand($images);
+								$randomImg = $images[$randomIndex];
+							?>
+							<div class="feature-pic set-bg" data-setbg="/storage/{{ $randomImg }}">
 								<div class="sale-notic">FOR SALE</div>
 							</div>
 							<div class="feature-text">
