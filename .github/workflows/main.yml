@@ -11,6 +11,10 @@ jobs:
   laravel-tests:
     name: Start Unit & Feature Configuration and Testing
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['7.3']
 
     services:
       # mysql-service Label used to access the service container
@@ -32,7 +36,14 @@ jobs:
           --health-timeout=5s
           --health-retries=3
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup and Install PHP Action
+        uses: shivammathur/setup-php@2.9.0
+        with:
+          php-version: ${{ matrix.php-versions }}
+      - name: Check PHP Version
+        run: php -v
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
