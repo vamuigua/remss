@@ -125,7 +125,8 @@ class HousesController extends Controller
         $extension = $request->file('import_file')->getClientOriginalExtension();
 
         if ($extension === "xlsx" || $extension === "xls" || $extension === "csv") {
-            Excel::import(new HousesImport, $request->file('import_file'));
+            $houseImport = new HousesImport;
+            Excel::import($houseImport, $request->file('import_file'));
             return redirect('admin/houses')->with('flash_message', 'Houses Imported...All good!');
         } else {
             return redirect('admin/houses')->with('flash_message_error', 'Failed to Import upload file!');
