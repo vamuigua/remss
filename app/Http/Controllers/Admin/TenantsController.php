@@ -162,8 +162,9 @@ class TenantsController extends Controller
         $extension = $request->file('import_file')->getClientOriginalExtension();
 
         if ($extension === "xlsx" || $extension === "xls" || $extension === "csv") {
-            Excel::import(new TenantsImport, $request->file('import_file'));
-            return redirect('admin/tenants')->with('flash_message', 'Tenants Imported...All good!');
+            $tenantsImport = new TenantsImport;
+            Excel::import($tenantsImport, $request->file('import_file'));
+            return redirect('admin/tenants')->with('flash_message', 'Tenants Imported!');
         } else {
             return redirect('admin/tenants')->with('flash_message_error', 'Failed to Import upload file!');
         }
