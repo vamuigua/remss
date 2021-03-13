@@ -27,7 +27,7 @@
         "admin-lte": "^3.0.2",
         "bootstrap-datepicker": "^1.9.0",
         "bootstrap-select": "^1.13.12",
-        "jspdf": "^1.5.3",
+        "jspdf": "^2.3.1",
         "owl.carousel": "^2.3.4",
         "vue-resource": "^1.5.1"
     }
