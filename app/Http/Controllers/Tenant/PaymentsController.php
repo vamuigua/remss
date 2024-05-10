@@ -72,11 +72,11 @@ class PaymentsController extends Controller
 
         $amount_paid = $this->validatedData['amount_paid'];
 
+        $paymentData = ['payment_type' => 'mpesa'];
+        array_merge($this->validatedData, $paymentData);
+
         // Create a new payment with the validated data
-        $payment = Payment::create(array_merge(
-            $this->validatedData,
-            ['payment_type' => 'mpesa'],
-        ));
+        $payment = Payment::create();
 
         $payment_id = $payment->id;
 
