@@ -70,6 +70,19 @@
 
                         </div>
                         <!-- /.login-card-body -->
+
+                        <div class="card-footer">
+                            <p>Admin Login Creds:</p>
+                            <ul>
+                                <li><b>Email:</b> admin@remss.com</li>
+                                <li><b>Password:</b> Admin@123</li>
+                            </ul>
+                            <p>Tenant Login Creds:</p>
+                            <ul>
+                                <li><b>Email:</b> tenant@remss.com</li>
+                                <li><b>Password:</b> Tenant@123</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
